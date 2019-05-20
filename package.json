@@ -1,0 +1,24 @@
+{
+  "name": "ppap.server",
+  "version": "1.0.0",
+  "description": "node api\u001b[D\u001b[D\u001b[D\u001b[D koa2 API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppap6/PPAP.server.git"
+  },
+  "keywords": [
+    "koa2",
+    "node",
+    "koa-router"
+  ],
+  "author": "jwchan1996",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ppap6/PPAP.server/issues"
+  },
+  "homepage": "https://github.com/ppap6/PPAP.server#readme"
+}
