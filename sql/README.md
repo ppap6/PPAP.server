@@ -13,6 +13,10 @@
 - 用户动态表 user_log (考虑 mongodb)
 -
 - 话题表 topic
+- 
+- 用户关注表 user_fans_relation (考虑 mongodb)
+- 用户订阅话题表 user_topic_relation (考虑 mongodb)
+- 
 - 私信信息表？ chat_message
 
 
@@ -94,7 +98,7 @@ likes  - 点赞数
 collects  - 收藏数
 ```
 
-#### <span style="color:#009688"># </span>用户帖子点赞收藏表 user_post_likes_collects_relation (考虑 mongodb)
+#### <span style="color:#009688"># </span>用户的帖子点赞收藏表 user_post_likes_collects_relation (考虑 mongodb)
 
 > 字段
 
@@ -133,6 +137,8 @@ update_time  - 更新时间
 ```
 
 #### <span style="color:#009688"># </span>用户动态表 user_log (考虑 mongodb)
+
+> 动态记录不会因为用户改变操作而删除
 
 > 字段
 
@@ -182,3 +188,38 @@ pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
 create_time  - 创建时间
 ```
+
+#### <span style="color:#009688"># </span>话题表 topic
+
+> 字段
+
+```
+id  - 话题ID
+name  - 话题名称
+intro  - 话题简介
+posts  - 帖子总数
+follows  - 关注用户总数
+```
+
+#### <span style="color:#009688"># </span>用户关注表 user_fans_relation (考虑 mongodb)
+
+> 字段
+
+```
+id  - 记录ID
+uid  - 用户ID
+follow_uid  - 关注的偶像ID
+create_time  - 关注时间
+state  - 关注状态（1为关注，0为未关注）
+```
+
+#### <span style="color:#009688"># </span>用户订阅话题表 user_topic_relation (考虑 mongodb)
+
+> 字段
+
+```
+id  - 记录ID
+uid  - 用户ID
+follow_topic_id  - 关注的话题ID
+create_time  - 关注时间
+state  - 关注状态（1为关注，0为未关注）
