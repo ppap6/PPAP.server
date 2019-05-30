@@ -17,7 +17,8 @@
 - 用户关注表 user_fans_relation (考虑 mongodb)
 - 用户订阅话题表 user_topic_relation (考虑 mongodb)
 - 
-- 私信信息表？ chat_message
+- 私信表 chat
+- 私信信息表 message (考虑 mongodb)
 
 
 #### <span style="color:#009688"># </span>用户表 user
@@ -105,8 +106,8 @@ collects  - 收藏数
 ```
 id  - 记录ID
 uid  - 用户ID
-like_posts  - (Arrays)点赞的帖子数组
-collect_posts  - (Arrays)收藏的帖子数组
+like_posts  - (Arrays)点赞的帖子ID数组
+collect_posts  - (Arrays)收藏的帖子ID数组
 ```
 
 #### <span style="color:#009688"># </span>帖子评论表 comment (考虑 mongodb)
@@ -223,3 +224,29 @@ uid  - 用户ID
 follow_topic_id  - 关注的话题ID
 create_time  - 关注时间
 state  - 关注状态（1为关注，0为未关注）
+```
+
+#### <span style="color:#009688"># </span>私信表 chat
+
+> 用户 ID 字符串以 `_` 下划线分割，查询使用 LIKE 配合 % 模糊匹配  
+如： `SELECT * FROM [chat] WHERE uid_str LIKE '%_12_'` 即可匹配到用户 ID 为 12 的用户全部私信记录
+
+> 字段
+
+```
+id  - 私信ID
+uid_str  - 用户ID字符串（如: "_12_52_" 代表私信是由 ID 为 12 的用户与 ID 为 52 的用户建立的）
+create_time  - 创建时间
+```
+
+#### <span style="color:#009688"># </span>私信信息表 message (考虑 mongodb)
+
+> 字段
+
+```
+id  - 信息ID
+uid  - 用户ID
+cid  - 私信ID
+content  - 私信内容
+create_time  - 创建时间
+```
