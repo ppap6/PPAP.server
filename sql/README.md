@@ -26,16 +26,16 @@
 > 字段
 
 ```
-id  - 用户ID
-name  - 姓名
-account  - 账号
-password  - 密码
-avatar  - 头像
-sex  - 性别
-email  - 邮箱
-mobile  - 手机号
-create_time  - 创建时间
-role_id  - 角色ID
+id  - 用户ID（int）
+name  - 姓名（varchar）
+account  - 账号（varchar）
+password  - 密码（varchar）
+avatar  - 头像（varchar）
+sex  - 性别，0为保密，1为男，2为女（int）
+email  - 邮箱（varchar）
+mobile  - 手机号（varchar）
+create_time  - 创建时间（datetime）
+role_id  - 角色ID（int）
 ```
 
 #### <span style="color:#009688"># </span>角色表 role
