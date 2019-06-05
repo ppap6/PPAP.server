@@ -43,10 +43,10 @@ role_id  - 角色ID（int）
 > 字段
 
 ```
-id  - 角色ID
-name  - 角色名称
-create_time  - 创建时间
-description  - 角色描述
+id  - 角色ID（int）
+name  - 角色名称（varchar）
+create_time  - 创建时间（datetime）
+description  - 角色描述（varchar）
 ```
 
 #### <span style="color:#009688"># </span>权限表 access
@@ -54,10 +54,10 @@ description  - 角色描述
 > 字段
 
 ```
-id  - 权限ID
-name  - 权限名称
-create_time  - 创建时间
-description  - 权限描述
+id  - 权限ID（int）
+name  - 权限名称（varchar）
+create_time  - 创建时间（datetime）
+description  - 权限描述（varchar）
 ```
 
 #### <span style="color:#009688"># </span>角色权限关联表 role_access_relation
@@ -65,9 +65,9 @@ description  - 权限描述
 > 字段
 
 ```
-id  - 记录ID
-role_id  - 角色ID
-access_id  - 权限ID
+id  - 记录ID（int）
+role_id  - 角色ID（int）
+access_id  - 权限ID（int）
 ```
 
 #### <span style="color:#009688"># </span>操作日志表 admin_log
@@ -75,11 +75,13 @@ access_id  - 权限ID
 > 字段
 
 ```
-id  - 日志ID
-type  - 操作类型
-content  - 操作内容
-uid  - 操作人ID
-create_time  - 操作时间
+id  - 日志ID（int）
+uid  - 操作人ID（int）
+type  - 操作类型（1新增2修改3删除）（int）
+tname_en  - 数据表英文字符串（','分割）（varchar）
+tname_cn  - 数据表中文字符串（','分割）（varchar）
+content  - 操作内容（如：修改用户密码）（varchar）
+create_time  - 操作时间（datetime）
 ```
 
 #### <span style="color:#009688"># </span>帖子表 post
@@ -87,16 +89,15 @@ create_time  - 操作时间
 > 字段
 
 ```
-id  - 记录ID
-pid  - 帖子ID
-uid  - 用户ID
-title  - 帖子标题
-content  - 帖子内容
-create_time  - 创建时间
-update_time  - 更新时间
-reads  - 阅读数
-likes  - 点赞数
-collects  - 收藏数
+id  - 帖子ID（int）
+uid  - 用户ID（int）
+title  - 帖子标题（varchar）
+content  - 帖子内容（varchar）
+create_time  - 创建时间（datetime）
+update_time  - 更新时间（datetime）
+reads  - 阅读数（int）
+likes  - 点赞数（int）
+collects  - 收藏数（int）
 ```
 
 #### <span style="color:#009688"># </span>用户的帖子点赞收藏表 user_post_likes_collects_relation (考虑 mongodb)
@@ -195,11 +196,13 @@ create_time  - 创建时间
 > 字段
 
 ```
-id  - 话题ID
-name  - 话题名称
-intro  - 话题简介
-posts  - 帖子总数
-follows  - 关注用户总数
+id  - 话题ID（int）
+name  - 话题名称（varchar）
+intro  - 话题简介（varchar）
+create_time  - 创建时间（datetime）
+update_time  - 更新时间（datetime）
+posts  - 帖子总数（int）
+followers  - 关注总数（int）
 ```
 
 #### <span style="color:#009688"># </span>用户关注表 user_fans_relation (考虑 mongodb)
@@ -234,9 +237,9 @@ state  - 关注状态（1为关注，0为未关注）
 > 字段
 
 ```
-id  - 私信ID
-uid_str  - 用户ID字符串（如: "_12_52_" 代表私信是由 ID 为 12 的用户与 ID 为 52 的用户建立的）
-create_time  - 创建时间
+id  - 私信ID（int）
+uid_str  - 用户ID字符串（如: "_12_52_" 代表私信是由 ID 为 12 的用户与 ID 为 52 的用户建立的）（varchar）
+create_time  - 创建时间（datetime）
 ```
 
 #### <span style="color:#009688"># </span>私信信息表 message (考虑 mongodb)
