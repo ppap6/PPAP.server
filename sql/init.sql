@@ -2,10 +2,9 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-05 16:14:23
+ * @LastEditTime: 2019-06-05 18:55:13
  */
 
---用户表
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
@@ -17,12 +16,11 @@ CREATE TABLE `user` (
     `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '邮箱',
     `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '头像',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
-    `role_id` INT NOT NULL DEFAULT '' COMMENT '角色ID',
+    `role_id` INT NOT NULL COMMENT '角色ID',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 
---角色表
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '角色ID',
@@ -30,10 +28,9 @@ CREATE TABLE `role` (
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '角色描述',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 
---权限表
 DROP TABLE IF EXISTS `access`;
 CREATE TABLE `access` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '权限ID',
@@ -41,34 +38,31 @@ CREATE TABLE `access` (
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '权限描述',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 
---角色权限关联表
 DROP TABLE IF EXISTS `role_access_relation`;
 CREATE TABLE `role_access_relation` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '记录ID',
     `role_id` INT UNSIGNED NOT NULL COMMENT '角色ID',
     `access_id` INT UNSIGNED NOT NULL COMMENT '权限ID',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
 
 
---操作日志表
 DROP TABLE IF EXISTS `admin_log`;
 CREATE TABLE `admin_log` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志ID',
     `uid` INT UNSIGNED NOT NULL COMMENT '操作人ID',
     `type` INT UNSIGNED NOT NULL COMMENT '操作类型（1新增2修改3删除）',
-    `tname_cn` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '数据表英文字符串（','分割）',
-    `tname_en` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '数据表中文字符串（','分割）',
+    `tname_cn` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '数据表英文字符串',
+    `tname_en` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '数据表中文字符串',
     `content` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '操作内容',
     `create_time` DATETIME NOT NULL COMMENT '操作时间',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='操作日志表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 
 
---帖子表
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
@@ -79,12 +73,11 @@ CREATE TABLE `post` (
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `reads` INT UNSIGNED NOT NULL COMMENT '阅读数',
     `likes` INT UNSIGNED NOT NULL COMMENT '点赞数',
-    `collects` INT UNSIGNED NOT NULL COMMENT '收藏数'
+    `collects` INT UNSIGNED NOT NULL COMMENT '收藏数',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='帖子表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='帖子表';
 
 
---话题表
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '话题ID',
@@ -95,14 +88,13 @@ CREATE TABLE `topic` (
     `posts` INT UNSIGNED NOT NULL COMMENT '帖子总数',
     `followers` INT UNSIGNED NOT NULL COMMENT '关注总数',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='话题表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='话题表';
 
 
---私信表
 DROP TABLE IF EXISTS `chat`;
 CREATE TABLE `chat` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '私信ID',
     `uid_str` VARCHAR(100) NOT NULL COMMENT '用户ID字符串',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='私信表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='私信表';
