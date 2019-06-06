@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-05 18:55:13
+ * @LastEditTime: 2019-06-06 10:29:49
  */
 
 DROP TABLE IF EXISTS `user`;
@@ -14,7 +14,7 @@ CREATE TABLE `user` (
     `avatar` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '头像',
     `sex` INT NOT NULL DEFAULT 0 COMMENT '性别',
     `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '邮箱',
-    `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '头像',
+    `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '手机号',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `role_id` INT NOT NULL COMMENT '角色ID',
     PRIMARY KEY (`id`)
