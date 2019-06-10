@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-10 11:36:42
+ * @LastEditTime: 2019-06-10 15:33:39
  */
 
 const mysql = require('mysql')
@@ -14,10 +14,10 @@ const pool = mysql.createPool({
   database: 'ppap'
 })
 
-let query = function( sql, values ) {
+const query = ( sql, values ) => {
 
   return new Promise(( resolve, reject ) => {
-    pool.getConnection(function(err, connection) {
+    pool.getConnection((err, connection) => {
       if (err) {
         resolve( err )
       } else {
@@ -36,7 +36,7 @@ let query = function( sql, values ) {
 
 }
 
-let select = function( keys, table ) {
+const select = ( keys, table ) => {
   let  _sql =  "SELECT ?? FROM ?? "
   return query( _sql, [ keys, table ] )
 }
