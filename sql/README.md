@@ -151,6 +151,7 @@ update_time  - 更新时间
 2 => 回复
 3 => 关注
 4 => 点赞
+5 => 收藏
 ```
 
 - 评论类型动态
@@ -186,6 +187,16 @@ create_time  - 创建时间
 ```
 id  - 动态ID
 type  - 动态类型值 4
+uid  - 用户ID
+pid  - 帖子ID
+post_owner_id  - 帖子发表人ID
+create_time  - 创建时间
+```
+
+- 收藏类型动态
+```
+id  - 动态ID
+type  - 动态类型值 5
 uid  - 用户ID
 pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
