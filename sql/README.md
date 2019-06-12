@@ -101,7 +101,7 @@ likes  - 点赞数(int)
 collects  - 收藏数(int)
 ```
 
-#### <span style="color:#009688"># </span>用户的帖子点赞收藏表 user_post_likes_collects_relation (考虑 mongodb)
+#### <span style="color:#009688"># </span>用户的点赞收藏点亮表 user_likes_collects_lights_relation (考虑 mongodb)
 
 > 字段
 
@@ -110,6 +110,8 @@ id  - 记录ID
 uid  - 用户ID
 like_posts  - (Arrays)点赞的帖子ID数组
 collect_posts  - (Arrays)收藏的帖子ID数组
+light_comments  - (Arrays)亮了的评论ID数组
+light_answers - (Arrays)亮了的回复ID数组
 ```
 
 #### <span style="color:#009688"># </span>帖子评论表 comment (考虑 mongodb)
@@ -123,6 +125,7 @@ pid  - 帖子ID
 content  - 评论内容
 create_time  - 创建时间
 update_time  - 更新时间
+lights  - 点亮数
 ```
 
 #### <span style="color:#009688"># </span>评论回复表 answer (考虑 mongodb)
@@ -132,11 +135,13 @@ update_time  - 更新时间
 ```
 id  - 回复ID
 pid  - 帖子ID
+comment_id  - 评论ID
 requestor_id  - 发起人ID
 targetor_id  - 目标人ID
 content  - 回复内容
 create_time  - 创建时间
 update_time  - 更新时间
+lights  - 点亮数
 ```
 
 #### <span style="color:#009688"># </span>用户动态表 user_log (考虑 mongodb)
