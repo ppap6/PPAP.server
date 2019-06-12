@@ -37,8 +37,10 @@ const query = ( sql, values ) => {
 }
 
 const select = ( keys, table ) => {
-  let  _sql =  "SELECT ?? FROM ?? "
-  return query( _sql, [ keys, table ] )
+  // let  _sql =  "SELECT ?? FROM ?? "
+  let  _sql =  `SELECT ${keys} FROM ?? `
+  // return query( _sql, [ keys, table ] )
+  return query( _sql, [ table ] )
 }
 
 module.exports = {
