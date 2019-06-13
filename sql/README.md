@@ -106,7 +106,7 @@ collects  - 收藏数(int)
 > 字段
 
 ```
-id  - 记录ID
+_id  - 记录ID
 uid  - 用户ID
 like_posts  - (Arrays)点赞的帖子ID数组
 collect_posts  - (Arrays)收藏的帖子ID数组
@@ -119,7 +119,7 @@ light_answers - (Arrays)亮了的回复ID数组
 > 字段
 
 ```
-id  - 评论ID
+_id  - 评论ID
 uid  - 用户ID
 pid  - 帖子ID
 content  - 评论内容
@@ -133,9 +133,32 @@ lights  - 点亮数
 > 字段
 
 ```
-id  - 回复ID
+根据回复类型 type 区分  
+1 => 对评论的回复
+2 => 对回复的回复
+```
+
+- 对评论的回复
+```
+_id  - 回复ID
+type  - 回复类型值 1
 pid  - 帖子ID
-comment_id  - 评论ID
+comment_id  - 目标评论的ID
+requestor_id  - 发起人ID
+targetor_id  - 目标人ID
+content  - 回复内容
+create_time  - 创建时间
+update_time  - 更新时间
+lights  - 点亮数
+```
+
+- 对回复的回复
+```
+_id  - 回复ID
+type  - 回复类型值 2
+pid  - 帖子ID
+comment_id  - 目标评论的ID
+target_answer_id  - 目标回复的ID
 requestor_id  - 发起人ID
 targetor_id  - 目标人ID
 content  - 回复内容
@@ -161,7 +184,7 @@ lights  - 点亮数
 
 - 评论类型动态
 ```
-id  - 动态ID
+_id  - 动态ID
 type  - 动态类型值 1
 uid  - 用户ID
 pid  - 帖子ID
@@ -171,7 +194,7 @@ create_time  - 创建时间
 
 - 回复类型动态
 ```
-id  - 动态ID
+_id  - 动态ID
 type  - 动态类型值 2
 uid  - 用户ID
 pid  - 帖子ID
@@ -181,7 +204,7 @@ create_time  - 创建时间
 
 - 关注类型动态
 ```
-id  - 动态ID
+_id  - 动态ID
 type  - 动态类型值 3
 uid  - 用户ID
 follow_people_id  - 关注的人ID
@@ -190,7 +213,7 @@ create_time  - 创建时间
 
 - 点赞类型动态
 ```
-id  - 动态ID
+_id  - 动态ID
 type  - 动态类型值 4
 uid  - 用户ID
 pid  - 帖子ID
@@ -200,7 +223,7 @@ create_time  - 创建时间
 
 - 收藏类型动态
 ```
-id  - 动态ID
+_id  - 动态ID
 type  - 动态类型值 5
 uid  - 用户ID
 pid  - 帖子ID
@@ -227,7 +250,7 @@ followers  - 关注总数(int)
 > 字段
 
 ```
-id  - 记录ID
+_id  - 记录ID
 uid  - 用户ID
 follow_uid  - 关注的偶像ID
 create_time  - 关注时间
@@ -239,7 +262,7 @@ state  - 关注状态(1为关注，0为未关注)
 > 字段
 
 ```
-id  - 记录ID
+_id  - 记录ID
 uid  - 用户ID
 follow_topic_id  - 关注的话题ID
 create_time  - 关注时间
@@ -264,7 +287,7 @@ create_time  - 创建时间(datetime)
 > 字段
 
 ```
-id  - 信息ID
+_id  - 信息ID
 uid  - 用户ID
 cid  - 私信ID
 content  - 私信内容
