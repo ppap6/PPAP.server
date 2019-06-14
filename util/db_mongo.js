@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-10 16:44:40
+ * @LastEditTime: 2019-06-15 01:29:10
  */
 
 const MongoClient = require('mongodb').MongoClient
@@ -11,25 +11,13 @@ const url = 'mongodb://localhost:27017/'
 
 
 /**
- * @description: 连接数据库并执行命令
- * @param {Function} command 命令函数
- * @return {Object} 返回
+ * 创建数据库连接对象
  */
-const query = command => {
-
-  return new Promise(( resolve, reject ) => {
-    MongoClient.connect( url, { useNewUrlParser: true }, (err, db) => {
-      let client = db.db('ppap')
-      if (err) {
-        resolve( err )
-      } else {
-        command(resolve, reject, client)
-        db.close()
-      }
-    })
-  })
-
-}
+let DB
+MongoClient.connect( url, { useNewUrlParser: true }, (err, client) => {
+  if(err) throw err
+  DB = client.db('ppap')
+})
 
 
 /**
@@ -39,16 +27,15 @@ const query = command => {
  * @return {Array} 返回
  */
 const find = ( table, condition={} ) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).find(condition).toArray((err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).find(condition).toArray((err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 
@@ -59,16 +46,15 @@ const find = ( table, condition={} ) => {
  * @return {boolean} 返回
  */
 const insertOne = (table, value) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).insertOne(value, (err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).insertOne(value, (err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 
@@ -79,16 +65,15 @@ const insertOne = (table, value) => {
  * @return {boolean} 返回
  */
 const insertMany = (table, value) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).insertMany(value, (err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).insertMany(value, (err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 
@@ -100,16 +85,15 @@ const insertMany = (table, value) => {
  * @return {boolean} 返回
  */
 const updateOne = (table, condition, value) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).updateOne(condition, value, (err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).updateOne(condition, value, (err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 
@@ -121,16 +105,15 @@ const updateOne = (table, condition, value) => {
  * @return {boolean} 返回
  */
 const updateMany = (table, condition, value) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).updateMany(condition, value, (err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).updateMany(condition, value, (err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 
@@ -141,16 +124,15 @@ const updateMany = (table, condition, value) => {
  * @return {boolean} 返回
  */
 const deleteOne = (table, condition) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).deleteOne(condition, (err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).deleteOne(condition, (err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 
@@ -161,20 +143,18 @@ const deleteOne = (table, condition) => {
  * @return {boolean} 返回
  */
 const deleteMany = (table, condition) => {
-  let command = (resolve, reject, client) => {
-    client.collection(table).deleteMany(condition, (err, result) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).deleteMany(condition, (err, result) => {
       if(err){
         reject(err)
       }else{
         resolve(result)
       }
     })
-  }
-  return query(command)
+  })
 }
 
 module.exports = {
-  query,
   find,
   insertOne,
   insertMany,
