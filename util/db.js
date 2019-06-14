@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-10 15:33:39
+ * @LastEditTime: 2019-06-14 12:01:04
  */
 
 const mysql = require('mysql')
@@ -11,7 +11,8 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'ppap'
+  database: 'ppap',
+  timezone: '08:00'
 })
 
 const query = ( sql, values ) => {
