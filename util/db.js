@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-15 01:29:54
+ * @LastEditTime: 2019-06-16 22:50:53
  */
 
 const mysql = require('mysql')
@@ -37,14 +37,6 @@ const query = ( sql, values ) => {
 
 }
 
-const select = ( keys, table ) => {
-  // let  _sql =  "SELECT ?? FROM ?? "
-  let  _sql =  `SELECT ${keys} FROM ?? `
-  // return query( _sql, [ keys, table ] )
-  return query( _sql, [ table ] )
-}
-
 module.exports = {
-  query,
-  select
+  query
 }
