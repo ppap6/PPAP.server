@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-17 19:50:21
+ * @LastEditTime: 2019-06-18 23:57:04
  */
 
 const db = require('../util/db')
@@ -47,6 +47,16 @@ const user = {
     return false
   },
 
+  //获取用户信息
+  async getUser(id){
+    let sql = 'SELECT * FROM user WHERE id=??'
+    let result = await db.query(sql, [id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
   //修改用户信息
   async updateUser(id, data){
     let sql = 'UPDATE user SET name=??,account=??,password=??,sex=??,email=??,create_time=??,role_id=?? WHERE id=??'
@@ -64,7 +74,19 @@ const user = {
       return true
     }
     return false
-  }
+  },
+
+  //用户登录
+  async login(account,password){
+    let sql = 'SELECT password FROM user WHERE account=??'
+    let result = await db.query(sql, [account])
+    if(result){
+      if(result === password){
+        return true
+      }
+    }
+    return false
+  },
 }
 
 module.exports = user
