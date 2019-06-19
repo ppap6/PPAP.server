@@ -2,16 +2,16 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-10 14:50:44
+ * @LastEditTime: 2019-06-19 23:30:02
  */
 
 const userCode = require('../code/user')
 const postService = require('../service/post')
 
 const post = {
-  async getPostComment(ctx){
-    let comments = await postService.getPostComment()
-    ctx.body = comments
+  async getPostList(ctx){
+    let postList = await postService.getPostList()
+    ctx.body = postList
   }
 }
 
