@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-10 17:46:56
+ * @LastEditTime: 2019-06-21 17:03:51
  */
 
 DROP TABLE IF EXISTS `user`;
@@ -72,9 +72,9 @@ CREATE TABLE `post` (
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `topic_id` INT UNSIGNED NOT NULL COMMENT '话题ID',
-    `reads` INT UNSIGNED NOT NULL COMMENT '阅读数',
-    `likes` INT UNSIGNED NOT NULL COMMENT '点赞数',
-    `collects` INT UNSIGNED NOT NULL COMMENT '收藏数',
+    `reads` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读数',
+    `likes` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数',
+    `collects` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '收藏数',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='帖子表';
 
@@ -86,8 +86,8 @@ CREATE TABLE `topic` (
     `intro` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '话题简介',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
-    `posts` INT UNSIGNED NOT NULL COMMENT '帖子总数',
-    `followers` INT UNSIGNED NOT NULL COMMENT '关注总数',
+    `posts` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '帖子总数',
+    `followers` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注总数',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='话题表';
 
