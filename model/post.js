@@ -2,9 +2,10 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-20 00:58:01
+ * @LastEditTime: 2019-06-21 17:45:14
  */
 
+const util = require('../util').default
 const db = require('../util/db')
 const db_mongo = require('../util/db_mongo')
 
@@ -29,7 +30,25 @@ const post = {
     if(Array.isArray(result) && result.length > 0){
       return result
     }
-    return 'null'
+    return false
+  },
+
+  //新增帖子数据
+  async addPost(data){
+    let sql = 'INSERT INTO post(uid,title,content,create_time,update_time,topic_id) VALUES(??,??,??,??,??,??)'
+    let values = [
+      data.uid,
+      data.title,
+      data.content,
+      util.changeTimeToStr(new Date()),
+      util.changeTimeToStr(new Date()),
+      data.topic_id
+    ]
+    let result = await db.query(sql, [...values])
+    if(result){
+      return true
+    }
+    return false
   }
 }
 
