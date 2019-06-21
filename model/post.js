@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-21 17:45:14
+ * @LastEditTime: 2019-06-22 00:49:58
  */
 
 const util = require('../util').default
@@ -49,7 +49,33 @@ const post = {
       return true
     }
     return false
-  }
+  },
+
+  //删除帖子数据
+  async deletePost(id){
+    let sql = 'DELETE FROM post WHERE id=??'
+    let result = await db.query(sql, [id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
+  //修改帖子信息
+  async updatePost(id, data){
+    let sql = 'UPDATE post SET title=??,content=??,update_time=?? WHERE id=??'
+    let values = [
+      data.title,
+      data.content,
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values,id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
 }
 
 module.exports = post
