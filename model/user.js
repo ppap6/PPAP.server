@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-23 23:47:48
+ * @LastEditTime: 2019-06-24 23:33:56
  */
 
 const db = require('../util/db')
@@ -10,10 +10,10 @@ const db = require('../util/db')
 const user = {
 
   //查找所有用户
-  async getAllUser(pageNum=1,pageSize=20){
+  async getAllUser(pageNum, pageSize){
     let start = (pageNum-1)*pageSize
-    let sql = `SELECT * FROM user LIMIT ??,??`
-    let result = await db.query(sql, [start,pageSize])
+    let sql = `SELECT * FROM user LIMIT ${start},${pageSize}`
+    let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
       return result
     }
