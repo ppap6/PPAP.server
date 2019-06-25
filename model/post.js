@@ -2,10 +2,10 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-24 23:04:14
+ * @LastEditTime: 2019-06-26 00:41:30
  */
 
-const util = require('../util').default
+const util = require('../util')
 const db = require('../util/db')
 const db_mongo = require('../util/db_mongo')
 

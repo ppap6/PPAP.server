@@ -9,8 +9,8 @@ const userModel = require('../model/user')
 const user = {
 
   //获取所有用户
-  async getAllUser(pageNum, pageSize){
-    return await userModel.getAllUser(pageNum, pageSize)
+  async getUserList(pageNum, pageSize){
+    return await userModel.getUserList(pageNum, pageSize)
   },
 
   //添加用户

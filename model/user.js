@@ -2,15 +2,21 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-25 23:54:51
+ * @LastEditTime: 2019-06-26 01:02:17
  */
 
+/**
+ * 标识符（数据库、表、列名）用两个 ? 做占位符（即 ?? ）
+ * 其他的用一个 ? 做占位符
+ */
+
+const util = require('../util')
 const db = require('../util/db')
 
 const user = {
 
   //查找所有用户
-  async getAllUser(pageNum, pageSize){
+  async getUserList(pageNum, pageSize){
     let start = (pageNum-1)*pageSize
     let sql = `SELECT * FROM user LIMIT ${start},${pageSize}`
     let result = await db.query(sql)
@@ -22,18 +28,18 @@ const user = {
 
   //新增用户
   async addUser(data){
-    let sql = 'INSERT INTO user(name,account,password,email,create_time,role_id) VALUES(??,??,??,??,??,??)'
+    let sql = 'INSERT INTO user(name,account,password,email,create_time,role_id) VALUES(?,?,?,?,?,?)'
     let values = [
       data.name,
       data.account,
       data.password,
       data.email,
-      data.create_time,
+      util.changeTimeToStr(new Date()),
       4
     ]
     let result = await db.query(sql, values)
-    if(result.insertID){
-      return result.insertID
+    if(result.insertId){
+      return result.insertId
     }
     return false
   },
@@ -67,7 +73,7 @@ const user = {
       data.password,
       data.sex,
       data.email,
-      data.create_time,
+      util.changeTimeToStr(new Date()),
       data.role_id
     ]
     let result = await db.query(sql, [...values,id])
