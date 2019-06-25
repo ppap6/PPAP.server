@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 01:02:17
+ * @LastEditTime: 2019-06-26 01:37:48
  */
 
 /**
@@ -15,7 +15,7 @@ const db = require('../util/db')
 
 const user = {
 
-  //查找所有用户
+  //查看用户列表
   async getUserList(pageNum, pageSize){
     let start = (pageNum-1)*pageSize
     let sql = `SELECT * FROM user LIMIT ${start},${pageSize}`
@@ -46,9 +46,9 @@ const user = {
 
   //删除用户
   async deleteUser(id){
-    let sql = 'DELETE FROM user WHERE id=??'
+    let sql = 'DELETE FROM user WHERE id=?'
     let result = await db.query(sql, [id])
-    if(result){
+    if(result.affectedRows){
       return true
     }
     return false

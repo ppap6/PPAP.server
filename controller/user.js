@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-25 23:59:12
+ * @LastEditTime: 2019-06-26 01:33:31
  */
 
 const userCode = require('../code/user')
@@ -22,6 +22,12 @@ const user = {
   async addUser(ctx){
     //验证数据
     let result = await userService.addUser(ctx.request.body)
+    ctx.body = result
+  },
+
+  //删除用户
+  async deleteUser(ctx){
+    let result = await userService.deleteUser(ctx.params.id)
     ctx.body = result
   }
   

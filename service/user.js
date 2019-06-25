@@ -16,6 +16,11 @@ const user = {
   //添加用户
   async addUser(data){
     return await userModel.addUser(data)
+  },
+
+  //删除用户
+  async deleteUser(id){
+    return await userModel.deleteUser(id)
   }
   
 }
