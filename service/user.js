@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-25 23:54:45
+ * @LastEditTime: 2019-06-26 01:45:49
  */
 const userModel = require('../model/user')
 
@@ -21,6 +21,11 @@ const user = {
   //删除用户
   async deleteUser(id){
     return await userModel.deleteUser(id)
+  },
+
+  //获取用户信息
+  async getUser(id){
+    return await userModel.getUser(id)
   }
   
 }
