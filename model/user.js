@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 10:33:39
+ * @LastEditTime: 2019-06-26 11:32:10
  */
 
 /**
@@ -55,10 +55,20 @@ const user = {
     return false
   },
 
-  //获取用户信息
+  //获取用户信息(根据id)
   async getUser(id){
     let sql = 'SELECT * FROM user WHERE id=?'
     let result = await db.query(sql, [id])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
+
+  //获取用户信息(根据account)
+  async getUserByAccount(account){
+    let sql = 'SELECT * FROM user WHERE account=?'
+    let result = await db.query(sql, [account])
     if(Array.isArray(result) && result.length > 0){
       return result[0]
     }
@@ -85,12 +95,14 @@ const user = {
   },
 
   //用户登录
-  async login(account,password){
-    let sql = 'SELECT password FROM user WHERE account=??'
+  async login(account, password){
+    let sql = 'SELECT password FROM user WHERE account=?'
     let result = await db.query(sql, [account])
-    if(result){
-      if(result === password){
+    if(Array.isArray(result) && result.length > 0){
+      if(result[0].password === password){
         return true
+      }else{
+        return false
       }
     }
     return false
