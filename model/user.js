@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 01:53:54
+ * @LastEditTime: 2019-06-26 10:33:39
  */
 
 /**
@@ -28,12 +28,13 @@ const user = {
 
   //新增用户
   async addUser(data){
-    let sql = 'INSERT INTO user(name,account,password,email,create_time,role_id) VALUES(?,?,?,?,?,?)'
+    let sql = 'INSERT INTO user(name,account,password,email,create_time,update_time,role_id) VALUES(?,?,?,?,?,?,?)'
     let values = [
       data.name,
       data.account,
       data.password,
       data.email,
+      util.changeTimeToStr(new Date()),
       util.changeTimeToStr(new Date()),
       4
     ]
@@ -66,7 +67,7 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
-    let sql = 'UPDATE user SET name=??,account=??,password=??,sex=??,email=??,create_time=??,role_id=?? WHERE id=??'
+    let sql = 'UPDATE user SET name=?,account=?,password=?,sex=?,email=?,update_time=?,role_id=? WHERE id=?'
     let values = [
       data.name,
       data.account,
@@ -77,7 +78,7 @@ const user = {
       data.role_id
     ]
     let result = await db.query(sql, [...values,id])
-    if(result){
+    if(result.affectedRows){
       return true
     }
     return false

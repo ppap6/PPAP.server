@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 01:45:22
+ * @LastEditTime: 2019-06-26 09:40:29
  */
 
 const userCode = require('../code/user')
@@ -34,6 +34,12 @@ const user = {
   //获取用户信息
   async getUser(ctx){
     let result = await userService.getUser(ctx.params.id)
+    ctx.body = result
+  },
+
+  //修改用户信息
+  async updateUser(ctx){
+    let result = await userService.updateUser(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
   

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 01:45:49
+ * @LastEditTime: 2019-06-26 10:33:51
  */
 const userModel = require('../model/user')
 
@@ -26,6 +26,21 @@ const user = {
   //获取用户信息
   async getUser(id){
     return await userModel.getUser(id)
+  },
+
+  //修改用户信息
+  async updateUser(id, data){
+    let exist = await userModel.getUser(id)
+    if(exist){
+      let result = await userModel.updateUser(id, data)
+      if(result){
+        return true
+      }else{
+        return false
+      }
+    }else{
+      return false
+    }
   }
   
 }
