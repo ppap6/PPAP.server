@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 00:29:29
+ * @LastEditTime: 2019-06-27 01:08:41
  */
 
 const util = require('../util')
@@ -56,9 +56,9 @@ const post = {
 
   //删除帖子数据
   async deletePost(id){
-    let sql = 'DELETE FROM post WHERE id=??'
+    let sql = 'DELETE FROM post WHERE id=?'
     let result = await db.query(sql, [id])
-    if(result){
+    if(result.affectedRows){
       return true
     }
     return false

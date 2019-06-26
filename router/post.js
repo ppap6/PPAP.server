@@ -11,5 +11,6 @@ const post = require('../controller/post')
 router
     .get('/', post.getPostList)     //获取帖子列表
     .post('/', post.addPost)     //添加帖子
+    .del('/:id', post.deletePost)   //删除帖子
 
 module.exports = router

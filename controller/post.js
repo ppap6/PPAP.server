@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 00:21:07
+ * @LastEditTime: 2019-06-27 01:06:06
  */
 
 const userCode = require('../code/user')
@@ -23,6 +23,13 @@ const post = {
   async addPost(ctx){
     //验证数据
     let result = await postService.addPost(ctx.request.body)
+    ctx.body = result
+  },
+
+  //删除帖子
+  async deletePost(ctx){
+    //验证身份
+    let result = await postService.deletePost(ctx.params.id)
     ctx.body = result
   }
 

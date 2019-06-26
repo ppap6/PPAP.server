@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 00:02:21
+ * @LastEditTime: 2019-06-27 01:08:05
  */
 
  /**
@@ -26,6 +26,11 @@ const post ={
   //添加帖子
   async addPost(data){
     return await postModel.addPost(data)
+  },
+
+  //删除帖子
+  async deletePost(id){
+    return await postModel.deletePost(id)
   }
   
 }
