@@ -21,6 +21,11 @@ const post ={
   //获取帖子列表
   async getPostList(pageNum, pageSize, topicId){
     return await postModel.getPostList(pageNum, pageSize, topicId)
+  },
+
+  //添加帖子
+  async addPost(data){
+    return await postModel.addPost(data)
   }
   
 }

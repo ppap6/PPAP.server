@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 00:12:25
+ * @LastEditTime: 2019-06-27 00:29:29
  */
 
 const util = require('../util')
@@ -38,7 +38,7 @@ const post = {
 
   //新增帖子数据
   async addPost(data){
-    let sql = 'INSERT INTO post(uid,title,content,create_time,update_time,topic_id) VALUES(??,??,??,??,??,??)'
+    let sql = 'INSERT INTO post(uid,title,content,create_time,update_time,topic_id) VALUES(?,?,?,?,?,?)'
     let values = [
       data.uid,
       data.title,
@@ -48,8 +48,8 @@ const post = {
       data.topic_id
     ]
     let result = await db.query(sql, [...values])
-    if(result){
-      return true
+    if(result.insertId){
+      return result.insertId
     }
     return false
   },

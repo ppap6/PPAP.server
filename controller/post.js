@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 00:15:30
+ * @LastEditTime: 2019-06-27 00:21:07
  */
 
 const userCode = require('../code/user')
@@ -21,7 +21,9 @@ const post = {
 
   //添加帖子
   async addPost(ctx){
-
+    //验证数据
+    let result = await postService.addPost(ctx.request.body)
+    ctx.body = result
   }
 
 }
