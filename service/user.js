@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 00:22:10
+ * @LastEditTime: 2019-06-27 01:14:19
  */
 
  /**
@@ -30,7 +30,17 @@ const user = {
 
   //删除用户
   async deleteUser(id){
-    return await userModel.deleteUser(id)
+    let exist = await userModel.getUser(id)
+    if(exist){
+      let result = await userModel.deleteUser(id)
+      if(result){
+        return true
+      }else{
+        return false
+      } 
+    }else{
+      return false
+    }
   },
 
   //获取用户信息
