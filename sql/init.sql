@@ -2,20 +2,21 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-21 17:03:51
+ * @LastEditTime: 2019-06-26 09:58:38
  */
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-    `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '昵称',
+    `name` VARCHAR(100) NOT NULL COMMENT '昵称',
     `account` VARCHAR(20) NOT NULL COMMENT '账号',
-    `password` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '昵称',
-    `avatar` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '头像',
+    `password` VARCHAR(100) NOT NULL COMMENT '密码',
+    `avatar` VARCHAR(200) NOT NULL DEFAULT 'https://jwchan.cn/images/avatar.gif' COMMENT '头像',
     `sex` INT NOT NULL DEFAULT 0 COMMENT '性别',
     `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '邮箱',
     `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '手机号',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `role_id` INT NOT NULL COMMENT '角色ID',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
@@ -26,6 +27,7 @@ CREATE TABLE `role` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '角色ID',
     `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '角色名称',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '角色描述',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色表';
@@ -34,8 +36,9 @@ CREATE TABLE `role` (
 DROP TABLE IF EXISTS `access`;
 CREATE TABLE `access` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '权限ID',
-    `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '权限名称',
+    `name` VARCHAR(100) NOT NULL COMMENT '权限名称',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '权限描述',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限表';
