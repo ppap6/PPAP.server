@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 01:17:20
+ * @LastEditTime: 2019-06-27 01:25:26
  */
 
  /**
@@ -41,6 +41,11 @@ const post ={
     }else{
       return false
     }
+  },
+
+  //获取帖子信息
+  async getPost(id){
+    return await postModel.getPost(id)
   }
   
 }

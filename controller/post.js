@@ -31,6 +31,12 @@ const post = {
     //验证身份
     let result = await postService.deletePost(ctx.params.id)
     ctx.body = result
+  },
+
+  //获取帖子信息
+  async getPost(ctx){
+    let result = await postService.getPost(ctx.params.id)
+    ctx.body = result
   }
 
 }
