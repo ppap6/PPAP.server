@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 01:15:35
+ * @LastEditTime: 2019-06-27 01:17:20
  */
 
  /**
@@ -30,7 +30,17 @@ const post ={
 
   //删除帖子
   async deletePost(id){
-    return await postModel.deletePost(id)
+    let exist = await postModel.getPost(id)
+    if(exist){
+      let result = await postModel.deletePost(id)
+      if(result){
+        return true
+      }else{
+        return false
+      } 
+    }else{
+      return false
+    }
   }
   
 }
