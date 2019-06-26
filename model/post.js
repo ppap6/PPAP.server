@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 00:41:30
+ * @LastEditTime: 2019-06-27 00:12:25
  */
 
 const util = require('../util')
@@ -15,11 +15,13 @@ const post = {
   async getPostList(pageNum=1,pageSize=20,topicId=0){
     let start = (pageNum-1)*pageSize
     let sql
+    console.log(topicId)
     if(topicId === 0){
       sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.reads,p.likes,p.collects,p.topic_id,t.name AS topic_name 
         FROM post AS p,user AS u,topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id
         LIMIT ${start},${pageSize}`
+      console.log("666")
     }else{
       sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.reads,p.likes,p.collects,p.topic_id,t.name AS topic_name 
         FROM post AS p,user AS u,topic AS t 
@@ -27,6 +29,7 @@ const post = {
         LIMIT ${start},${pageSize}`
     }
     let result = await db.query(sql)
+    console.log(result)
     if(Array.isArray(result) && result.length > 0){
       return result
     }
