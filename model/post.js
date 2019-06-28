@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 01:25:29
+ * @LastEditTime: 2019-06-28 09:45:57
  */
 
 const util = require('../util')
@@ -75,13 +75,13 @@ const post = {
 
   //修改帖子信息
   async updatePost(id, data){
-    let sql = 'UPDATE post SET title=??,content=??,update_time=?? WHERE id=??'
+    let sql = 'UPDATE post SET title=?,content=?,update_time=? WHERE id=?'
     let values = [
       data.title,
       data.content,
       util.changeTimeToStr(new Date())
     ]
-    let result = await db.query(sql, [...values,id])
+    let result = await db.query(sql, [...values, id])
     if(result){
       return true
     }

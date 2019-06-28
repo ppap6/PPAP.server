@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 01:06:06
+ * @LastEditTime: 2019-06-28 10:22:43
  */
 
 const userCode = require('../code/user')
@@ -36,6 +36,12 @@ const post = {
   //获取帖子信息
   async getPost(ctx){
     let result = await postService.getPost(ctx.params.id)
+    ctx.body = result
+  },
+
+  //修改帖子信息
+  async updatePost(ctx){
+    let result = await postService.updatePost(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
 

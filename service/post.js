@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 01:25:26
+ * @LastEditTime: 2019-06-28 10:29:48
  */
 
  /**
@@ -46,6 +46,30 @@ const post ={
   //获取帖子信息
   async getPost(id){
     return await postModel.getPost(id)
+  },
+
+  //修改帖子信息
+  async updatePost(id, data){
+    let exist = await postModel.getPost(id)
+    if(exist){
+      let result = await postModel.updatePost(id, data)
+      if(result){
+        return {
+          status: 200,
+          message: '更新成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    } 
   }
   
 }
