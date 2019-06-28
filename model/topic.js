@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-28 18:07:02
+ * @LastEditTime: 2019-06-29 01:50:58
  */
 
 const util = require('../util')
@@ -27,7 +27,6 @@ const topic = {
     let sql = 'SELECT * FROM topic WHERE sid=?'
     let result = await db.query(sql, [sid])
     if(Array.isArray(result) && result.length > 0){
-      console.log("model")
       return result
     }
     return false
