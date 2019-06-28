@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 09:58:38
+ * @LastEditTime: 2019-06-28 16:32:08
  */
 
 DROP TABLE IF EXISTS `user`;
@@ -85,6 +85,7 @@ CREATE TABLE `post` (
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '话题ID',
+    `sid` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级话题ID',
     `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '话题名称',
     `intro` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '话题简介',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',

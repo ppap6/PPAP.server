@@ -237,6 +237,7 @@ create_time  - 创建时间
 
 ```
 id  - 话题ID(int)
+sid  - 上级话题ID(int)(0代表没有上级)
 name  - 话题名称(varchar)
 intro  - 话题简介(varchar)
 create_time  - 创建时间(datetime)
