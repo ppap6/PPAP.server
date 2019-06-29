@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-28 10:29:48
+ * @LastEditTime: 2019-06-29 12:08:04
  */
 
  /**
@@ -20,12 +20,32 @@ const post ={
 
   //获取帖子列表
   async getPostList(pageNum, pageSize, topicId){
-    return await postModel.getPostList(pageNum, pageSize, topicId)
+    let postList = await postModel.getPostList(pageNum, pageSize, topicId)
+    if(postList){
+      return {
+        status: 200,
+        message: postList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
   },
 
   //添加帖子
   async addPost(data){
-    return await postModel.addPost(data)
+    let result = await postModel.addPost(data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }
+    return {
+      status: 10000,
+      message: '操作失败'
+    }
   },
 
   //删除帖子
@@ -34,18 +54,37 @@ const post ={
     if(exist){
       let result = await postModel.deletePost(id)
       if(result){
-        return true
+        return {
+          status: 200,
+          message: '操作成功'
+        }
       }else{
-        return false
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
       } 
     }else{
-      return false
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
     }
   },
 
   //获取帖子信息
   async getPost(id){
-    return await postModel.getPost(id)
+    let post = await postModel.getPost(id)
+    if(post){
+      return {
+        status: 200,
+        message: post
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
   },
 
   //修改帖子信息

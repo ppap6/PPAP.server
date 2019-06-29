@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:55:00
+ * @LastEditTime: 2019-06-29 12:03:58
  */
 
  /**
@@ -50,7 +50,7 @@ const topic ={
     if(result){
       return {
         status: 200,
-        message: '添加成功'
+        message: '操作成功'
       }
     }
     return {

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-27 01:14:19
+ * @LastEditTime: 2019-06-29 12:10:59
  */
 
  /**
@@ -20,12 +20,32 @@ const user = {
 
   //获取所有用户
   async getUserList(pageNum, pageSize){
-    return await userModel.getUserList(pageNum, pageSize)
+    let userList = await userModel.getUserList(pageNum, pageSize)
+    if(userList){
+      return {
+        status: 200,
+        message: userList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
   },
 
   //添加用户
   async addUser(data){
-    return await userModel.addUser(data)
+    let result = await userModel.addUser(data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }
+    return {
+      status: 10000,
+      message: '操作失败'
+    }
   },
 
   //删除用户
@@ -34,18 +54,37 @@ const user = {
     if(exist){
       let result = await userModel.deleteUser(id)
       if(result){
-        return true
+        return {
+          status: 200,
+          message: '操作成功'
+        }
       }else{
-        return false
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
       } 
     }else{
-      return false
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
     }
   },
 
   //获取用户信息
   async getUser(id){
-    return await userModel.getUser(id)
+    let user = await userModel.getUser(id)
+    if(user){
+      return {
+        status: 200,
+        message: user
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
   },
 
   //修改用户信息
@@ -54,12 +93,21 @@ const user = {
     if(exist){
       let result = await userModel.updateUser(id, data)
       if(result){
-        return true
+        return {
+          status: 200,
+          message: '操作成功'
+        }
       }else{
-        return false
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
       }
     }else{
-      return false
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
     }
   },
 
