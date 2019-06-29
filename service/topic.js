@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-28 19:00:38
+ * @LastEditTime: 2019-06-29 11:35:18
  */
 
  /**
@@ -41,6 +41,21 @@ const topic ={
         status: 10003,
         message: '未找到操作对象'
       }
+    }
+  },
+
+  //添加话题
+  async addTopic(data){
+    let result = await topicModel.addTopic(data)
+    if(result){
+      return {
+        status: 200,
+        message: '添加成功'
+      }
+    }
+    return {
+      status: 10000,
+      message: '操作失败'
     }
   }
    

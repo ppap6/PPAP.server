@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 01:50:58
+ * @LastEditTime: 2019-06-29 11:31:00
  */
 
 const util = require('../util')
@@ -28,6 +28,23 @@ const topic = {
     let result = await db.query(sql, [sid])
     if(Array.isArray(result) && result.length > 0){
       return result
+    }
+    return false
+  },
+
+  //添加话题
+  async addTopic(data){
+    let sql = 'INSERT INTO topic(sid,name,intro,create_time,update_time) VALUES(?,?,?,?,?)'
+    let values = [
+      data.sid,
+      data.name,
+      data.intro,
+      util.changeTimeToStr(new Date()),
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values])
+    if(result.insertId){
+      return result.insertId
     }
     return false
   }
