@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:26:26
+ * @LastEditTime: 2019-06-29 11:41:21
  */
 
 const topicService = require('../service/topic')
@@ -22,7 +22,13 @@ const topic = {
     //验证数据
     let result = await topicService.addTopic(ctx.request.body)
     ctx.body = result
-  }
+  },
+
+  //获取话题信息
+  async getTopic(ctx){
+    let result = await topicService.getTopic(ctx.params.id)
+    ctx.body = result
+  },
 
 }
 

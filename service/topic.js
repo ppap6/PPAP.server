@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:35:18
+ * @LastEditTime: 2019-06-29 11:49:05
  */
 
  /**
@@ -57,7 +57,22 @@ const topic ={
       status: 10000,
       message: '操作失败'
     }
-  }
+  },
+
+  //获取话题信息
+  async getTopic(id){
+    let topic = await topicModel.getTopic(id)
+    if(topic){
+      return {
+        status: 200,
+        message: topic
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
    
 }
  

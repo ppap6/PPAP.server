@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:31:00
+ * @LastEditTime: 2019-06-29 11:43:57
  */
 
 const util = require('../util')
@@ -47,7 +47,17 @@ const topic = {
       return result.insertId
     }
     return false
-  }
+  },
+
+  //获取话题信息(根据id)
+  async getTopic(id){
+    let sql = 'SELECT * FROM topic WHERE id=?'
+    let result = await db.query(sql, [id])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
 
 }
 
