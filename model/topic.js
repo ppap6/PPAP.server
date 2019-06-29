@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:43:57
+ * @LastEditTime: 2019-06-29 11:56:44
  */
 
 const util = require('../util')
@@ -55,6 +55,16 @@ const topic = {
     let result = await db.query(sql, [id])
     if(Array.isArray(result) && result.length > 0){
       return result[0]
+    }
+    return false
+  },
+
+  //删除话题数据
+  async deleteTopic(id){
+    let sql = 'DELETE FROM topic WHERE id=?'
+    let result = await db.query(sql, [id])
+    if(result.affectedRows){
+      return true
     }
     return false
   },

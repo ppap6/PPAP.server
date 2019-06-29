@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:41:21
+ * @LastEditTime: 2019-06-29 11:58:05
  */
 
 const topicService = require('../service/topic')
@@ -27,6 +27,13 @@ const topic = {
   //获取话题信息
   async getTopic(ctx){
     let result = await topicService.getTopic(ctx.params.id)
+    ctx.body = result
+  },
+
+  //删除话题
+  async deleteTopic(ctx){
+    //验证身份
+    let result = await topicService.deleteTopic(ctx.params.id)
     ctx.body = result
   },
 
