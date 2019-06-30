@@ -6,11 +6,13 @@ node 服务端程序
 
 > 技术栈
 
-`node` + `koa2` + `koa-router` + `ES6`
+`node` + `koa2` + `koa-router` + `ES6` + `mysql` + `mongodb`
 
 ### Structure
 ```bash
 └── PPAP.server
+    ├── code # 返回提示码
+    │   └── index.js  # 常量文件
     ├── controller # 操作层 验证视图层用户输入，调用业务层方法，json接口返回数据
     │   └── index.js
     ├── model # 数据模型层 执行数据操作
