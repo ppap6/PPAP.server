@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 11:56:44
+ * @LastEditTime: 2019-06-30 23:47:52
  */
 
 const util = require('../util')
@@ -64,6 +64,21 @@ const topic = {
     let sql = 'DELETE FROM topic WHERE id=?'
     let result = await db.query(sql, [id])
     if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
+  //修改话题信息
+  async updateTopic(id, data){
+    let sql = 'UPDATE topic SET name=?,intro=?,update_time=? WHERE id=?'
+    let values = [
+      data.name,
+      data.intro,
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values, id])
+    if(result){
       return true
     }
     return false
