@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 12:08:04
+ * @LastEditTime: 2019-06-30 23:46:36
  */
 
  /**
@@ -95,7 +95,7 @@ const post ={
       if(result){
         return {
           status: 200,
-          message: '更新成功'
+          message: '操作成功'
         }
       }else{
         return {
