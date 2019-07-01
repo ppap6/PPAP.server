@@ -35,6 +35,7 @@ sex  - 性别(0为保密，1为男，2为女)(int)
 email  - 邮箱(varchar)
 mobile  - 手机号(varchar)
 create_time  - 创建时间(datetime)
+update_time  - 更新时间(datetime)
 role_id  - 角色ID(int)
 ```
 
@@ -46,6 +47,7 @@ role_id  - 角色ID(int)
 id  - 角色ID(int)
 name  - 角色名称(varchar)
 create_time  - 创建时间(datetime)
+update_time  - 更新时间(datetime)
 description  - 角色描述(varchar)
 ```
 
@@ -57,6 +59,7 @@ description  - 角色描述(varchar)
 id  - 权限ID(int)
 name  - 权限名称(varchar)
 create_time  - 创建时间(datetime)
+update_time  - 更新时间(datetime)
 description  - 权限描述(varchar)
 ```
 
