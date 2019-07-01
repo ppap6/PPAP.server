@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 00:06:23
+ * @LastEditTime: 2019-07-02 00:16:33
  */
 
 const util = require('../util')
@@ -34,6 +34,16 @@ const role = {
     let result = await db.query(sql, [...values])
     if(result.insertId){
       return result.insertId
+    }
+    return false
+  },
+
+  //获取角色信息(根据id)
+  async getRole(id){
+    let sql = 'SELECT * FROM role WHERE id=?'
+    let result = await db.query(sql, [id])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
     }
     return false
   },

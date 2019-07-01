@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:30:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 00:00:26
+ * @LastEditTime: 2019-07-02 00:14:17
  */
 
 const roleService = require('../service/role')
@@ -21,6 +21,12 @@ const role = {
   async addRole(ctx){
     //验证数据
     let result = await roleService.addRole(ctx.request.body)
+    ctx.body = result
+  },
+
+  //获取角色信息
+  async getRole(ctx){
+    let result = await roleService.getRole(ctx.params.id)
     ctx.body = result
   },
 
