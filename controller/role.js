@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:30:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-01 23:32:50
+ * @LastEditTime: 2019-07-02 00:00:26
  */
 
 const roleService = require('../service/role')
@@ -15,6 +15,13 @@ const role = {
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
     let roles = await roleService.getRoleList(pageNum, pageSize)
     ctx.body = roles
+  },
+
+  //添加角色
+  async addRole(ctx){
+    //验证数据
+    let result = await roleService.addRole(ctx.request.body)
+    ctx.body = result
   },
 
 }

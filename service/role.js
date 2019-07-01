@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:33:02
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-01 23:35:31
+ * @LastEditTime: 2019-07-02 00:01:01
  */
 
  /**
@@ -30,6 +30,21 @@ const role ={
     return {
       status: 10003,
       message: '未找到操作对象'
+    }
+  },
+
+  //添加角色
+  async addRole(data){
+    let result = await roleModel.addRole(data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }
+    return {
+      status: 10000,
+      message: '操作失败'
     }
   },
   
