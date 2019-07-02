@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-28 16:32:08
+ * @LastEditTime: 2019-07-03 00:17:00
  */
 
 DROP TABLE IF EXISTS `user`;
@@ -36,7 +36,9 @@ CREATE TABLE `role` (
 DROP TABLE IF EXISTS `access`;
 CREATE TABLE `access` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '权限ID',
+    `sid` INT UNSIGNED NOT NULL COMMENT '上级权限ID',
     `name` VARCHAR(100) NOT NULL COMMENT '权限名称',
+    `code` VARCHAR(100) NOT NULL COMMENT '权限代码',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '权限描述',
