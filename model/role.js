@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 00:16:33
+ * @LastEditTime: 2019-07-02 23:27:34
  */
 
 const util = require('../util')
@@ -44,6 +44,16 @@ const role = {
     let result = await db.query(sql, [id])
     if(Array.isArray(result) && result.length > 0){
       return result[0]
+    }
+    return false
+  },
+
+  //删除角色数据
+  async deleteRole(id){
+    let sql = 'DELETE FROM role WHERE id=?'
+    let result = await db.query(sql, [id])
+    if(result.affectedRows){
+      return true
     }
     return false
   },

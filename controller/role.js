@@ -30,6 +30,13 @@ const role = {
     ctx.body = result
   },
 
+  //删除角色
+  async deleteRole(ctx){
+    //验证身份
+    let result = await roleService.deleteRole(ctx.params.id)
+    ctx.body = result
+  },
+
 }
 
 module.exports = role

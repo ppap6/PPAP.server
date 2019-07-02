@@ -62,6 +62,30 @@ const role ={
       message: '未找到操作对象'
     }
   },
+
+  //删除角色
+  async deleteRole(id){
+    let exist = await roleModel.getRole(id)
+    if(exist){
+      let result = await roleModel.deleteRole(id)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      } 
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+  },
   
 }
 
