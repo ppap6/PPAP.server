@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-30 23:43:54
+ * @LastEditTime: 2019-07-02 23:32:13
  */
 
 const topicService = require('../service/topic')
@@ -37,8 +37,8 @@ const topic = {
     ctx.body = result
   },
 
-   //修改话题信息
-   async updateTopic(ctx){
+  //修改话题信息
+  async updateTopic(ctx){
     //验证数据
     let result = await topicService.updateTopic(ctx.params.id, ctx.request.body)
     ctx.body = result

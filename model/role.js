@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:27:34
+ * @LastEditTime: 2019-07-02 23:35:21
  */
 
 const util = require('../util')
@@ -53,6 +53,21 @@ const role = {
     let sql = 'DELETE FROM role WHERE id=?'
     let result = await db.query(sql, [id])
     if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
+  //修改角色信息
+  async updateRole(id, data){
+    let sql = 'UPDATE role SET name=?,description=?,update_time=? WHERE id=?'
+    let values = [
+      data.name,
+      data.description,
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values, id])
+    if(result){
       return true
     }
     return false

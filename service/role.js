@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:33:02
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 00:15:16
+ * @LastEditTime: 2019-07-02 23:33:35
  */
 
  /**
@@ -86,6 +86,30 @@ const role ={
       }
     }
   },
+
+  //修改角色信息
+  async updateRole(id, data){
+    let exist = await roleModel.getRole(id)
+    if(exist){
+      let result = await roleModel.updateRole(id, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    } 
+  }
   
 }
 

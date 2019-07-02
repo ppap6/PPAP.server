@@ -13,5 +13,6 @@ router
     .post('/', role.addRole)   //添加角色
     .get('/:id', role.getRole)   //获取角色信息
     .del('/:id', role.deleteRole)   //删除角色
+    .put('/:id', role.updateRole)   //修改角色信息
 
 module.exports = router
