@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:41:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:44:35
+ * @LastEditTime: 2019-07-02 23:57:10
  */
 
  /**
@@ -32,6 +32,21 @@
        message: '未找到操作对象'
      }
    },
+
+   //添加权限
+  async addAccess(data){
+    let result = await accessModel.addAccess(data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }
+    return {
+      status: 10000,
+      message: '操作失败'
+    }
+  },
    
  }
  
