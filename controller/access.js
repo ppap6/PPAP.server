@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:39:42
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 09:35:50
+ * @LastEditTime: 2019-07-03 09:41:10
  */
 
 const accessService = require('../service/access')
@@ -27,6 +27,13 @@ const access = {
   //获取权限信息
   async getAccess(ctx){
     let result = await accessService.getAccess(ctx.params.id)
+    ctx.body = result
+  },
+
+  //删除权限
+  async deleteAccess(ctx){
+    //验证身份
+    let result = await accessService.deleteAccess(ctx.params.id)
     ctx.body = result
   },
 
