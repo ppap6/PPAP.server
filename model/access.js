@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:43:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 09:42:59
+ * @LastEditTime: 2019-07-03 09:57:28
  */
 
 const util = require('../util')
@@ -65,6 +65,22 @@ const access = {
     let sql = 'DELETE FROM access WHERE id=?'
     let result = await db.query(sql, [id])
     if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
+  //修改权限信息
+  async updateAccess(id, data){
+    let sql = 'UPDATE access SET name=?,code=?,description=?,update_time=? WHERE id=?'
+    let values = [
+      data.name,
+      data.code,
+      data.description,
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values, id])
+    if(result){
       return true
     }
     return false

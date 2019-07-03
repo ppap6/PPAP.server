@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:41:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 09:42:31
+ * @LastEditTime: 2019-07-03 09:51:25
  */
 
  /**
@@ -95,6 +95,30 @@ const access ={
       }
     }
   },
+
+  //修改权限信息
+  async updateAccess(id, data){
+    let exist = await accessModel.getAccess(id)
+    if(exist){
+      let result = await accessModel.updateAccess(id, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    } 
+  }
    
 }
 
