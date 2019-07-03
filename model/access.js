@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:43:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 00:09:36
+ * @LastEditTime: 2019-07-03 09:21:02
  */
 
 const util = require('../util')
@@ -11,11 +11,21 @@ const db_mongo = require('../util/db_mongo')
 
 const access = {
 
-  //获取权限列表
+  //获取一级权限列表
   async getAccessList(pageNum=1, pageSize=20){
     let start = (pageNum-1)*pageSize
-    let sql = 'SELECT * FROM access LIMIT ?,?'
+    let sql = 'SELECT * FROM access WHERE sid=0 LIMIT ?,?'
     let result = await db.query(sql, [start, pageSize])
+    if(Array.isArray(result) && result.length > 0){
+      return result
+    }
+    return false
+  },
+
+  //获取子级权限数据
+  async getChildAccessList(sid){
+    let sql = 'SELECT * FROM access WHERE sid=?'
+    let result = await db.query(sql, [sid])
     if(Array.isArray(result) && result.length > 0){
       return result
     }
