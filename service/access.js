@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:41:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 09:23:46
+ * @LastEditTime: 2019-07-03 09:37:40
  */
 
  /**
@@ -54,6 +54,21 @@ const access ={
     return {
       status: 10000,
       message: '操作失败'
+    }
+  },
+
+  //获取权限信息
+  async getAccess(id){
+    let access = await accessModel.getAccess(id)
+    if(access){
+      return {
+        status: 200,
+        message: access
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
     }
   },
    

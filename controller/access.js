@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:39:42
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:56:27
+ * @LastEditTime: 2019-07-03 09:35:50
  */
 
 const accessService = require('../service/access')
@@ -21,6 +21,12 @@ const access = {
   async addAccess(ctx){
     //验证数据
     let result = await accessService.addAccess(ctx.request.body)
+    ctx.body = result
+  },
+
+  //获取权限信息
+  async getAccess(ctx){
+    let result = await accessService.getAccess(ctx.params.id)
     ctx.body = result
   },
 

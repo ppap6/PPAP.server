@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:43:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 09:21:02
+ * @LastEditTime: 2019-07-03 09:37:07
  */
 
 const util = require('../util')
@@ -46,6 +46,16 @@ const access = {
     let result = await db.query(sql, [...values])
     if(result.insertId){
       return result.insertId
+    }
+    return false
+  },
+
+  //获取权限信息(根据id)
+  async getAccess(id){
+    let sql = 'SELECT * FROM access WHERE id=?'
+    let result = await db.query(sql, [id])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
     }
     return false
   },
