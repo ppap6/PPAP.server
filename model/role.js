@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-04 23:56:16
+ * @LastEditTime: 2019-07-05 00:06:50
  */
 
 const util = require('../util')
@@ -77,7 +77,7 @@ const role = {
   async getRoleAccess(id){
     let sql = `SELECT a.id,a.sid,a.name,a.code
       FROM access AS a,role_access_relation AS rar
-      WHERE rar.role_id=? AND a.sid=0`
+      WHERE rar.access_id=a.id AND rar.role_id=? AND a.sid=0`
     let result = await db.query(sql, [id])
     if(Array.isArray(result) && result.length > 0){
       for(let i=0; i<result.length; i++){

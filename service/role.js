@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:33:02
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-04 23:21:12
+ * @LastEditTime: 2019-07-05 00:07:01
  */
 
  /**
@@ -114,7 +114,7 @@ const role ={
   //获取角色权限
   async getRoleAccess(id){
     let roleAccess = await roleModel.getRoleAccess(id)
-    if(role){
+    if(roleAccess){
       return {
         status: 200,
         message: roleAccess
