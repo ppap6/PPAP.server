@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:33:02
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:33:35
+ * @LastEditTime: 2019-07-04 23:21:12
  */
 
  /**
@@ -109,7 +109,22 @@ const role ={
         message: '未找到操作对象'
       }
     } 
-  }
+  },
+
+  //获取角色权限
+  async getRoleAccess(id){
+    let roleAccess = await roleModel.getRoleAccess(id)
+    if(role){
+      return {
+        status: 200,
+        message: roleAccess
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
   
 }
 

@@ -42,7 +42,13 @@ const role = {
     //验证数据
     let result = await roleService.updateRole(ctx.params.id, ctx.request.body)
     ctx.body = result
-  }
+  },
+
+  //获取角色权限
+  async getRoleAccess(ctx){
+    let result = await roleService.getRoleAccess(ctx.params.id)
+    ctx.body = result
+  },
 
 }
 

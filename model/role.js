@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:35:21
+ * @LastEditTime: 2019-07-04 23:56:16
  */
 
 const util = require('../util')
@@ -69,6 +69,29 @@ const role = {
     let result = await db.query(sql, [...values, id])
     if(result){
       return true
+    }
+    return false
+  },
+
+  //获取角色权限
+  async getRoleAccess(id){
+    let sql = `SELECT a.id,a.sid,a.name,a.code
+      FROM access AS a,role_access_relation AS rar
+      WHERE rar.role_id=? AND a.sid=0`
+    let result = await db.query(sql, [id])
+    if(Array.isArray(result) && result.length > 0){
+      for(let i=0; i<result.length; i++){
+        let sql = `SELECT child.id,child.sid,child.name,child.code
+          FROM access AS child,access AS parent,role_access_relation AS rar
+          WHERE child.sid=parent.id AND rar.access_id=child.id AND parent.id=?`
+        let res = await db.query(sql, result[i].id)
+        if(Array.isArray(res) && res.length > 0){
+          result[i].child = res
+        }else{
+          result[i] = []
+        }
+      }
+      return result
     }
     return false
   },
