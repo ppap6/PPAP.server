@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:30:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:31:51
+ * @LastEditTime: 2019-07-05 23:03:27
  */
 
 const roleService = require('../service/role')
@@ -47,6 +47,13 @@ const role = {
   //获取角色权限
   async getRoleAccess(ctx){
     let result = await roleService.getRoleAccess(ctx.params.id)
+    ctx.body = result
+  },
+
+  //修改角色权限
+  async updateRoleAccess(ctx){
+    //验证数据
+    let result = await roleService.updateRoleAccess(ctx.params.id, ctx.request.body)
     ctx.body = result
   },
 

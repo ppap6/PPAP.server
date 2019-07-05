@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-05 00:06:50
+ * @LastEditTime: 2019-07-05 23:06:45
  */
 
 const util = require('../util')
@@ -92,6 +92,30 @@ const role = {
         }
       }
       return result
+    }
+    return false
+  },
+
+  //删除角色权限关联记录
+  async deleteRoleAccessRelation(id){
+    let sql = 'DELETE FROM role_access_relation WHERE role_id=?'
+    let result = await db.query(sql, [id])
+    if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
+  //添加角色权限关联记录
+  async addRoleAccessRelation(id, data){
+    let accessArr = data.access.split(',')
+    let result
+    for(let i=0; i<accessArr.length; i++){
+      let sql = 'INSERT INTO role_access_relation(role_id,access_id) VALUES(?,?)'
+      result = await db.query(sql, [id, accessArr[i]])
+    } 
+    if(result.affectedRows){
+      return true
     }
     return false
   },

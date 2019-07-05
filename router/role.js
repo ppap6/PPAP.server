@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:27:13
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-04 23:17:47
+ * @LastEditTime: 2019-07-05 22:47:16
  */
 
 const router = require('koa-router')()
@@ -16,5 +16,6 @@ router
     .put('/:id', role.updateRole)   //修改角色信息
 
     .get('/access/:id', role.getRoleAccess)   //获取角色权限
+    .put('/access/:id', role.updateRoleAccess)   //修改角色权限
 
 module.exports = router

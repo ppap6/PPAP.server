@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:33:02
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-05 00:07:01
+ * @LastEditTime: 2019-07-05 23:18:41
  */
 
  /**
@@ -123,6 +123,23 @@ const role ={
     return {
       status: 10003,
       message: '未找到操作对象'
+    }
+  },
+
+  //修改角色权限
+  async updateRoleAccess(id, data){
+    await roleModel.deleteRoleAccessRelation(id)
+    let result = await roleModel.addRoleAccessRelation(id, data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }else{
+      return {
+        status: 10000,
+        message: '操作失败'
+      }
     }
   },
   
