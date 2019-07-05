@@ -2,12 +2,11 @@
  * @Author: jwchan1996
  * @Date: 2019-07-02 23:43:23
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 09:57:28
+ * @LastEditTime: 2019-07-05 23:58:07
  */
 
 const util = require('../util')
 const db = require('../util/db')
-const db_mongo = require('../util/db_mongo')
 
 const access = {
 

@@ -2,12 +2,11 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-05 23:06:45
+ * @LastEditTime: 2019-07-05 23:58:31
  */
 
 const util = require('../util')
 const db = require('../util/db')
-const db_mongo = require('../util/db_mongo')
 
 const role = {
 

@@ -2,12 +2,11 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-30 23:47:52
+ * @LastEditTime: 2019-07-05 23:58:48
  */
 
 const util = require('../util')
 const db = require('../util/db')
-const db_mongo = require('../util/db_mongo')
 
 const topic = {
 
