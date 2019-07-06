@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:33:02
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-05 23:18:41
+ * @LastEditTime: 2019-07-06 11:15:05
  */
 
  /**
@@ -128,17 +128,28 @@ const role ={
 
   //修改角色权限
   async updateRoleAccess(id, data){
-    await roleModel.deleteRoleAccessRelation(id)
-    let result = await roleModel.addRoleAccessRelation(id, data)
-    if(result){
-      return {
-        status: 200,
-        message: '操作成功'
+    //先判断是否存在角色
+    let exist = await roleModel.getRole(id)
+    if(exist){
+      //删除角色权限关联记录
+      await roleModel.deleteRoleAccessRelation(id)
+      //添加角色权限关联记录
+      let result = await roleModel.addRoleAccessRelation(id, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
       }
     }else{
       return {
-        status: 10000,
-        message: '操作失败'
+        status: 10003,
+        message: '未找到操作对象'
       }
     }
   },
