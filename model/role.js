@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-01 23:35:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-05 23:58:31
+ * @LastEditTime: 2019-07-06 11:21:24
  */
 
 const util = require('../util')
@@ -74,16 +74,18 @@ const role = {
 
   //获取角色权限
   async getRoleAccess(id){
+    //获取一级权限
     let sql = `SELECT a.id,a.sid,a.name,a.code
       FROM access AS a,role_access_relation AS rar
       WHERE rar.access_id=a.id AND rar.role_id=? AND a.sid=0`
     let result = await db.query(sql, [id])
     if(Array.isArray(result) && result.length > 0){
+      //获取子权限
       for(let i=0; i<result.length; i++){
         let sql = `SELECT child.id,child.sid,child.name,child.code
           FROM access AS child,access AS parent,role_access_relation AS rar
-          WHERE child.sid=parent.id AND rar.access_id=child.id AND parent.id=?`
-        let res = await db.query(sql, result[i].id)
+          WHERE child.sid=parent.id AND rar.role_id=? AND rar.access_id=child.id AND parent.id=?`
+        let res = await db.query(sql, [id, result[i].id])
         if(Array.isArray(res) && res.length > 0){
           result[i].child = res
         }else{
