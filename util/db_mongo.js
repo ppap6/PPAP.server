@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-07 23:49:17
+ * @LastEditTime: 2019-07-09 23:41:54
  */
 
 const MongoClient = require('mongodb').MongoClient
@@ -26,9 +26,9 @@ MongoClient.connect( url, { useNewUrlParser: true }, (err, client) => {
  * @param {Object} condition 查询条件
  * @return {Array} 返回
  */
-const find = ( table, condition={} ) => {
+const find = ( table, condition={}, start, pageSize ) => {
   return new Promise((resolve, reject) => {
-    DB.collection(table).find(condition).toArray((err, result) => {
+    DB.collection(table).find(condition).skip(start).limit(pageSize).toArray((err, result) => {
       if(err){
         reject(err)
       }else{

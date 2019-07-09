@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:35:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-07 23:51:19
+ * @LastEditTime: 2019-07-09 23:40:22
  */
 
 const util = require('../util')
@@ -13,9 +13,7 @@ const comment = {
   //获取帖子评论数据（页数，数目，帖子id）
   async getCommentList(pageNum=1, pageSize=20, postId=0){
     let start = (pageNum-1)*pageSize
-    let result = await db_mongo.find('comment', {
-        pid: postId
-    })
+    let result = await db_mongo.find('comment', {pid: postId}, start, pageSize)
     if(Array.isArray(result) && result.length > 0){
       return result
     }
