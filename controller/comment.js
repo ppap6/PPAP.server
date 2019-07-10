@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:29:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-10 23:57:51
+ * @LastEditTime: 2019-07-11 00:50:56
  */
 
 const commentService = require('../service/comment')
@@ -22,6 +22,12 @@ const comment = {
   async addComment(ctx){
     //验证数据
     let result = await commentService.addComment(ctx.request.body)
+    ctx.body = result
+  },
+
+  //获取帖子评论信息
+  async getComment(ctx){
+    let result = await commentService.getComment(ctx.params.id)
     ctx.body = result
   },
 

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:33:17
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-10 23:59:09
+ * @LastEditTime: 2019-07-11 00:55:03
  */
 
  /**
@@ -46,6 +46,21 @@
     return {
       status: 10000,
       message: '操作失败'
+    }
+  },
+
+  //获取帖子评论信息
+  async getComment(id){
+    let comment = await commentModel.getComment(id)
+    if(comment){
+      return {
+        status: 200,
+        message: comment
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
     }
   },
 
