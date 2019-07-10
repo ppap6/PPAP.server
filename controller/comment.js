@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:29:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-07 23:53:04
+ * @LastEditTime: 2019-07-10 23:28:18
  */
 
 const commentService = require('../service/comment')
@@ -16,6 +16,13 @@ const comment = {
     let postId = ctx.params.id === undefined ? 0 : parseInt(ctx.params.id)
     let comments = await commentService.getCommentList(pageNum, pageSize, postId)
     ctx.body = comments
+  },
+
+  //添加帖子评论
+  async addComment(ctx){
+    //验证数据
+    let result = await commentService.addComment(ctx.request.body)
+    ctx.body = result
   },
 
 }
