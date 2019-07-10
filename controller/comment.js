@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:29:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-10 23:28:18
+ * @LastEditTime: 2019-07-10 23:57:51
  */
 
 const commentService = require('../service/comment')
@@ -24,6 +24,12 @@ const comment = {
     let result = await commentService.addComment(ctx.request.body)
     ctx.body = result
   },
+
+  //修改帖子评论信息
+  async updateComment(ctx){
+    let result = await commentService.updateComment(ctx.params.id, ctx.request.body)
+    ctx.body = result
+  }
 
 }
 
