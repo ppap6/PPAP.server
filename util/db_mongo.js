@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-09 23:41:54
+ * @LastEditTime: 2019-07-10 23:53:46
  */
 
 const MongoClient = require('mongodb').MongoClient
@@ -45,9 +45,9 @@ const find = ( table, condition={}, start, pageSize ) => {
  * @param {Object} value 数据对象
  * @return {boolean} 返回
  */
-const insertOne = (table, value) => {
+const insertOne = (table, dataObj) => {
   return new Promise((resolve, reject) => {
-    DB.collection(table).insertOne(value, (err, result) => {
+    DB.collection(table).insertOne(dataObj, (err, result) => {
       if(err){
         reject(err)
       }else{
@@ -64,9 +64,9 @@ const insertOne = (table, value) => {
  * @param {Array} value 数据对象数组
  * @return {boolean} 返回
  */
-const insertMany = (table, value) => {
+const insertMany = (table, objArr) => {
   return new Promise((resolve, reject) => {
-    DB.collection(table).insertMany(value, (err, result) => {
+    DB.collection(table).insertMany(objArr, (err, result) => {
       if(err){
         reject(err)
       }else{
@@ -84,9 +84,9 @@ const insertMany = (table, value) => {
  * @param {Object} value 数据对象，格式 {$set: {"type": "en"}}
  * @return {boolean} 返回
  */
-const updateOne = (table, condition, value) => {
+const updateOne = (table, condition, dataObj) => {
   return new Promise((resolve, reject) => {
-    DB.collection(table).updateOne(condition, value, (err, result) => {
+    DB.collection(table).updateOne(condition, dataObj, (err, result) => {
       if(err){
         reject(err)
       }else{
@@ -104,9 +104,9 @@ const updateOne = (table, condition, value) => {
  * @param {Object} value 数据对象，格式 {$set: {"type": "en"}}
  * @return {boolean} 返回
  */
-const updateMany = (table, condition, value) => {
+const updateMany = (table, condition, dataObj) => {
   return new Promise((resolve, reject) => {
-    DB.collection(table).updateMany(condition, value, (err, result) => {
+    DB.collection(table).updateMany(condition, dataObj, (err, result) => {
       if(err){
         reject(err)
       }else{
