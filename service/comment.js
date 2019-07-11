@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:33:17
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-11 00:55:03
+ * @LastEditTime: 2019-07-11 23:53:25
  */
 
  /**
@@ -46,6 +46,30 @@
     return {
       status: 10000,
       message: '操作失败'
+    }
+  },
+
+  //删除帖子评论
+  async deleteComment(id, postId){
+    let exist = await commentModel.getComment(id)
+    if(exist){
+      let result = await commentModel.deleteComment(id)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      } 
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
     }
   },
 
