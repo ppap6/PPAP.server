@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:33:17
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-11 23:53:25
+ * @LastEditTime: 2019-07-13 09:54:17
  */
 
  /**
@@ -34,7 +34,7 @@
      }
    },
 
-   //添加帖子评论
+  //添加帖子评论
   async addComment(data){
     let result = await commentModel.addComment(data)
     if(result){

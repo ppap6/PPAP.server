@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:20:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-12 00:24:17
+ * @LastEditTime: 2019-07-13 09:54:00
  */
 
 const answerService = require('../service/answer')
@@ -16,6 +16,13 @@ const answer = {
     let commentId = ctx.params.id === undefined ? 0 : ctx.params.id
     let answers = await answerService.getAnswerList(pageNum, pageSize, commentId)
     ctx.body = answers
+  },
+
+  //添加评论回复
+  async addAnswer(ctx){
+    //验证数据
+    let result = await answerService.addAnswer(ctx.request.body)
+    ctx.body = result
   },
 
 }

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:24:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-12 00:32:21
+ * @LastEditTime: 2019-07-13 09:55:05
  */
 
 /**
@@ -37,6 +37,21 @@ const answer ={
     return {
       status: 10003,
       message: '未找到操作对象'
+    }
+  },
+
+  //添加评论回复
+  async addAnswer(data){
+    let result = await answerModel.addAnswer(data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }
+    return {
+      status: 10000,
+      message: '操作失败'
     }
   },
   
