@@ -25,6 +25,12 @@ const answer = {
     ctx.body = result
   },
 
+  //获取评论单条回复信息
+  async getAnswer(ctx){
+    let result = await answerService.getAnswer(ctx.params.id)
+    ctx.body = result
+  },
+
 }
 
 module.exports = answer

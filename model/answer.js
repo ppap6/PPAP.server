@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:26:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-13 10:22:47
+ * @LastEditTime: 2019-07-14 23:44:32
  */
 
 const util = require('../util')
@@ -55,6 +55,15 @@ const answer = {
     let result = await db_mongo.insertOne('answer', dataObj)
     if(result.insertedCount){
       return result.insertedCount
+    }
+    return false
+  },
+
+  //获取评论单条回复信息(根据id)
+  async getAnswer(id){
+    let result = await db_mongo.find('answer', {_id: ObjectId(id)})
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
     }
     return false
   },

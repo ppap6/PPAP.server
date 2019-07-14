@@ -54,6 +54,21 @@ const answer ={
       message: '操作失败'
     }
   },
+
+  //获取评论单条回复信息
+  async getAnswer(id){
+    let answer = await answerModel.getAnswer(id)
+    if(answer){
+      return {
+        status: 200,
+        message: answer
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
   
 }
 
