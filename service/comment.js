@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:33:17
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-14 23:41:53
+ * @LastEditTime: 2019-07-15 23:48:30
  */
 
  /**
@@ -50,7 +50,7 @@
   },
 
   //删除帖子评论
-  async deleteComment(id, postId){
+  async deleteComment(id){
     let exist = await commentModel.getComment(id)
     if(exist){
       let result = await commentModel.deleteComment(id)
