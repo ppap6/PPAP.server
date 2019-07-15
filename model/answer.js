@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:26:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-15 23:44:41
+ * @LastEditTime: 2019-07-15 23:54:29
  */
 
 const util = require('../util')
@@ -73,6 +73,22 @@ const answer = {
     let result = await db_mongo.find('answer', {_id: ObjectId(id)})
     if(Array.isArray(result) && result.length > 0){
       return result[0]
+    }
+    return false
+  },
+
+  //修改评论回复信息
+  async updateAnswer(id, data){
+    let dataObj = {
+      content: data.content,
+      update_time: util.changeTimeToStr(new Date())
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('answer', {_id: ObjectId(id)}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
     }
     return false
   },

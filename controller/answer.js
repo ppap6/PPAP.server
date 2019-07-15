@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:20:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-15 23:42:07
+ * @LastEditTime: 2019-07-15 23:51:24
  */
 
 const answerService = require('../service/answer')
@@ -37,6 +37,12 @@ const answer = {
     let result = await answerService.getAnswer(ctx.params.id)
     ctx.body = result
   },
+
+  //修改评论回复信息
+  async updateAnswer(ctx){
+    let result = await answerService.updateAnswer(ctx.params.id, ctx.request.body)
+    ctx.body = result
+  }
 
 }
 

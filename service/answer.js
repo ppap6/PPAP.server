@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:24:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-13 09:55:05
+ * @LastEditTime: 2019-07-15 23:52:18
  */
 
 /**
@@ -93,6 +93,30 @@ const answer ={
       message: '未找到操作对象'
     }
   },
+
+  //修改评论回复信息
+  async updateAnswer(id, data){
+    let exist = await answerModel.getAnswer(id)
+    if(exist){
+      let result = await answerModel.updateAnswer(id, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    } 
+  }
   
 }
 
