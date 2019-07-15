@@ -55,6 +55,30 @@ const answer ={
     }
   },
 
+  //删除评论单条回复
+  async deleteAnswer(id){
+    let exist = await answerModel.getAnswer(id)
+    if(exist){
+      let result = await answerModel.deleteAnswer(id)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      } 
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+  },
+
   //获取评论单条回复信息
   async getAnswer(id){
     let answer = await answerModel.getAnswer(id)

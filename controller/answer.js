@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:20:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-13 09:54:00
+ * @LastEditTime: 2019-07-15 23:42:07
  */
 
 const answerService = require('../service/answer')
@@ -22,6 +22,13 @@ const answer = {
   async addAnswer(ctx){
     //验证数据
     let result = await answerService.addAnswer(ctx.request.body)
+    ctx.body = result
+  },
+
+  //删除评论单条回复
+  async deleteAnswer(ctx){
+    //验证身份
+    let result = await answerService.deleteAnswer(ctx.params.id)
     ctx.body = result
   },
 

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:26:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-14 23:44:32
+ * @LastEditTime: 2019-07-15 23:44:41
  */
 
 const util = require('../util')
@@ -55,6 +55,15 @@ const answer = {
     let result = await db_mongo.insertOne('answer', dataObj)
     if(result.insertedCount){
       return result.insertedCount
+    }
+    return false
+  },
+
+  //删除评论单条回复
+  async deleteAnswer(id){
+    let result = await db_mongo.deleteOne('answer', {_id: ObjectId(id)})
+    if(result.deletedCount){
+      return true
     }
     return false
   },

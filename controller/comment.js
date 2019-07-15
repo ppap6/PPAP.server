@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:29:53
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-14 23:40:54
+ * @LastEditTime: 2019-07-15 23:41:27
  */
 
 const commentService = require('../service/comment')
