@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-16 23:58:31
+ * @LastEditTime: 2019-07-17 00:32:00
  */
 
 /**
@@ -121,6 +121,15 @@ const user = {
     let result = await db_mongo.insertOne('user_fans_relation', dataObj)
     if(result.insertedCount){
       return result.insertedCount
+    }
+    return false
+  },
+
+  //获取用户关注记录
+  async getFollow(uid, follow_uid){
+    let result = await db_mongo.find('answer', {uid, follow_uid})
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
     }
     return false
   },
