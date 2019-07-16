@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 11:09:22
+ * @LastEditTime: 2019-07-16 23:49:28
  */
 
 const userCode = require('../code/user')
@@ -47,7 +47,13 @@ const user = {
   async login(ctx){
     let result = await userService.login(ctx.request.body)
     ctx.body = result
-  }
+  },
+
+  //用户关注
+  async follow(ctx){
+    let result = await userService.follow(ctx.request.body)
+    ctx.body = result
+  },
   
 }
 

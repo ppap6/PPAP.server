@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-29 12:10:59
+ * @LastEditTime: 2019-07-16 23:50:52
  */
 
  /**
@@ -131,6 +131,22 @@ const user = {
       return {
         status: 10003,
         message: '未找到操作对象'
+      }
+    }
+  },
+
+  //用户关注
+  async follow(data){
+    let result = await userModel.follow(data)
+    if(result){
+      return {
+        status: 200,
+        message: '操作成功'
+      }
+    }else{
+      return {
+        status: 10000,
+        message: '操作失败'
       }
     }
   }

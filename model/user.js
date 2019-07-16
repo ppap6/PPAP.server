@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-06-26 11:32:10
+ * @LastEditTime: 2019-07-16 23:58:31
  */
 
 /**
@@ -12,6 +12,8 @@
 
 const util = require('../util')
 const db = require('../util/db')
+const db_mongo = require('../util/db_mongo')
+const ObjectId = require('mongodb').ObjectId
 
 const user = {
 
@@ -104,6 +106,21 @@ const user = {
       }else{
         return false
       }
+    }
+    return false
+  },
+
+  //用户关注
+  async follow(data){
+    let dataObj = {
+      uid: parseInt(data.uid),
+      follow_uid: parseInt(data.follow_uid),
+      create_time: util.changeTimeToStr(new Date()),
+      state: 1
+    }
+    let result = await db_mongo.insertOne('user_fans_relation', dataObj)
+    if(result.insertedCount){
+      return result.insertedCount
     }
     return false
   },
