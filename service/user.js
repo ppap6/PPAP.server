@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-18 23:52:45
+ * @LastEditTime: 2019-07-18 23:53:59
  */
 
  /**
@@ -138,7 +138,7 @@ const user = {
   //用户关注
   async follow(data){
     let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))
-    if(exist){
+    if(!exist){
       let result = await userModel.follow(data)
       if(result){
         return {
