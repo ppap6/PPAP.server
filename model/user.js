@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-18 23:52:19
+ * @LastEditTime: 2019-07-18 23:57:06
  */
 
 /**
@@ -13,7 +13,6 @@
 const util = require('../util')
 const db = require('../util/db')
 const db_mongo = require('../util/db_mongo')
-const ObjectId = require('mongodb').ObjectId
 
 const user = {
 
