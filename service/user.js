@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-17 00:41:33
+ * @LastEditTime: 2019-07-18 23:52:45
  */
 
  /**
@@ -140,6 +140,30 @@ const user = {
     let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))
     if(exist){
       let result = await userModel.follow(data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10000,
+        message: '请勿添加重复记录'
+      }
+    }
+  },
+
+  //用户关注话题
+  async followTopic(data){
+    let exist = await userModel.getFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id))
+    if(!exist){
+      let result = await userModel.followTopic(data)
       if(result){
         return {
           status: 200,

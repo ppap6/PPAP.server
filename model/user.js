@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-17 00:32:00
+ * @LastEditTime: 2019-07-18 23:52:19
  */
 
 /**
@@ -127,7 +127,31 @@ const user = {
 
   //获取用户关注记录
   async getFollow(uid, follow_uid){
-    let result = await db_mongo.find('answer', {uid, follow_uid})
+    let result = await db_mongo.find('user_fans_relation', {uid, follow_uid})
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
+
+  //用户关注话题
+  async followTopic(data){
+    let dataObj = {
+      uid: parseInt(data.uid),
+      follow_topic_id: parseInt(data.follow_topic_id),
+      create_time: util.changeTimeToStr(new Date()),
+      state: 1
+    }
+    let result = await db_mongo.insertOne('user_topic_relation', dataObj)
+    if(result.insertedCount){
+      return result.insertedCount
+    }
+    return false
+  },
+
+  //获取用户关注话题记录
+  async getFollowTopic(uid, follow_topic_id){
+    let result = await db_mongo.find('user_topic_relation', {uid, follow_topic_id})
     if(Array.isArray(result) && result.length > 0){
       return result[0]
     }
