@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-18 22:35:28
+ * @LastEditTime: 2019-07-20 00:13:38
  */
 
 const userCode = require('../code/user')
@@ -52,6 +52,12 @@ const user = {
   //用户关注
   async follow(ctx){
     let result = await userService.follow(ctx.request.body)
+    ctx.body = result
+  },
+
+  //用户取消关注
+  async cancelFollow(ctx){
+    let result = await userService.cancelFollow(ctx.request.body)
     ctx.body = result
   },
 
