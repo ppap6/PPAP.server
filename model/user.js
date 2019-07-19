@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-18 23:57:06
+ * @LastEditTime: 2019-07-19 23:55:26
  */
 
 /**
@@ -129,6 +129,21 @@ const user = {
     let result = await db_mongo.find('user_fans_relation', {uid, follow_uid})
     if(Array.isArray(result) && result.length > 0){
       return result[0]
+    }
+    return false
+  },
+
+  //修改关注状态
+  async updateFollow(uid, follow_uid){
+    let dataObj = {
+      state: 1
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_fans_relation', {uid, follow_uid}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
     }
     return false
   },

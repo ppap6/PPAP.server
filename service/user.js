@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-18 23:53:59
+ * @LastEditTime: 2019-07-19 23:55:24
  */
 
  /**
@@ -139,7 +139,22 @@ const user = {
   async follow(data){
     let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))
     if(!exist){
+      //添加关注记录
       let result = await userModel.follow(data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else if(exist && exist.state == 0){
+      //更改关注状态
+      let result = await userModel.updateFollow(parseInt(data.uid), parseInt(data.follow_uid))
       if(result){
         return {
           status: 200,
