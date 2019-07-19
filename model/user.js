@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-19 23:55:26
+ * @LastEditTime: 2019-07-20 00:21:39
  */
 
 /**
@@ -133,7 +133,7 @@ const user = {
     return false
   },
 
-  //修改关注状态
+  //修改用户关注状态
   async updateFollow(uid, follow_uid, state){
     let dataObj = {
       state
@@ -168,6 +168,21 @@ const user = {
     let result = await db_mongo.find('user_topic_relation', {uid, follow_topic_id})
     if(Array.isArray(result) && result.length > 0){
       return result[0]
+    }
+    return false
+  },
+
+  //修改用户关注话题状态
+  async updateFollowTopic(uid, follow_topic_id, state){
+    let dataObj = {
+      state
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_topic_relation', {uid, follow_topic_id}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
     }
     return false
   },

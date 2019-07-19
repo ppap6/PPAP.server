@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-20 00:12:59
+ * @LastEditTime: 2019-07-20 00:20:19
  */
 
  /**
@@ -203,8 +203,23 @@ const user = {
   //用户关注话题
   async followTopic(data){
     let exist = await userModel.getFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id))
-    if(!exist){
+    if(!exist){     //判断是否已存在关注记录
+      //添加关注记录
       let result = await userModel.followTopic(data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else if(exist && exist.state == 0){       //存在记录但是关注状态是0，即未关注
+      //更改为关注状态
+      let result = await userModel.updateFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id), 1)
       if(result){
         return {
           status: 200,
