@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-19 23:55:24
+ * @LastEditTime: 2019-07-20 00:05:00
  */
 
  /**
@@ -138,7 +138,7 @@ const user = {
   //用户关注
   async follow(data){
     let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))
-    if(!exist){
+    if(!exist){       //判断是否已存在关注记录
       //添加关注记录
       let result = await userModel.follow(data)
       if(result){
@@ -152,9 +152,9 @@ const user = {
           message: '操作失败'
         }
       }
-    }else if(exist && exist.state == 0){
-      //更改关注状态
-      let result = await userModel.updateFollow(parseInt(data.uid), parseInt(data.follow_uid))
+    }else if(exist && exist.state == 0){       //存在记录但是关注状态是0，即未关注
+      //更改为关注状态
+      let result = await userModel.updateFollow(parseInt(data.uid), parseInt(data.follow_uid), 1)
       if(result){
         return {
           status: 200,

@@ -134,9 +134,9 @@ const user = {
   },
 
   //修改关注状态
-  async updateFollow(uid, follow_uid){
+  async updateFollow(uid, follow_uid, state){
     let dataObj = {
-      state: 1
+      state
     }
     let setObj = {
       $set: dataObj
