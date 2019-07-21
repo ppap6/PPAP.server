@@ -66,6 +66,12 @@ const user = {
     let result = await userService.followTopic(ctx.request.body)
     ctx.body = result
   },
+
+  //用户取消关注话题
+  async cancelFollowTopic(ctx){
+    let result = await userService.cancelFollowTopic(ctx.request.body)
+    ctx.body = result
+  },
   
 }
 

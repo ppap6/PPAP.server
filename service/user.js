@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-20 00:20:19
+ * @LastEditTime: 2019-07-21 23:17:38
  */
 
  /**
@@ -237,7 +237,33 @@ const user = {
         message: '请勿添加重复记录'
       }
     }
-  }
+  },
+
+  //用户取消关注话题
+  async cancelFollowTopic(data){
+    let exist = await userModel.getFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id))
+    //判断是否已存在关注记录，且关注状态是1，即已关注
+    if(exist && exist.state == 1){      
+      //更改为未关注状态
+      let result = await userModel.updateFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id), 0)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10000,
+        message: '操作失败'
+      }
+    }
+  },
   
 }
 

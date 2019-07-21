@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-06 14:44:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-20 00:14:57
+ * @LastEditTime: 2019-07-21 23:10:31
  */
 
 const router = require('koa-router')()
@@ -19,5 +19,6 @@ router
   .post('/follow', user.follow)    //用户关注
   .post('/cancel/follow', user.cancelFollow)    //用户取消关注
   .post('/follow/topic', user.followTopic)    //用户关注话题
+  .post('/cancel/follow/topic', user.cancelFollowTopic)    //用户取消关注话题
 
 module.exports = router
