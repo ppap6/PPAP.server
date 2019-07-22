@@ -98,6 +98,10 @@ const topic = {
       sql = 'UPDATE topic SET followers=followers-1,update_time=? WHERE id=?'
     }else if(action == 'increasePosts'){
       sql = 'UPDATE topic SET posts=posts+1,update_time=? WHERE id=?'
+    }else if(action == 'decreasePosts'){
+      sql = 'UPDATE topic SET posts=posts-1,update_time=? WHERE id=?'
+    }else{
+      return false
     }
     let values = [
       util.changeTimeToStr(new Date())

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-23 00:38:56
+ * @LastEditTime: 2019-07-23 00:44:44
  */
 
  /**
@@ -56,6 +56,7 @@ const post ={
     if(exist){
       let result = await postModel.deletePost(id)
       if(result){
+        topicModel.updateTopicStatistics(exist.topic_id, 'decreasePosts')
         return {
           status: 200,
           message: '操作成功'
