@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-22 23:45:28
+ * @LastEditTime: 2019-07-23 00:28:46
  */
 
 const util = require('../util')
@@ -94,6 +94,8 @@ const topic = {
     let sql = ''
     if(action == 'increaseFollowers'){
       sql = 'UPDATE topic SET followers=followers+1,update_time=? WHERE id=?'
+    }else if(action == 'decreaseFollowers'){
+      sql = 'UPDATE topic SET followers=followers-1,update_time=? WHERE id=?'
     }
     let values = [
       util.changeTimeToStr(new Date())

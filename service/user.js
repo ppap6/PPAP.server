@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-22 23:48:54
+ * @LastEditTime: 2019-07-23 00:32:06
  */
 
  /**
@@ -252,6 +252,8 @@ const user = {
       //更改为未关注状态
       let result = await userModel.updateFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id), 0)
       if(result){
+        //话题关注数减一
+        await topicModel.updateTopicStatistics(data.follow_topic_id, 'decreaseFollowers')
         return {
           status: 200,
           message: '操作成功'
