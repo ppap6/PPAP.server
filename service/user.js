@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-21 23:17:38
+ * @LastEditTime: 2019-07-22 23:48:54
  */
 
  /**
@@ -15,6 +15,7 @@
   * 10005数据库错误
   */
 const userModel = require('../model/user')
+const topicModel = require('../model/topic')
 
 const user = {
 
@@ -207,6 +208,8 @@ const user = {
       //添加关注记录
       let result = await userModel.followTopic(data)
       if(result){
+        //话题关注数加一
+        await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
         return {
           status: 200,
           message: '操作成功'
@@ -221,6 +224,8 @@ const user = {
       //更改为关注状态
       let result = await userModel.updateFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id), 1)
       if(result){
+        //话题关注数加一
+        await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
         return {
           status: 200,
           message: '操作成功'

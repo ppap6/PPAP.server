@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-05 23:58:48
+ * @LastEditTime: 2019-07-22 23:45:28
  */
 
 const util = require('../util')
@@ -74,6 +74,28 @@ const topic = {
     let values = [
       data.name,
       data.intro,
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values, id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
+  //更新话题统计
+  async updateTopicStatistics(id, action){
+    /**
+     * increaseFollowers  增加关注数
+     * decreaseFollowers  减少关注数
+     * increasePosts  增加帖子数
+     * decreasePosts  减少帖子数
+     */
+    let sql = ''
+    if(action == 'increaseFollowers'){
+      sql = 'UPDATE topic SET followers=followers+1,update_time=? WHERE id=?'
+    }
+    let values = [
       util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values, id])
