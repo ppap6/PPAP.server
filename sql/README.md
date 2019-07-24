@@ -182,9 +182,10 @@ lights  - 点亮数
 根据动态类型 type 区分  
 1 => 评论
 2 => 回复
-3 => 关注
+3 => 关注他人
 4 => 点赞
 5 => 收藏
+6 => 关注话题
 ```
 
 - 评论类型动态
@@ -207,7 +208,7 @@ targetor_id  - 回复目标人ID
 create_time  - 创建时间
 ```
 
-- 关注类型动态
+- 关注他人类型动态
 ```
 _id  - 动态ID
 type  - 动态类型值 3
@@ -233,6 +234,15 @@ type  - 动态类型值 5
 uid  - 用户ID
 pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
+create_time  - 创建时间
+```
+
+- 关注话题类型动态
+```
+_id  - 动态ID
+type  - 动态类型值 6
+uid  - 用户ID
+follow_topic_id  - 关注的话题ID
 create_time  - 创建时间
 ```
 
