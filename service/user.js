@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-23 00:32:06
+ * @LastEditTime: 2019-07-24 22:46:02
  */
 
  /**
@@ -36,8 +36,9 @@ const user = {
 
   //添加用户
   async addUser(data){
-    let result = await userModel.addUser(data)
-    if(result){
+    let insertId = await userModel.addUser(data)
+    if(insertId){
+      await userModel.addUserLikeCollectLightModel(insertId)
       return {
         status: 200,
         message: '操作成功'

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-20 00:21:39
+ * @LastEditTime: 2019-07-24 22:38:29
  */
 
 /**
@@ -183,6 +183,22 @@ const user = {
     let result = await db_mongo.updateOne('user_topic_relation', {uid, follow_topic_id}, setObj)
     if(result.modifiedCount){
       return result.modifiedCount
+    }
+    return false
+  },
+
+  //新增用户点赞收藏点亮数据模型
+  async addUserLikeCollectLightModel(uid){
+    let dataObj = {
+      uid: parseInt(uid),
+      like_posts: [],
+      collect_posts: [],
+      light_comments: [],
+      light_answers: []
+    }
+    let result = await db_mongo.insertOne('user_likes_collects_lights_relation', dataObj)
+    if(result.insertedCount){
+      return result.insertedCount
     }
     return false
   },
