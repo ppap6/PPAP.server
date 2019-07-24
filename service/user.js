@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-24 22:46:02
+ * @LastEditTime: 2019-07-24 23:11:50
  */
 
  /**
@@ -56,6 +56,7 @@ const user = {
     if(exist){
       let result = await userModel.deleteUser(id)
       if(result){
+        await userModel.deleteUserLikeCollectLightModel(id)
         return {
           status: 200,
           message: '操作成功'

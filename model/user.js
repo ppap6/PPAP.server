@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-24 22:38:29
+ * @LastEditTime: 2019-07-24 23:15:01
  */
 
 /**
@@ -199,6 +199,15 @@ const user = {
     let result = await db_mongo.insertOne('user_likes_collects_lights_relation', dataObj)
     if(result.insertedCount){
       return result.insertedCount
+    }
+    return false
+  },
+
+  //删除用户点赞收藏点亮数据模型
+  async deleteUserLikeCollectLightModel(uid){
+    let result = await db_mongo.deleteOne('user_likes_collects_lights_relation', {uid: parseInt(uid)})
+    if(result.deletedCount){
+      return true
     }
     return false
   },
