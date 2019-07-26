@@ -40,3 +40,29 @@ yarn install
 yarn run dev
 ```
 服务运行在 `localhost:2333` 
+
+### API
+```
+user
+
+- post /user  添加用户
+- delete /user  删除用户
+```
+```
+role
+```
+```
+access
+```
+```
+post
+```
+```
+topic
+```
+```
+comment
+```
+```
+answer
+```
