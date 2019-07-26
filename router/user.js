@@ -22,5 +22,6 @@ router
   .post('/cancel/follow/topic', user.cancelFollowTopic)    //用户取消关注话题
 
   .post('/like/post', user.likePost)    //用户点赞帖子
+  .post('/cancel/like/post', user.cancelLikePost)    //用户取消点赞帖子
 
 module.exports = router

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-27 00:53:29
+ * @LastEditTime: 2019-07-27 01:22:48
  */
 
  /**
@@ -281,8 +281,8 @@ const user = {
       //获取用户点赞帖子数组
       let posts = await userModel.getLikePost(parseInt(data.uid))
       posts.push(parseInt(data.pid))
-      //添加点赞帖子记录
-      let result = await userModel.likePost(parseInt(data.uid), posts)
+      //修改点赞帖子记录
+      let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
       if(result){
         return {
           status: 200,
@@ -298,6 +298,34 @@ const user = {
       return {
         status: 10000,
         message: '请勿添加重复记录'
+      }
+    }
+  },
+
+  //用户取消点赞帖子
+  async cancelLikePost(data){
+    let exist = await userModel.getPostLikeState(parseInt(data.uid), parseInt(data.pid))
+    if(exist){       //判断是否已存在关注记录
+      //获取用户点赞帖子数组
+      let posts = await userModel.getLikePost(parseInt(data.uid))
+      posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
+      //修改点赞帖子记录
+      let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
       }
     }
   },

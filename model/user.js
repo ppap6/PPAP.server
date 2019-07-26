@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-27 01:04:05
+ * @LastEditTime: 2019-07-27 01:22:26
  */
 
 /**
@@ -235,7 +235,7 @@ const user = {
   },
 
   //修改用户帖子点赞数组数据
-  async likePost(uid, posts){
+  async updateLikePosts(uid, posts){
     let dataObj = {
       like_posts: posts
     }
