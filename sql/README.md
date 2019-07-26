@@ -7,7 +7,7 @@
 - 
 - 帖子表 post
 - 
-- 用户帖子点赞收藏表 user_post_likes_collects_relation (考虑 mongodb)
+- 用户的点赞收藏点亮表 user_likes_collects_lights_relation (考虑 mongodb)
 - 帖子评论表 comment (考虑 mongodb)
 - 评论回复表 answer (考虑 mongodb)
 - 用户动态表 user_log (考虑 mongodb)
