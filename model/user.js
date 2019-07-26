@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-24 23:15:01
+ * @LastEditTime: 2019-07-27 01:04:05
  */
 
 /**
@@ -208,6 +208,43 @@ const user = {
     let result = await db_mongo.deleteOne('user_likes_collects_lights_relation', {uid: parseInt(uid)})
     if(result.deletedCount){
       return true
+    }
+    return false
+  },
+
+  //获取用户帖子点赞数组数据
+  async getLikePost(uid){
+    let result = await db_mongo.find('user_likes_collects_lights_relation', {uid})
+    if(Array.isArray(result)){
+      return result[0].like_posts
+    }
+    return false
+  },
+
+  //获取用户帖子是否已点赞
+  async getPostLikeState(uid, pid){
+    let result = await db_mongo.find('user_likes_collects_lights_relation', {uid})
+    if(Array.isArray(result) && result.length > 0){
+      let postArr = result[0].like_posts
+      if(postArr.includes(pid)){
+        return true
+      }
+      return false
+    }
+    return false
+  },
+
+  //修改用户帖子点赞数组数据
+  async likePost(uid, posts){
+    let dataObj = {
+      like_posts: posts
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_likes_collects_lights_relation', {uid}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
     }
     return false
   },
