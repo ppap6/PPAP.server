@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-27 01:25:45
+ * @LastEditTime: 2019-07-28 22:40:05
  */
 
  /**
@@ -276,10 +276,10 @@ const user = {
 
   //用户点赞帖子
   async likePost(data){
-    let exist = await userModel.getPostLikeState(parseInt(data.uid), parseInt(data.pid))
-    if(!exist){       //判断是否已存在关注记录
-      //获取用户点赞帖子数组
-      let posts = await userModel.getLikePost(parseInt(data.uid))
+    //获取用户点赞帖子数组
+    let posts = await userModel.getLikePost(parseInt(data.uid))
+    if(!posts.includes(parseInt(data.pid))){    //判断是否已点赞   
+      //不存在=>添加
       posts.push(parseInt(data.pid))
       //修改点赞帖子记录
       let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
@@ -295,6 +295,7 @@ const user = {
         }
       }
     }else{
+      //存在=>不添加
       return {
         status: 10000,
         message: '请勿添加重复记录'
@@ -304,10 +305,10 @@ const user = {
 
   //用户取消点赞帖子
   async cancelLikePost(data){
-    let exist = await userModel.getPostLikeState(parseInt(data.uid), parseInt(data.pid))
-    if(exist){       //判断是否已存在关注记录
-      //获取用户点赞帖子数组
-      let posts = await userModel.getLikePost(parseInt(data.uid))
+    //获取用户点赞帖子数组
+    let posts = await userModel.getLikePost(parseInt(data.uid))
+    if(posts.includes(parseInt(data.pid))){     //判断是否已点赞
+      //存在=>移除
       posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
       //修改点赞帖子记录
       let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
@@ -323,6 +324,7 @@ const user = {
         }
       }
     }else{
+      //不存在=>不移除
       return {
         status: 10003,
         message: '未找到操作对象'

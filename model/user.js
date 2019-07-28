@@ -221,19 +221,6 @@ const user = {
     return false
   },
 
-  //获取用户帖子是否已点赞
-  async getPostLikeState(uid, pid){
-    let result = await db_mongo.find('user_likes_collects_lights_relation', {uid})
-    if(Array.isArray(result) && result.length > 0){
-      let postArr = result[0].like_posts
-      if(postArr.includes(pid)){
-        return true
-      }
-      return false
-    }
-    return false
-  },
-
   //修改用户帖子点赞数组数据
   async updateLikePosts(uid, posts){
     let dataObj = {
