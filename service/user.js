@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-28 22:46:56
+ * @LastEditTime: 2019-07-28 22:54:33
  */
 
  /**
@@ -357,6 +357,35 @@ const user = {
       return {
         status: 10000,
         message: '请勿添加重复记录'
+      }
+    }
+  },
+
+  //用户取消收藏帖子
+  async cancelCollectPost(data){
+    //获取用户收藏帖子数组
+    let posts = await userModel.getCollectPost(parseInt(data.uid))
+    if(posts.includes(parseInt(data.pid))){    //判断是否已收藏  
+      //存在=>移除
+      posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
+      //修改收藏帖子记录
+      let result = await userModel.updateCollectPosts(parseInt(data.uid), posts)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      //不存在=>不移除
+      return {
+        status: 10003,
+        message: '未找到操作对象'
       }
     }
   },

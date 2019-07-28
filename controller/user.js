@@ -90,6 +90,12 @@ const user = {
     let result = await userService.collectPost(ctx.request.body)
     ctx.body = result
   },
+
+  //用户取消收藏帖子
+  async cancelCollectPost(ctx){
+    let result = await userService.cancelCollectPost(ctx.request.body)
+    ctx.body = result
+  },
   
 }
 
