@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-27 01:16:35
+ * @LastEditTime: 2019-07-28 22:48:03
  */
 
 const userCode = require('../code/user')
@@ -82,6 +82,12 @@ const user = {
   //用户取消点赞帖子
   async cancelLikePost(ctx){
     let result = await userService.cancelLikePost(ctx.request.body)
+    ctx.body = result
+  },
+
+  //用户收藏帖子
+  async collectPost(ctx){
+    let result = await userService.collectPost(ctx.request.body)
     ctx.body = result
   },
   

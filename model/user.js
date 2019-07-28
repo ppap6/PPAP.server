@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-27 01:22:26
+ * @LastEditTime: 2019-07-28 22:45:23
  */
 
 /**
@@ -225,6 +225,30 @@ const user = {
   async updateLikePosts(uid, posts){
     let dataObj = {
       like_posts: posts
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_likes_collects_lights_relation', {uid}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
+  //获取用户帖子收藏数组数据
+  async getCollectPost(uid){
+    let result = await db_mongo.find('user_likes_collects_lights_relation', {uid})
+    if(Array.isArray(result)){
+      return result[0].collect_posts
+    }
+    return false
+  },
+
+  //修改用户帖子点赞数组数据
+  async updateCollectPosts(uid, posts){
+    let dataObj = {
+      collect_posts: posts
     }
     let setObj = {
       $set: dataObj
