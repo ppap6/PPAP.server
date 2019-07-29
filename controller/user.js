@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-28 22:48:03
+ * @LastEditTime: 2019-07-29 23:34:58
  */
 
 const userCode = require('../code/user')
@@ -97,6 +97,11 @@ const user = {
     ctx.body = result
   },
   
+  //用户点亮评论
+  async lightComment(ctx){
+    let result = await userService.lightComment(ctx.request.body)
+    ctx.body = result
+  },
 }
 
 module.exports = user

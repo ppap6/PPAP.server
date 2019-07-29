@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-28 22:45:23
+ * @LastEditTime: 2019-07-29 23:39:34
  */
 
 /**
@@ -249,6 +249,30 @@ const user = {
   async updateCollectPosts(uid, posts){
     let dataObj = {
       collect_posts: posts
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_likes_collects_lights_relation', {uid}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
+  //获取用户点亮评论数组数据
+  async getLightComment(uid){
+    let result = await db_mongo.find('user_likes_collects_lights_relation', {uid})
+    if(Array.isArray(result)){
+      return result[0].light_comments
+    }
+    return false
+  },
+
+  //修改用户点亮评论数组数据
+  async updateLightComments(uid, comments){
+    let dataObj = {
+      light_comments: comments
     }
     let setObj = {
       $set: dataObj
