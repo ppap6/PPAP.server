@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-29 23:34:58
+ * @LastEditTime: 2019-07-30 00:00:14
  */
 
 const userCode = require('../code/user')
@@ -100,6 +100,12 @@ const user = {
   //用户点亮评论
   async lightComment(ctx){
     let result = await userService.lightComment(ctx.request.body)
+    ctx.body = result
+  },
+
+  //用户取消点亮评论
+  async cancelLightComment(ctx){
+    let result = await userService.cancelLightComment(ctx.request.body)
     ctx.body = result
   },
 }
