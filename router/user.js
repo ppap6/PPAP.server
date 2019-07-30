@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-06 14:44:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-29 23:59:03
+ * @LastEditTime: 2019-07-30 23:17:25
  */
 
 const router = require('koa-router')()
@@ -28,5 +28,6 @@ router
   .post('/light/comment', user.lightComment)    //用户点亮评论
   .post('/cancel/light/comment', user.cancelLightComment)    //用户取消点亮评论
   .post('/light/answer', user.lightAnswer)    //用户点亮回复
+  .post('/cancel/light/answer', user.cancelLightAnswer)    //用户取消点亮回复
 
 module.exports = router

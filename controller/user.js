@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:56:04
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-30 22:58:31
+ * @LastEditTime: 2019-07-30 23:17:48
  */
 
 const userCode = require('../code/user')
@@ -112,6 +112,12 @@ const user = {
   //用户点亮回复
   async lightAnswer(ctx){
     let result = await userService.lightAnswer(ctx.request.body)
+    ctx.body = result
+  },
+
+  //用户取消点亮回复
+  async cancelLightAnswer(ctx){
+    let result = await userService.cancelLightAnswer(ctx.request.body)
     ctx.body = result
   },
 }

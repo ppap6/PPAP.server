@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-30 23:06:21
+ * @LastEditTime: 2019-07-30 23:25:36
  */
 
  /**
@@ -473,6 +473,35 @@ const user = {
       return {
         status: 10000,
         message: '请勿添加重复记录'
+      }
+    }
+  },
+
+  //用户取消点亮回复
+  async cancelLightAnswer(data){
+    //获取用户点亮回复数组
+    let answers = await userModel.getLightAnswer(parseInt(data.uid))
+    if(answers.includes(data.answer_id)){    //判断是否已点亮
+      //存在=>移除
+      answers.splice(answers.findIndex(item => item == data.answer_id), 1)
+      //修改点亮回复记录
+      let result = await userModel.updateLightAnswers(parseInt(data.uid), answers)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      //不存在=>不移除
+      return {
+        status: 10003,
+        message: '未找到操作对象'
       }
     }
   },
