@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-30 00:09:58
+ * @LastEditTime: 2019-07-30 23:06:21
  */
 
  /**
@@ -444,6 +444,35 @@ const user = {
       return {
         status: 10003,
         message: '未找到操作对象'
+      }
+    }
+  },
+
+  //用户点亮回复
+  async lightAnswer(data){
+    //获取用户点亮回复数组
+    let answers = await userModel.getLightAnswer(parseInt(data.uid))
+    if(!answers.includes(data.answer_id)){    //判断是否已点亮
+      //不存在=>添加
+      answers.push(data.answer_id)
+      //修改点亮回复记录
+      let result = await userModel.updateLightAnswers(parseInt(data.uid), answers)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      //存在=>不添加
+      return {
+        status: 10000,
+        message: '请勿添加重复记录'
       }
     }
   },

@@ -27,5 +27,6 @@ router
   .post('/cancel/collect/post', user.cancelCollectPost)    //用户取消收藏帖子
   .post('/light/comment', user.lightComment)    //用户点亮评论
   .post('/cancel/light/comment', user.cancelLightComment)    //用户取消点亮评论
+  .post('/light/answer', user.lightAnswer)    //用户点亮回复
 
 module.exports = router
