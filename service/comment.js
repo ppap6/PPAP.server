@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:33:17
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-31 23:55:39
+ * @LastEditTime: 2019-08-01 00:03:11
  */
 
  /**
@@ -17,6 +17,7 @@
  
  const commentModel = require('../model/comment')
  const postModel = require('../model/post')
+ const logModel = require('../model/log')
 
  const comment ={
  
@@ -40,7 +41,7 @@
     let result = await commentModel.addComment(data)
     if(result){
       let post = await postModel.getPost(parseInt(data.pid))
-      await userlogModel.addCommentLog(parseInt(data.uid), parseInt(data.pid), post.uid)
+      await logModel.addCommentLog(parseInt(data.uid), parseInt(data.pid), post.uid)
       return {
         status: 200,
         message: '操作成功'
