@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-30 23:25:36
+ * @LastEditTime: 2019-08-02 00:20:22
  */
 
  /**
@@ -16,6 +16,7 @@
   */
 const userModel = require('../model/user')
 const topicModel = require('../model/topic')
+const logModel = require('../model/log')
 
 const user = {
 
@@ -145,6 +146,7 @@ const user = {
       //添加关注记录
       let result = await userModel.follow(data)
       if(result){
+        await logModel.addFollowPeopleLog(parseInt(data.uid), parseInt(data.follow_uid))
         return {
           status: 200,
           message: '操作成功'
