@@ -40,7 +40,9 @@
   async addComment(data){
     let result = await commentModel.addComment(data)
     if(result){
+      //获取帖子up主uid
       let post = await postModel.getPost(parseInt(data.pid))
+      //添加用户评论动态
       await logModel.addCommentLog(parseInt(data.uid), parseInt(data.pid), post.uid)
       return {
         status: 200,

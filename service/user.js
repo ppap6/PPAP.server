@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-02 00:20:22
+ * @LastEditTime: 2019-08-02 00:31:40
  */
 
  /**
@@ -16,6 +16,7 @@
   */
 const userModel = require('../model/user')
 const topicModel = require('../model/topic')
+const postModel = require('../model/post')
 const logModel = require('../model/log')
 
 const user = {
@@ -286,6 +287,10 @@ const user = {
       //修改点赞帖子记录
       let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
       if(result){
+        //获取帖子up主uid
+        let post = await postModel.getPost(parseInt(data.pid))
+        //添加用户点赞帖子动态
+        await logModel.addLikePostLog(parseInt(data.uid), parseInt(data.pid), post.uid)
         return {
           status: 200,
           message: '操作成功'
