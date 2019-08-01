@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:24:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-15 23:52:18
+ * @LastEditTime: 2019-08-02 00:10:45
  */
 
 /**
@@ -16,6 +16,8 @@
 */
 
 const answerModel = require('../model/answer')
+const commentModel = require('../model/comment')
+const logModel = require('../model/log')
 
 const answer ={
 
@@ -42,16 +44,40 @@ const answer ={
 
   //添加评论回复
   async addAnswer(data){
-    let result = await answerModel.addAnswer(data)
-    if(result){
-      return {
-        status: 200,
-        message: '操作成功'
+    if(data.type == 1){
+      // type == 1, 代表对评论的回复
+      let result = await answerModel.addAnswerForComment(data)
+      if(result){
+        //获取准备回复的这条评论的目标人uid
+        let comment = await commentModel.getComment(data.comment_id)
+        //添加用户的回复动态
+        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(comment.uid))
+        return {
+          status: 200,
+          message: '操作成功'
+        }
       }
-    }
-    return {
-      status: 10000,
-      message: '操作失败'
+      return {
+        status: 10000,
+        message: '操作失败'
+      }
+    }else{
+      // type == 2, 代表对回复的回复
+      let result = await answerModel.addAnswerForAnswer(data)
+      if(result){
+        //获取准备回复的这条回复的目标人uid
+        let answer = await answerModel.getAnswer(data.answer_id)
+        //添加用户的回复动态
+        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(answer.requestor_id))
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }
+      return {
+        status: 10000,
+        message: '操作失败'
+      }
     }
   },
 
