@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-03 23:45:32
+ * @LastEditTime: 2019-08-04 00:09:47
  */
 
  /**
@@ -215,6 +215,8 @@ const user = {
       if(result){
         //话题关注数加一
         await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
+        //添加用户关注话题动态
+        await logModel.addFollowTopicLog(parseInt(data.uid), parseInt(data.follow_topic_id))
         return {
           status: 200,
           message: '操作成功'
@@ -231,6 +233,8 @@ const user = {
       if(result){
         //话题关注数加一
         await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
+        //添加用户关注话题动态
+        await logModel.addFollowTopicLog(parseInt(data.uid), parseInt(data.follow_topic_id))
         return {
           status: 200,
           message: '操作成功'

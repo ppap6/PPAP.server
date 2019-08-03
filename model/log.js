@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-03 23:44:10
+ * @LastEditTime: 2019-08-04 00:07:13
  */
 
 const util = require('../util')
@@ -80,6 +80,21 @@ const log = {
       uid,
       pid,
       post_owner_id,
+      create_time: util.changeTimeToStr(new Date())
+    }
+    let result = await db_mongo.insertOne('user_log', dataObj)
+    if(result.insertedCount){
+      return result.insertedCount
+    }
+    return false
+  },
+
+  //添加用户关注话题动态
+  async addFollowTopicLog(uid, follow_topic_id){
+    let dataObj = {
+      type: 6,
+      uid,
+      follow_topic_id,
       create_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
