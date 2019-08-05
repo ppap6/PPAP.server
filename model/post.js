@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-10 23:29:22
+ * @LastEditTime: 2019-08-05 23:54:23
  */
 
 const util = require('../util')
@@ -81,6 +81,16 @@ const post = {
       util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values, id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
+  //增加帖子阅读量
+  async addPV(id){
+    let sql = 'UPDATE post SET reads=reads+1 WHERE id=?'
+    let result = await db.query(sql, [id])
     if(result){
       return true
     }

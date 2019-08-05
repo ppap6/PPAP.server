@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-23 00:44:44
+ * @LastEditTime: 2019-08-05 23:28:06
  */
 
  /**
@@ -95,6 +95,30 @@ const post ={
     let exist = await postModel.getPost(id)
     if(exist){
       let result = await postModel.updatePost(id, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    } 
+  },
+
+  //增加帖子阅读量
+  async addPV(data){
+    let exist = await postModel.getPost(parseInt(data.pid))
+    if(exist){
+      let result = await postModel.addPV(parseInt(data.pid))
       if(result){
         return {
           status: 200,

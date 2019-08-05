@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-06 14:44:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-11 00:12:52
+ * @LastEditTime: 2019-08-05 23:24:55
  */
 
 const router = require('koa-router')()
@@ -14,5 +14,7 @@ router
     .del('/:id', post.deletePost)   //删除帖子
     .get('/:id', post.getPost)    //获取帖子信息
     .put('/:id', post.updatePost)    //修改帖子信息
+
+    .post('/add/pv', post.addPV)     //增加帖子阅读量
 
 module.exports = router
