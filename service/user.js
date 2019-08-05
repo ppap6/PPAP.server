@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-04 00:09:47
+ * @LastEditTime: 2019-08-06 00:30:33
  */
 
  /**
@@ -295,6 +295,8 @@ const user = {
         let post = await postModel.getPost(parseInt(data.pid))
         //添加用户点赞帖子动态
         await logModel.addLikePostLog(parseInt(data.uid), parseInt(data.pid), post.uid)
+        //增加帖子点赞数
+        postModel.updateLikes(parseInt(data.pid), 'increase')
         return {
           status: 200,
           message: '操作成功'
@@ -324,6 +326,8 @@ const user = {
       //修改点赞帖子记录
       let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
       if(result){
+        //减少帖子点赞数
+        postModel.updateLikes(parseInt(data.pid), 'decrease')
         return {
           status: 200,
           message: '操作成功'
