@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-06 00:28:49
+ * @LastEditTime: 2019-08-06 00:35:00
  */
 
 const util = require('../util')
@@ -104,6 +104,21 @@ const post = {
       sql = 'UPDATE post SET likes=likes+1 WHERE id=?'
     }else{
       sql = 'UPDATE post SET likes=likes-1 WHERE id=?'
+    }
+    let result = await db.query(sql, [id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
+  //修改帖子收藏数（increase为加一，decrease为减一）
+  async updateCollects(id, action){
+    let sql
+    if(action == 'increase'){
+      sql = 'UPDATE post SET collects=collects+1 WHERE id=?'
+    }else{
+      sql = 'UPDATE post SET collects=collects-1 WHERE id=?'
     }
     let result = await db.query(sql, [id])
     if(result){

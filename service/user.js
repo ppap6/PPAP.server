@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-06 00:30:33
+ * @LastEditTime: 2019-08-06 00:34:11
  */
 
  /**
@@ -361,6 +361,8 @@ const user = {
         let post = await postModel.getPost(parseInt(data.pid))
         //添加用户收藏帖子动态
         await logModel.addCollectPostLog(parseInt(data.uid), parseInt(data.pid), post.uid)
+        //增加帖子收藏数
+        postModel.updateCollects(parseInt(data.pid), 'increase')
         return {
           status: 200,
           message: '操作成功'
@@ -390,6 +392,8 @@ const user = {
       //修改收藏帖子记录
       let result = await userModel.updateCollectPosts(parseInt(data.uid), posts)
       if(result){
+        //减少帖子收藏数
+        postModel.updateCollects(parseInt(data.pid), 'decrease')
         return {
           status: 200,
           message: '操作成功'
