@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-05 23:54:23
+ * @LastEditTime: 2019-08-06 00:13:04
  */
 
 const util = require('../util')
@@ -15,12 +15,12 @@ const post = {
     let start = (pageNum-1)*pageSize
     let sql
     if(topicId === 0){
-      sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.reads,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+      sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
         FROM post AS p,user AS u,topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id
         LIMIT ${start},${pageSize}`
     }else{
-      sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.reads,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+      sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
         FROM post AS p,user AS u,topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
         LIMIT ${start},${pageSize}`
@@ -62,7 +62,7 @@ const post = {
 
   //获取帖子信息(根据id)
   async getPost(id){
-    let sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.reads,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+    let sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
       FROM post AS p,user AS u,topic AS t 
       WHERE p.topic_id=t.id AND p.uid=u.id AND p.id=?`
     let result = await db.query(sql, [id])
@@ -89,7 +89,7 @@ const post = {
 
   //增加帖子阅读量
   async addPV(id){
-    let sql = 'UPDATE post SET reads=reads+1 WHERE id=?'
+    let sql = 'UPDATE post SET pv=pv+1 WHERE id=?'
     let result = await db.query(sql, [id])
     if(result){
       return true
