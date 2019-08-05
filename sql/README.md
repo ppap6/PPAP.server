@@ -101,7 +101,7 @@ content  - 帖子内容(varchar)
 create_time  - 创建时间(datetime)
 update_time  - 更新时间(datetime)
 topic_id  - 话题ID(int)
-reads  - 阅读数(int)
+pv  - 阅读数(int)
 likes  - 点赞数(int)
 collects  - 收藏数(int)
 ```

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-03 00:17:00
+ * @LastEditTime: 2019-08-06 00:14:34
  */
 
 DROP TABLE IF EXISTS `user`;
@@ -77,7 +77,7 @@ CREATE TABLE `post` (
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `topic_id` INT UNSIGNED NOT NULL COMMENT '话题ID',
-    `reads` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读数',
+    `pv` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读数',
     `likes` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数',
     `collects` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '收藏数',
     PRIMARY KEY (`id`)
