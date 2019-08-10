@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-06 00:34:11
+ * @LastEditTime: 2019-08-10 14:58:08
  */
 
  /**
@@ -18,6 +18,8 @@ const userModel = require('../model/user')
 const topicModel = require('../model/topic')
 const postModel = require('../model/post')
 const logModel = require('../model/log')
+const jwt = require('jsonwebtoken')
+const secret = 'secret'
 
 const user = {
 
@@ -124,7 +126,8 @@ const user = {
       if(result){
         return {
           status: 200,
-          message: '登录成功'
+          message: '登录成功',
+          token: getToken({ account: data.account, password: data.password })
         }
       }else{
         return {
@@ -529,6 +532,11 @@ const user = {
     }
   },
   
+}
+
+/* 获取一个期限为2小时的token */
+function getToken(payload = {}) {
+  return jwt.sign(payload, secret, { expiresIn: '2h' });
 }
 
 module.exports = user
