@@ -2,12 +2,10 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-11 23:42:38
+ * @LastEditTime: 2019-08-12 22:54:23
  */
 const Koa = require('koa')
-const path = require('path')
 const bodyParser = require('koa-bodyparser')
-const jwt = require('jsonwebtoken') // 用于签发、解析`token`
 const jwtKoa = require('koa-jwt')  // 用于路由权限控制
 const app = new Koa()
 
