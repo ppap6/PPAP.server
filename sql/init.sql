@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-04 23:49:30
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-20 22:34:23
+ * @LastEditTime: 2019-08-20 23:07:59
  */
 
 DROP TABLE IF EXISTS `user`;
@@ -111,7 +111,7 @@ DROP TABLE IF EXISTS `expires_time`;
 CREATE TABLE `expires_time` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '记录ID',
     `uid` INT UNSIGNED NOT NULL COMMENT '用户ID',
-    `token` VARCHAR(255) NOT NULL DEFAULT 'token' COMMENT 'Token字符串',
-    `expires_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '有效期时间',
+    `token` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Token字符串',
+    `expires_time` DATETIME NOT NULL COMMENT '有效期时间',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='token 有效期时间表';
