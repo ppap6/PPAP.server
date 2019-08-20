@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-10 14:58:08
+ * @LastEditTime: 2019-08-20 22:59:53
  */
 
  /**
@@ -42,7 +42,10 @@ const user = {
   async addUser(data){
     let insertId = await userModel.addUser(data)
     if(insertId){
+      //新增用户点赞收藏点亮模型
       await userModel.addUserLikeCollectLightModel(insertId)
+      //新增用户token有效期时间记录
+      await userModel.addUserTokenExpiresTimeRelation(insertId)
       return {
         status: 200,
         message: '操作成功'
@@ -60,7 +63,10 @@ const user = {
     if(exist){
       let result = await userModel.deleteUser(id)
       if(result){
+        //删除用户点赞收藏点亮模型
         await userModel.deleteUserLikeCollectLightModel(id)
+        //删除用户token有效期时间记录
+        await userModel.deleteUserTokenExpiresTimeRelation(id)
         return {
           status: 200,
           message: '操作成功'
