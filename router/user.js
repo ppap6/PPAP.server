@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-06 14:44:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-30 23:17:25
+ * @LastEditTime: 2019-09-02 22:36:21
  */
 
 const router = require('koa-router')()
@@ -15,6 +15,7 @@ router
   .get('/:id', user.getUser)    //获取用户信息
   .put('/:id', user.updateUser)    //修改用户信息
   .post('/login', user.login)    //用户登录
+  .post('/register', user.addUser)    //用户注册
 
   .post('/follow', user.follow)    //用户关注
   .post('/cancel/follow', user.cancelFollow)    //用户取消关注

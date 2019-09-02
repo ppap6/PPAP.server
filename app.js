@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-12 22:54:23
+ * @LastEditTime: 2019-09-02 22:38:48
  */
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
@@ -21,7 +21,7 @@ app.use((ctx, next) => {
           ctx.status = 401;
           ctx.body = {
             status: 401,
-            message: 'Protected resource, use Authorization header to get access'
+            message: '未携带token令牌或者token令牌已过期'
           }
       }else{
           throw err;
@@ -34,6 +34,7 @@ app.use(jwtKoa({ secret: secret }).unless({
   // 设置login、register接口，可以不需要认证访问
   path: [
       /^\/user\/login/,
+      /^\/user\/register/
   ]
 }));
 
