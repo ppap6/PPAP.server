@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-02 22:38:48
+ * @LastEditTime: 2019-09-02 23:57:10
  */
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
@@ -16,6 +16,10 @@ app.use(bodyParser())
 
 // 错误处理
 app.use((ctx, next) => {
+  //获取token，保存全局变量
+  if(ctx.request.header.authorization){
+    global.token = ctx.request.header.authorization.split(' ')[1]
+  }
   return next().catch((err) => {
       if(err.status === 401){
           ctx.status = 401;
