@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-03 23:59:37
+ * @LastEditTime: 2019-09-04 00:15:21
  */
 
 /**
@@ -338,9 +338,12 @@ const user = {
   async getRoleId(){
     let token = global.token
     let obj = jwt.verify(token, secret)
-    let sql = 'SELECT * FROM user WHERE account=?'
-    let result = await db.query(sql, [obj.account, ])
+    let account = obj.account
+    let sql = `SELECT * FROM user WHERE account=${account}`
+    let result = await db.query(sql)
+    console.log(Array.isArray(result))
     if(Array.isArray(result) && result.length > 0){
+      console.log(result[0].role_id)
       return result[0].role_id
     }
     return false

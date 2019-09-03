@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-03 23:50:07
+ * @LastEditTime: 2019-09-04 00:26:30
  */
 
  /**
@@ -25,10 +25,15 @@ const user = {
 
   //获取所有用户
   async getUserList(pageNum, pageSize){
-    //读取http请求token值
-    userModel.getRoleId()
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
     //验证身份权限
-
+    if(roleId >= 4){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let userList = await userModel.getUserList(pageNum, pageSize)
     if(userList){
       return {
