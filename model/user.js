@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-04 00:15:21
+ * @LastEditTime: 2019-09-04 00:36:17
  */
 
 /**
@@ -31,6 +31,7 @@ const user = {
 
   //新增用户
   async addUser(data){
+    //默认新增普通用户
     let sql = 'INSERT INTO user(name,account,password,email,create_time,update_time,role_id) VALUES(?,?,?,?,?,?,?)'
     let values = [
       data.name,
@@ -39,7 +40,7 @@ const user = {
       data.email,
       util.changeTimeToStr(new Date()),
       util.changeTimeToStr(new Date()),
-      4
+      5
     ]
     let result = await db.query(sql, values)
     if(result.insertId){
@@ -339,11 +340,9 @@ const user = {
     let token = global.token
     let obj = jwt.verify(token, secret)
     let account = obj.account
-    let sql = `SELECT * FROM user WHERE account=${account}`
-    let result = await db.query(sql)
-    console.log(Array.isArray(result))
+    let sql = 'SELECT * FROM user WHERE account=?'
+    let result = await db.query(sql, [account])
     if(Array.isArray(result) && result.length > 0){
-      console.log(result[0].role_id)
       return result[0].role_id
     }
     return false
