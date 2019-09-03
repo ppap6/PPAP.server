@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-02 23:59:50
+ * @LastEditTime: 2019-09-03 23:50:07
  */
 
  /**
@@ -26,7 +26,7 @@ const user = {
   //获取所有用户
   async getUserList(pageNum, pageSize){
     //读取http请求token值
-    console.log(global.token)
+    userModel.getRoleId()
     //验证身份权限
 
     let userList = await userModel.getUserList(pageNum, pageSize)
