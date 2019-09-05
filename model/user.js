@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 09:42:12
+ * @LastEditTime: 2019-09-05 10:21:53
  */
 
 /**
@@ -306,30 +306,6 @@ const user = {
     let result = await db_mongo.updateOne('user_likes_collects_lights_relation', {uid}, setObj)
     if(result.modifiedCount){
       return result.modifiedCount
-    }
-    return false
-  },
-
-  //新增用户token有效期时间记录
-  async addUserTokenExpiresTimeRelation(uid){
-    let sql = 'INSERT INTO expires_time(uid,expires_time) VALUES(?,?)'
-    let values = [
-      uid,
-      util.changeTimeToStr(new Date())
-    ]
-    let result = await db.query(sql, values)
-    if(result.insertId){
-      return result.insertId
-    }
-    return false
-  },
-
-  //删除用户token有效期时间记录
-  async deleteUserTokenExpiresTimeRelation(uid){
-    let sql = 'DELETE FROM expires_time WHERE uid=?'
-    let result = await db.query(sql, [uid])
-    if(result.affectedRows){
-      return true
     }
     return false
   },

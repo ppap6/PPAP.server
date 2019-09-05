@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 09:58:06
+ * @LastEditTime: 2019-09-05 10:22:25
  */
 
  /**
@@ -52,8 +52,6 @@ const user = {
     if(insertId){
       //新增用户点赞收藏点亮模型
       await userModel.addUserLikeCollectLightModel(insertId)
-      //新增用户token有效期时间记录
-      await userModel.addUserTokenExpiresTimeRelation(insertId)
       return {
         status: 200,
         message: '操作成功'
@@ -73,8 +71,6 @@ const user = {
       if(result){
         //删除用户点赞收藏点亮模型
         await userModel.deleteUserLikeCollectLightModel(id)
-        //删除用户token有效期时间记录
-        await userModel.deleteUserTokenExpiresTimeRelation(id)
         return {
           status: 200,
           message: '操作成功'
