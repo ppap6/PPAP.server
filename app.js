@@ -2,13 +2,14 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-02 23:57:10
+ * @LastEditTime: 2019-09-05 10:09:54
  */
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const jwtKoa = require('koa-jwt')  // 用于路由权限控制
 const app = new Koa()
 
+const tokenUtil = require('./util/token')
 const router = require('./router')
 
 //配置ctx.body解析中间件
@@ -20,7 +21,19 @@ app.use((ctx, next) => {
   if(ctx.request.header.authorization){
     global.token = ctx.request.header.authorization.split(' ')[1]
   }
-  return next().catch((err) => {
+  return next().then(() => {
+    // 设置login、register接口，不需要判断token续期
+    if(ctx.path == '/user/login' || ctx.path == '/user/register'){
+      return
+    }
+    //判断token是否应该续期（有效时间）
+    if(tokenUtil.getTokenRenewStatus){
+      //设置header
+      ctx.set({
+        new_token: tokenUtil.createNewToken()
+      })
+    }
+  }).catch((err) => {
       if(err.status === 401){
           ctx.status = 401;
           ctx.body = {

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-04 00:36:17
+ * @LastEditTime: 2019-09-05 09:42:12
  */
 
 /**
@@ -13,8 +13,7 @@
 const util = require('../util')
 const db = require('../util/db')
 const db_mongo = require('../util/db_mongo')
-const jwt = require('jsonwebtoken')
-const secret = 'secret'
+const tokenUtil = require('../util/token')
 
 const user = {
 
@@ -337,8 +336,7 @@ const user = {
 
   //根据token获取用户角色id
   async getRoleId(){
-    let token = global.token
-    let obj = jwt.verify(token, secret)
+    let obj = tokenUtil.parseToken()
     let account = obj.account
     let sql = 'SELECT * FROM user WHERE account=?'
     let result = await db.query(sql, [account])
