@@ -1,3 +1,9 @@
+<!--
+ * @Author: jwchan1996
+ * @Date: 2019-05-25 09:07:20
+ * @LastEditors: jwchan1996
+ * @LastEditTime: 2019-09-05 10:19:35
+ -->
 ### 数据表设计
 - 用户表 user
 - 角色表 role
@@ -19,8 +25,6 @@
 - 
 - 私信表 chat
 - 私信信息表 message (考虑 mongodb)
--
-- token 有效期时间表 token_expires
 
 
 #### <span style="color:#009688"># </span>用户表 user
@@ -310,15 +314,4 @@ uid  - 用户ID
 cid  - 私信ID
 content  - 私信内容
 create_time  - 创建时间
-```
-
-#### <span style="color:#009688"># </span>token 有效期时间表 token_expires
-
-> 字段
-
-```
-id  - 记录ID(int)
-uid - 用户ID(int)
-token  - token字符串(varchar)
-expires_time  - 有效期时间(datetime)
 ```
