@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 10:09:54
+ * @LastEditTime: 2019-09-08 23:03:44
  */
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
@@ -46,8 +46,7 @@ app.use((ctx, next) => {
   })
 })
 
-const secret = 'secret'
-app.use(jwtKoa({ secret: secret }).unless({
+app.use(jwtKoa({ secret: tokenUtil.secret }).unless({
   // 设置login、register接口，可以不需要认证访问
   path: [
       /^\/user\/login/,
@@ -59,4 +58,4 @@ app.use(jwtKoa({ secret: secret }).unless({
 app.use(router.routes()).use(router.allowedMethods())
 
 //监听启动窗口
-app.listen(2333, () => console.log("koa demo is run on localhost:2333"))
+app.listen(2333, () => console.log("PPAP.server is run on localhost:2333"))

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-05 09:15:19
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 10:15:28
+ * @LastEditTime: 2019-09-08 23:02:32
  */
 const jwt = require('jsonwebtoken')
 const secret = 'secret'
@@ -49,6 +49,7 @@ const parseToken = () => {
 }
 
 module.exports = {
+  secret,
   getTokenRenewStatus,
   getToken,
   createNewToken,
