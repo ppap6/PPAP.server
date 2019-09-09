@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 10:22:25
+ * @LastEditTime: 2019-09-10 01:49:13
  */
 
  /**
@@ -130,14 +130,20 @@ const user = {
 
   //用户登录
   async login(data){
-    let exist = await userModel.getUserByAccount(data.account)
-    if(exist){
+    let user = await userModel.getUserByAccount(data.account)
+    if(user){
       let result = await userModel.login(data.account, data.password)
       if(result){
         return {
           status: 200,
           message: '登录成功',
-          token: tokenUtil.getToken({account: data.account, password: data.password})
+          token: tokenUtil.getToken({
+            uid: user.id,
+            name: user.name,
+            account: data.account, 
+            password: data.password,
+            roleId: user.role_id
+          })
         }
       }else{
         return {
