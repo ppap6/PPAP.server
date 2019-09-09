@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-08 23:03:44
+ * @LastEditTime: 2019-09-10 01:17:05
  */
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
@@ -27,7 +27,7 @@ app.use((ctx, next) => {
       return
     }
     //判断token是否应该续期（有效时间）
-    if(tokenUtil.getTokenRenewStatus){
+    if(tokenUtil.getTokenRenewStatus()){
       //设置header
       ctx.set({
         new_token: tokenUtil.createNewToken()

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-05 09:15:19
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-08 23:02:32
+ * @LastEditTime: 2019-09-10 01:15:06
  */
 const jwt = require('jsonwebtoken')
 const secret = 'secret'
@@ -11,8 +11,12 @@ const secret = 'secret'
 const getTokenRenewStatus = () => {
 
   //检测当前token是否到达续期时间段
-  let token = global.token
-  let obj = jwt.verify(token, secret)
+  let obj = parseToken()
+  //解析token携带的信息
+  global.uid = obj.uid
+  global.name = obj.name
+  global.account = obj.account
+  global.roleId = obj.roleId
   //更新时间段在过期前3天
   if(obj.exp - new Date().getTime()/1000 > 60*60*24*3){
     return false
