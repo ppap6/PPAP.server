@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-10 01:37:17
+ * @LastEditTime: 2019-09-10 23:43:57
  */
 
 /**
@@ -17,11 +17,18 @@
 const personModel = require('../model/person')
 
 const person = {
-
+    
     //获取个人帖子列表
     async getPostList(pageNum, pageSize) {
         let postList = await personModel.getPostList(pageNum, pageSize)
         if (postList) {
+            //遍历
+            for (let i = 0; i < postList.length; i++) {
+                let commentCount = await personModel.getPostCommentCount(postList[i].id)
+                let answerCount = await personModel.getPostAnswerCount(postList[i].id)
+                postList[i].comments = commentCount
+                postList[i].answers = answerCount
+            }
             return {
                 status: 200,
                 message: postList
