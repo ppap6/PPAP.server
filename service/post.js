@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-05 23:28:06
+ * @LastEditTime: 2019-09-11 00:07:19
  */
 
  /**
@@ -16,6 +16,7 @@
   */
 const postModel = require('../model/post')
 const topicModel = require('../model/topic')
+const personModel = require('../model/person')
 
 const post ={
 
@@ -23,6 +24,12 @@ const post ={
   async getPostList(pageNum, pageSize, topicId){
     let postList = await postModel.getPostList(pageNum, pageSize, topicId)
     if(postList){
+      for (let i = 0; i < postList.length; i++) {
+        let commentCount = await personModel.getPostCommentCount(postList[i].id)
+        let answerCount = await personModel.getPostAnswerCount(postList[i].id)
+        postList[i].comments = commentCount
+        postList[i].answers = answerCount
+      }
       return {
         status: 200,
         message: postList
