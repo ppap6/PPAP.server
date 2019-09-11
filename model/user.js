@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 10:21:53
+ * @LastEditTime: 2019-09-11 23:37:03
  */
 
 /**
@@ -13,6 +13,7 @@
 const util = require('../util')
 const db = require('../util/db')
 const db_mongo = require('../util/db_mongo')
+const ObjectId = require('mongodb').ObjectId
 const tokenUtil = require('../util/token')
 
 const user = {
@@ -280,6 +281,66 @@ const user = {
       $set: dataObj
     }
     let result = await db_mongo.updateOne('user_likes_collects_lights_relation', {uid}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
+  //评论点亮计数加一
+  async increaseCommentLightsCount(commentId, lights){
+    let dataObj = {
+      lights: lights + 1
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('comment', {_id: ObjectId(commentId)}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
+  //评论点亮计数减一
+  async decreaseCommentLightsCount(commentId, lights){
+    let dataObj = {
+      lights: lights - 1
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('comment', {_id: ObjectId(commentId)}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
+  //回复点亮计数加一
+  async increaseAnswerLightsCount(answerId, lights){
+    let dataObj = {
+      lights: lights + 1
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('answer', {_id: ObjectId(answerId)}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
+  //回复点亮计数减一
+  async decreaseAnswerLightsCount(answerId, lights){
+    let dataObj = {
+      lights: lights - 1
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('answer', {_id: ObjectId(answerId)}, setObj)
     if(result.modifiedCount){
       return result.modifiedCount
     }

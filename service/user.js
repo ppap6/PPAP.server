@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-10 01:49:13
+ * @LastEditTime: 2019-09-11 23:34:58
  */
 
  /**
@@ -18,6 +18,8 @@ const userModel = require('../model/user')
 const topicModel = require('../model/topic')
 const postModel = require('../model/post')
 const logModel = require('../model/log')
+const commentModel = require('../model/comment')
+const answerModel = require('../model/answer')
 const tokenUtil = require('../util/token')
 
 const user = {
@@ -441,6 +443,9 @@ const user = {
       comments.push(data.comment_id)
       //修改点亮评论记录
       let result = await userModel.updateLightComments(parseInt(data.uid), comments)
+      //修改评论点亮计数
+      let comment = await commentModel.getComment(data.comment_id)
+      userModel.increaseCommentLightsCount(comment._id, comment.lights)
       if(result){
         return {
           status: 200,
@@ -470,6 +475,9 @@ const user = {
       comments.splice(comments.findIndex(item => item == data.comment_id), 1)
       //修改点亮评论记录
       let result = await userModel.updateLightComments(parseInt(data.uid), comments)
+      //修改评论点亮计数
+      let comment = await commentModel.getComment(data.comment_id)
+      userModel.decreaseCommentLightsCount(comment._id, comment.lights)
       if(result){
         return {
           status: 200,
@@ -499,6 +507,9 @@ const user = {
       answers.push(data.answer_id)
       //修改点亮回复记录
       let result = await userModel.updateLightAnswers(parseInt(data.uid), answers)
+      //修改回复点亮计数
+      let answer = await answerModel.getAnswer(data.answer_id)
+      userModel.increaseAnswerLightsCount(answer._id, answer.lights)
       if(result){
         return {
           status: 200,
@@ -528,6 +539,9 @@ const user = {
       answers.splice(answers.findIndex(item => item == data.answer_id), 1)
       //修改点亮回复记录
       let result = await userModel.updateLightAnswers(parseInt(data.uid), answers)
+      //修改回复点亮计数
+      let answer = await answerModel.getAnswer(data.answer_id)
+      userModel.decreaseAnswerLightsCount(answer._id, answer.lights)
       if(result){
         return {
           status: 200,
