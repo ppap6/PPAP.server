@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-11 00:15:06
+ * @LastEditTime: 2019-09-18 00:22:42
  */
 
 /**
@@ -16,14 +16,13 @@ const db_mongo = require('../util/db_mongo')
 const person = {
 
     //获取用户帖子列表
-    async getPostList(pageNum, pageSize) {
-        let uid = global.uid
+    async getPostList(userId, pageNum, pageSize) {
         let start = (pageNum - 1) * pageSize
         let sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
             FROM post AS p,user AS u,topic AS t 
             WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=?
             LIMIT ${start},${pageSize}`
-        let result = await db.query(sql, [uid])
+        let result = await db.query(sql, [userId])
         if (Array.isArray(result) && result.length > 0) {
             return result
         }
@@ -46,6 +45,16 @@ const person = {
             return result.length
         }
         return 0
+    },
+
+    //获取用户评论列表
+    async getCommentList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('comment', {uid: userId}, start, pageSize, {update_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
     }
 
 }

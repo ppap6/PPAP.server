@@ -2,20 +2,30 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:33:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-10 01:33:20
+ * @LastEditTime: 2019-09-17 23:52:10
  */
 const userCode = require('../code/user')
 const personService = require('../service/person')
 
 const person = {
 
-    //获取用户帖子列表
+    //获取用户个人帖子列表
     async getPostList(ctx) {
+        let userId = ctx.query.user_id
         let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
         let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
-        let posts = await personService.getPostList(pageNum, pageSize)
+        let posts = await personService.getPostList(userId, pageNum, pageSize)
         ctx.body = posts
-    }
+    },
+
+    //获取用户个人评论列表
+    async getCommentList(ctx) {
+        let userId = ctx.query.user_id
+        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
+        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let comments = await personService.getCommentList(userId, pageNum, pageSize)
+        ctx.body = comments
+    },
 
 }
 
