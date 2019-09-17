@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-11 00:16:30
+ * @LastEditTime: 2019-09-18 00:23:45
  */
 
 const MongoClient = require('mongodb').MongoClient
@@ -14,7 +14,7 @@ const url = 'mongodb://localhost:27017/'
  * 创建数据库连接对象
  */
 let DB
-MongoClient.connect( url, { useNewUrlParser: true }, (err, client) => {
+MongoClient.connect( url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
   if(err) throw err
   DB = client.db('ppap')
 })
@@ -26,9 +26,9 @@ MongoClient.connect( url, { useNewUrlParser: true }, (err, client) => {
  * @param {Object} condition 查询条件
  * @return {Array} 返回
  */
-const find = ( table, condition={}, start=0, pageSize=1000 ) => {
+const find = ( table, condition={}, start=0, pageSize=1000, sortCondition={} ) => {
   return new Promise((resolve, reject) => {
-    DB.collection(table).find(condition).skip(start).limit(pageSize).toArray((err, result) => {
+    DB.collection(table).find(condition).sort(sortCondition).skip(start).limit(pageSize).toArray((err, result) => {
       if(err){
         reject(err)
       }else{
