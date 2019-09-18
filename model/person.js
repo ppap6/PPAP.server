@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-18 00:22:42
+ * @LastEditTime: 2019-09-18 23:06:24
  */
 
 /**
@@ -55,7 +55,17 @@ const person = {
             return result
         }
         return false
-    }
+    },
+
+    //获取用户回复列表
+    async getAnswerList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('answer', {requestor_id: userId}, start, pageSize, {update_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
 
 }
 

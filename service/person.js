@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-18 00:07:23
+ * @LastEditTime: 2019-09-18 23:21:56
  */
 
 /**
@@ -16,6 +16,9 @@
  */
 const personModel = require('../model/person')
 const postModel = require('../model/post')
+const userModel = require('../model/user')
+const commentModel = require('../model/comment')
+const answerModel = require('../model/answer')
 
 const person = {
     
@@ -57,6 +60,47 @@ const person = {
                     create_time: commentList[i].create_time,
                     update_time: commentList[i].update_time,
                     lights: commentList[i].lights
+                }
+                newList.push(item)
+            }
+            return {
+                status: 200,
+                message: newList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    },
+
+    //获取个人回复列表
+    async getAnswerList(userId, pageNum, pageSize) {
+        let answerList = await personModel.getAnswerList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
+        if (answerList) {
+            let newList = []
+            for(let i=0; i<answerList.length; i++){
+                let post = await postModel.getPost(answerList[i].pid)
+                let user = await userModel.getUser(answerList[i].targetor_id)
+                let comment = await commentModel.getComment(answerList[i].comment_id)
+                let answer = await answerModel.getAnswer(answerList[i].target_answer_id)
+                let item = {
+                    _id: answerList[i]._id,
+                    type: answerList[i].type,
+                    comment_id: answerList[i].comment_id,
+                    comment_content: comment.content,
+                    target_answer_id: answerList[i].target_answer_id,
+                    target_answer_content: answer.content,
+                    requestor_id: answerList[i].requestor_id,
+                    targetor_id: answerList[i].targetor_id,
+                    targetor_name: user.name,
+                    targetor_avatar: user.avatar,
+                    pid: answerList[i].pid,
+                    ptitle: post.title,
+                    content: answerList[i].content,
+                    create_time: answerList[i].create_time,
+                    update_time: answerList[i].update_time,
+                    lights: answerList[i].lights
                 }
                 newList.push(item)
             }
