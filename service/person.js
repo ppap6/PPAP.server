@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 00:28:59
+ * @LastEditTime: 2019-09-22 00:34:51
  */
 
 /**
@@ -136,6 +136,35 @@ const person = {
             return {
                 status: 200,
                 message: newFansList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    },
+
+    //获取个人关注列表
+    async getFollowList(userId, pageNum, pageSize) {
+        let followList = await personModel.getFollowList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
+        if (followList) {
+            let newFollowList = []
+            //遍历
+            for (let i = 0; i < followList.length; i++) {
+                let user = await userModel.getUser(followList[i].follow_uid)
+                let fansCount = await personModel.getUserFansCount(parseInt(followList[i].follow_uid))
+                let followCount = await personModel.getUserFollowCount(parseInt(followList[i].follow_uid))
+                newFollowList.push({
+                    id: user.id,
+                    name: user.name,
+                    avatar: user.avatar,
+                    fans_count: fansCount,
+                    follow_count: followCount
+                })
+            }
+            return {
+                status: 200,
+                message: newFollowList
             }
         }
         return {
