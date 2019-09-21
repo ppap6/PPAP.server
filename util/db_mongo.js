@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-18 00:23:45
+ * @LastEditTime: 2019-09-22 00:19:58
  */
 
 const MongoClient = require('mongodb').MongoClient
@@ -29,6 +29,24 @@ MongoClient.connect( url, { useNewUrlParser: true, useUnifiedTopology: true }, (
 const find = ( table, condition={}, start=0, pageSize=1000, sortCondition={} ) => {
   return new Promise((resolve, reject) => {
     DB.collection(table).find(condition).sort(sortCondition).skip(start).limit(pageSize).toArray((err, result) => {
+      if(err){
+        reject(err)
+      }else{
+        resolve(result)
+      }
+    })
+  })
+}
+
+/**
+ * @description: 计算总数通用函数
+ * @param {String} table 数据表
+ * @param {Object} condition 查询条件
+ * @return {Array} 返回
+ */
+const count = ( table, condition={} ) => {
+  return new Promise((resolve, reject) => {
+    DB.collection(table).find(condition).count((err, result) => {
       if(err){
         reject(err)
       }else{
@@ -156,6 +174,7 @@ const deleteMany = (table, condition) => {
 
 module.exports = {
   find,
+  count,
   insertOne,
   insertMany,
   updateOne,

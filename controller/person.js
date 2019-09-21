@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:33:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-18 22:59:08
+ * @LastEditTime: 2019-09-21 23:39:08
  */
 const userCode = require('../code/user')
 const personService = require('../service/person')
@@ -34,6 +34,15 @@ const person = {
         let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
         let answers = await personService.getAnswerList(userId, pageNum, pageSize)
         ctx.body = answers
+    },
+
+    //获取用户个人粉丝列表
+    async getFansList(ctx) {
+        let userId = ctx.query.user_id
+        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
+        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let fans = await personService.getFansList(userId, pageNum, pageSize)
+        ctx.body = fans
     },
 
 }

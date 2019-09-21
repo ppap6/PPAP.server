@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-18 23:06:24
+ * @LastEditTime: 2019-09-22 00:28:19
  */
 
 /**
@@ -66,6 +66,46 @@ const person = {
         }
         return false
     },
+
+    //获取用户粉丝列表
+    async getFansList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_fans_relation', {follow_uid: userId, state: 1}, start, pageSize, {create_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取用户关注列表
+    async getFollowList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_fans_relation', {uid: userId, state: 1}, start, pageSize, {create_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取用户粉丝总数
+    async getUserFansCount(userId){
+        let count = await db_mongo.count('user_fans_relation', {follow_uid: userId, state: 1})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
+    //获取用户关注总数
+    async getUserFollowCount(userId){
+        let count = await db_mongo.count('user_fans_relation', {uid: userId, state: 1})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
+    
 
 }
 
