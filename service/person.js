@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 22:27:20
+ * @LastEditTime: 2019-09-22 23:33:14
  */
 
 /**
@@ -177,22 +177,43 @@ const person = {
     async getLikeList(userId, pageNum, pageSize){
         let pidArr = await personModel.getLikePidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (pidArr.length) {
-            let newLikeList = []
+            let likeList = []
             //遍历
             for (let i = 0; i < pidArr.length; i++) {
                 let post = await postModel.getPost(pidArr[i])
-                newLikeList.push(post)
+                likeList.push(post)
             }
             return {
                 status: 200,
-                message: newLikeList
+                message: likeList
             }
         }
         return {
             status: 10003,
             message: '未找到操作对象'
         }
-    }
+    },
+
+    //获取个人收藏列表
+    async getCollectList(userId, pageNum, pageSize){
+        let pidArr = await personModel.getCollectPidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
+        if (pidArr.length) {
+            let collectList = []
+            //遍历
+            for (let i = 0; i < pidArr.length; i++) {
+                let post = await postModel.getPost(pidArr[i])
+                collectList.push(post)
+            }
+            return {
+                status: 200,
+                message: collectList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    },
 
 }
 

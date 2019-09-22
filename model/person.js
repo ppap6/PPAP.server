@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:20:18
+ * @LastEditTime: 2019-09-22 23:34:25
  */
 
 /**
@@ -111,6 +111,20 @@ const person = {
         let likePosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
         if (Array.isArray(likePosts) && likePosts.length > 0) {
             let pidArr = likePosts[0].like_posts
+            if(pidArr.length - start > pageSize){
+                return pidArr.slice(start, pageSize)
+            }
+            return pidArr.slice(start)
+        }
+        return 0
+    },
+
+    //获取用户收藏帖子数组（分页page）
+    async getCollectPidArr(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let collectPosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
+        if (Array.isArray(collectPosts) && collectPosts.length > 0) {
+            let pidArr = collectPosts[0].collect_posts
             if(pidArr.length - start > pageSize){
                 return pidArr.slice(start, pageSize)
             }

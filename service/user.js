@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:05:45
+ * @LastEditTime: 2019-09-22 23:35:27
  */
 
  /**
@@ -374,7 +374,7 @@ const user = {
     let posts = await userModel.getCollectPost(parseInt(data.uid))
     if(!posts.includes(parseInt(data.pid))){    //判断是否已收藏  
       //不存在=>添加
-      posts.push(parseInt(data.pid))
+      posts.unshift(parseInt(data.pid))
       //修改收藏帖子记录
       let result = await userModel.updateCollectPosts(parseInt(data.uid), posts)
       if(result){
