@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:33:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 00:32:30
+ * @LastEditTime: 2019-09-22 22:19:51
  */
 const userCode = require('../code/user')
 const personService = require('../service/person')
@@ -52,6 +52,15 @@ const person = {
         let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
         let followList = await personService.getFollowList(userId, pageNum, pageSize)
         ctx.body = followList
+    },
+
+    //获取用户个人点赞列表
+    async getLikeList(ctx) {
+        let userId = ctx.query.user_id
+        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
+        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let likeList = await personService.getLikeList(userId, pageNum, pageSize)
+        ctx.body = likeList
     },
 
 }

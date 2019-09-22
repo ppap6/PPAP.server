@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 00:34:51
+ * @LastEditTime: 2019-09-22 22:27:20
  */
 
 /**
@@ -172,6 +172,27 @@ const person = {
             message: '未找到操作对象'
         }
     },
+
+    //获取个人点赞列表
+    async getLikeList(userId, pageNum, pageSize){
+        let pidArr = await personModel.getLikePidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
+        if (pidArr.length) {
+            let newLikeList = []
+            //遍历
+            for (let i = 0; i < pidArr.length; i++) {
+                let post = await postModel.getPost(pidArr[i])
+                newLikeList.push(post)
+            }
+            return {
+                status: 200,
+                message: newLikeList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    }
 
 }
 

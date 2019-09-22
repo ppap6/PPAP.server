@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-11 23:34:58
+ * @LastEditTime: 2019-09-22 23:05:45
  */
 
  /**
@@ -308,7 +308,7 @@ const user = {
     let posts = await userModel.getLikePost(parseInt(data.uid))
     if(!posts.includes(parseInt(data.pid))){    //判断是否已点赞   
       //不存在=>添加
-      posts.push(parseInt(data.pid))
+      posts.unshift(parseInt(data.pid))
       //修改点赞帖子记录
       let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
       if(result){
