@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-02 23:32:48
+ * @LastEditTime: 2019-09-24 00:26:39
  */
 
  /**
@@ -63,9 +63,27 @@ const topic ={
   async getTopic(id){
     let topic = await topicModel.getTopic(id)
     if(topic){
+      let sname = ''
+      if(topic.sid){
+          let stopic = await topicModel.getTopic(topic.sid)
+          if(stopic){
+              sname = stopic.name
+          }
+      }
+      let newTopic = {
+        id: topic.id,
+        sid: topic.sid,
+        sname: sname,
+        name: topic.name,
+        intro: topic.intro,
+        create_time: topic.create_time,
+        update_time: topic.update_time,
+        posts: topic.posts,
+        followers: topic.followers,
+      }
       return {
         status: 200,
-        message: topic
+        message: newTopic
       }
     }
     return {

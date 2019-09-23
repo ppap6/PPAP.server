@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-23 23:39:02
+ * @LastEditTime: 2019-09-24 00:21:58
  */
 
 /**
@@ -136,7 +136,7 @@ const person = {
     //获取用户关注话题列表
     async getTopicList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
-        let result = await db_mongo.find('user_topic_relation', {uid: userId})
+        let result = await db_mongo.find('user_topic_relation', {uid: userId}, start, pageSize)
         if (Array.isArray(result) && result.length > 0) {
             return result
         }

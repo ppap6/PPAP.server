@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-23 23:35:31
+ * @LastEditTime: 2019-09-24 00:23:37
  */
 
 /**
@@ -177,7 +177,7 @@ const person = {
     //获取个人点赞列表
     async getLikeList(userId, pageNum, pageSize){
         let pidArr = await personModel.getLikePidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
-        if (pidArr.length) {
+        if (pidArr) {
             let likeList = []
             //遍历
             for (let i = 0; i < pidArr.length; i++) {
@@ -198,7 +198,7 @@ const person = {
     //获取个人收藏列表
     async getCollectList(userId, pageNum, pageSize){
         let pidArr = await personModel.getCollectPidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
-        if (pidArr.length) {
+        if (pidArr) {
             let collectList = []
             //遍历
             for (let i = 0; i < pidArr.length; i++) {
@@ -219,12 +219,32 @@ const person = {
     //获取个人话题列表
     async getTopicList(userId, pageNum, pageSize){
         let followTopicList = await personModel.getTopicList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
-        if (followTopicList.length) {
+        if (followTopicList) {
             let topicList = []
             //遍历
             for (let i = 0; i < followTopicList.length; i++) {
                 let topic = await topicModel.getTopic(followTopicList[i].follow_topic_id)
-                topicList.push(topic)
+                if(topic){
+                    let sname = ''
+                    if(topic.sid){
+                        let stopic = await topicModel.getTopic(topic.sid)
+                        if(stopic){
+                            sname = stopic.name
+                        }
+                    }
+                    let newTopic = {
+                        id: topic.id,
+                        sid: topic.sid,
+                        sname: sname,
+                        name: topic.name,
+                        intro: topic.intro,
+                        create_time: topic.create_time,
+                        update_time: topic.update_time,
+                        posts: topic.posts,
+                        followers: topic.followers,
+                    }
+                    topicList.push(newTopic)
+                }
             }
             return {
                 status: 200,
