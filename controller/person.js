@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:33:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:31:29
+ * @LastEditTime: 2019-09-23 23:16:39
  */
 const userCode = require('../code/user')
 const personService = require('../service/person')
@@ -70,6 +70,15 @@ const person = {
         let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
         let collectList = await personService.getCollectList(userId, pageNum, pageSize)
         ctx.body = collectList
+    },
+
+    //获取用户个人话题列表
+    async getTopicList(ctx) {
+        let userId = ctx.query.user_id
+        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
+        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let topicList = await personService.getTopicList(userId, pageNum, pageSize)
+        ctx.body = topicList
     },
 
 }

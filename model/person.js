@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:34:25
+ * @LastEditTime: 2019-09-23 23:39:02
  */
 
 /**
@@ -131,6 +131,16 @@ const person = {
             return pidArr.slice(start)
         }
         return 0
+    },
+
+    //获取用户关注话题列表
+    async getTopicList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_topic_relation', {uid: userId})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
     },
 
 }

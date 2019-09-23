@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:31:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:30:53
+ * @LastEditTime: 2019-09-23 23:16:07
  */
 const router = require('koa-router')()
 const person = require('../controller/person')
@@ -15,5 +15,6 @@ router
     .get('/follow', person.getFollowList)   //获取个人关注列表
     .get('/like', person.getLikeList)   //获取个人点赞列表
     .get('/collect', person.getCollectList)   //获取个人收藏列表
+    .get('/topic', person.getTopicList)   //获取个人话题列表
 
 module.exports = router

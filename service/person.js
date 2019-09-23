@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:33:14
+ * @LastEditTime: 2019-09-23 23:35:31
  */
 
 /**
@@ -19,6 +19,7 @@ const postModel = require('../model/post')
 const userModel = require('../model/user')
 const commentModel = require('../model/comment')
 const answerModel = require('../model/answer')
+const topicModel = require('../model/topic')
 
 const person = {
     
@@ -207,6 +208,27 @@ const person = {
             return {
                 status: 200,
                 message: collectList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    },
+
+    //获取个人话题列表
+    async getTopicList(userId, pageNum, pageSize){
+        let followTopicList = await personModel.getTopicList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
+        if (followTopicList.length) {
+            let topicList = []
+            //遍历
+            for (let i = 0; i < followTopicList.length; i++) {
+                let topic = await topicModel.getTopic(followTopicList[i].follow_topic_id)
+                topicList.push(topic)
+            }
+            return {
+                status: 200,
+                message: topicList
             }
         }
         return {
