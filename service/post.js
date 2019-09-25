@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-11 00:07:19
+ * @LastEditTime: 2019-09-26 00:56:01
  */
 
  /**
@@ -46,6 +46,8 @@ const post ={
     let result = await postModel.addPost(data)
     if(result){
       topicModel.updateTopicStatistics(data.topic_id, 'increasePosts')
+      //添加用户发布帖子动态
+      await logModel.addPostLog(parseInt(data.uid), parseInt(result))
       return {
         status: 200,
         message: '操作成功'
