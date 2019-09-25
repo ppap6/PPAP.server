@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-25 09:07:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-05 10:19:35
+ * @LastEditTime: 2019-09-26 00:50:14
  -->
 ### 数据表设计
 - 用户表 user
@@ -192,6 +192,7 @@ lights  - 点亮数
 4 => 点赞
 5 => 收藏
 6 => 关注话题
+7 => 发布帖子
 ```
 
 - 评论类型动态
@@ -249,6 +250,15 @@ _id  - 动态ID
 type  - 动态类型值 6
 uid  - 用户ID
 follow_topic_id  - 关注的话题ID
+create_time  - 创建时间
+```
+
+- 发布帖子类型动态
+```
+_id  - 动态ID
+type  - 动态类型值 7
+uid  - 用户ID
+pid  - 帖子ID
 create_time  - 创建时间
 ```
 
