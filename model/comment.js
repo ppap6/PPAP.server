@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:35:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-15 23:44:04
+ * @LastEditTime: 2019-09-28 23:00:00
  */
 
 const util = require('../util')
@@ -33,7 +33,7 @@ const comment = {
     }
     let result = await db_mongo.insertOne('comment', dataObj)
     if(result.insertedCount){
-      return result.insertedCount
+      return result.insertedId
     }
     return false
   },

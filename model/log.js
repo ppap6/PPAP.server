@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-26 00:57:22
+ * @LastEditTime: 2019-09-28 23:01:37
  */
 
 const util = require('../util')
@@ -11,12 +11,13 @@ const db_mongo = require('../util/db_mongo')
 const log = {
 
   //添加用户评论动态
-  async addCommentLog(uid, pid, post_owner_id){
+  async addCommentLog(uid, pid, post_owner_id, comment_id){
     let dataObj = {
       type: 1,
       uid,
       pid,
       post_owner_id,
+      comment_id,
       create_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)

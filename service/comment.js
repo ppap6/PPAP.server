@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-07 23:33:17
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-01 00:03:11
+ * @LastEditTime: 2019-09-28 23:00:52
  */
 
  /**
@@ -38,12 +38,12 @@
 
   //添加帖子评论
   async addComment(data){
-    let result = await commentModel.addComment(data)
-    if(result){
+    let insertedId = await commentModel.addComment(data)
+    if(insertedId){
       //获取帖子up主uid
       let post = await postModel.getPost(parseInt(data.pid))
       //添加用户评论动态
-      await logModel.addCommentLog(parseInt(data.uid), parseInt(data.pid), post.uid)
+      await logModel.addCommentLog(parseInt(data.uid), parseInt(data.pid), post.uid, insertedId)
       return {
         status: 200,
         message: '操作成功'
