@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:24:39
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-08-02 00:10:45
+ * @LastEditTime: 2019-09-28 23:05:10
  */
 
 /**
@@ -46,12 +46,12 @@ const answer ={
   async addAnswer(data){
     if(data.type == 1){
       // type == 1, 代表对评论的回复
-      let result = await answerModel.addAnswerForComment(data)
-      if(result){
+      let insertedId = await answerModel.addAnswerForComment(data)
+      if(insertedId){
         //获取准备回复的这条评论的目标人uid
         let comment = await commentModel.getComment(data.comment_id)
         //添加用户的回复动态
-        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(comment.uid))
+        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(comment.uid), insertedId)
         return {
           status: 200,
           message: '操作成功'
@@ -63,12 +63,12 @@ const answer ={
       }
     }else{
       // type == 2, 代表对回复的回复
-      let result = await answerModel.addAnswerForAnswer(data)
-      if(result){
+      let insertedId = await answerModel.addAnswerForAnswer(data)
+      if(insertedId){
         //获取准备回复的这条回复的目标人uid
         let answer = await answerModel.getAnswer(data.answer_id)
         //添加用户的回复动态
-        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(answer.requestor_id))
+        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
         return {
           status: 200,
           message: '操作成功'

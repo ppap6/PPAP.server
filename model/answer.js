@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-07-12 00:26:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-07-15 23:54:29
+ * @LastEditTime: 2019-09-28 23:03:49
  */
 
 const util = require('../util')
@@ -36,7 +36,7 @@ const answer = {
     }
     let result = await db_mongo.insertOne('answer', dataObj)
     if(result.insertedCount){
-      return result.insertedCount
+      return result.insertedId
     }
     return false
   },
@@ -57,7 +57,7 @@ const answer = {
     }
     let result = await db_mongo.insertOne('answer', dataObj)
     if(result.insertedCount){
-      return result.insertedCount
+      return result.insertedId
     }
     return false
   },

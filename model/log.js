@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 19:58:41
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-28 23:01:37
+ * @LastEditTime: 2019-09-28 23:06:12
  */
 
 const util = require('../util')
@@ -28,12 +28,13 @@ const log = {
   },
 
   //添加用户回复动态
-  async addAnswerLog(uid, pid, targetor_id){
+  async addAnswerLog(uid, pid, targetor_id, answer_id){
     let dataObj = {
       type: 2,
       uid,
       pid,
       targetor_id,
+      answer_id,
       create_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
