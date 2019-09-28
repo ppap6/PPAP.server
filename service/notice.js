@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-29 00:13:53
+ * @LastEditTime: 2019-09-29 00:29:56
  */
 
 /**
@@ -115,6 +115,36 @@ const notice = {
             message: '未找到操作对象'
         }
     },
+
+    //获取点赞通知列表
+    async getLikeList(userId, pageNum, pageSize) {
+      let likeLogList = await noticeModel.getLikeLogList(userId, pageNum, pageSize)
+      if (likeLogList) {
+          let noticeList = []
+          //遍历
+          for (let i = 0; i < likeLogList.length; i++) {
+            let user = await userModel.getUser(likeLogList[i].uid)
+            let post = await postModel.getPost(likeLogList[i].pid)
+            noticeList.push({
+              _id: likeLogList[i]._id,
+              uid: likeLogList[i].uid,
+              uname: user.name,
+              avatar: user.avatar,
+              pid: likeLogList[i].pid,
+              pname: post.title,
+              create_time: likeLogList[i].create_time
+            })
+          }
+          return {
+              status: 200,
+              message: noticeList
+          }
+      }
+      return {
+          status: 10003,
+          message: '未找到操作对象'
+      }
+  },
 
 }
 

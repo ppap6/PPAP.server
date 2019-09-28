@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:33:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-28 23:58:19
+ * @LastEditTime: 2019-09-29 00:28:17
  */
 const noticeService = require('../service/notice')
 
@@ -33,6 +33,15 @@ const notice = {
         let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
         let follows = await noticeService.getFollowList(userId, pageNum, pageSize)
         ctx.body = follows
+    },
+
+    //获取点赞通知列表
+    async getLikeList(ctx) {
+        let userId = global.uid
+        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
+        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let likes = await noticeService.getLikeList(userId, pageNum, pageSize)
+        ctx.body = likes
     },
 
 }
