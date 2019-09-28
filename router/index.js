@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:02:00
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-10 01:40:26
+ * @LastEditTime: 2019-09-28 21:36:19
  */
 
 /**
@@ -20,6 +20,7 @@ const access = require('./access')
 const comment = require('./comment')
 const answer = require('./answer')
 const person = require('./person')
+const notice = require('./notice')
 
 router.use('/', home.routes(), home.allowedMethods())
 router.use('/user', user.routes(), user.allowedMethods())
@@ -30,5 +31,6 @@ router.use('/access', access.routes(), access.allowedMethods())
 router.use('/comment', comment.routes(), comment.allowedMethods())
 router.use('/answer', answer.routes(), answer.allowedMethods())
 router.use('/person', person.routes(), person.allowedMethods())
+router.use('/notice', notice.routes(), notice.allowedMethods())
 
 module.exports = router
