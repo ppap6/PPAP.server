@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-28 23:50:36
+ * @LastEditTime: 2019-09-29 00:22:07
  */
 
 /**
@@ -28,6 +28,16 @@ const notice = {
     async getAnswerLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_log', {targetor_id: userId, type: 2}, start, pageSize, {create_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取关注通知列表
+    async getFollowLogList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_log', {follow_people_uid: userId, type: 3}, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }

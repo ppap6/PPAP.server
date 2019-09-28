@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-28 23:54:16
+ * @LastEditTime: 2019-09-29 00:13:53
  */
 
 /**
@@ -75,6 +75,34 @@ const notice = {
                 answer_id: answerLogList[i].answer_id,
                 answer_content: answer.content,
                 create_time: answerLogList[i].create_time
+              })
+            }
+            return {
+                status: 200,
+                message: noticeList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    },
+
+    //获取关注通知列表
+    async getFollowList(userId, pageNum, pageSize) {
+        let followLogList = await noticeModel.getFollowLogList(userId, pageNum, pageSize)
+        console.log(followLogList)
+        if (followLogList) {
+            let noticeList = []
+            //遍历
+            for (let i = 0; i < followLogList.length; i++) {
+              let user = await userModel.getUser(followLogList[i].uid)
+              noticeList.push({
+                _id: followLogList[i]._id,
+                uid: followLogList[i].uid,
+                uname: user.name,
+                avatar: user.avatar,
+                create_time: followLogList[i].create_time
               })
             }
             return {

@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 23:35:27
+ * @LastEditTime: 2019-09-29 00:24:45
  */
 
  /**
@@ -182,6 +182,7 @@ const user = {
     }else if(exist && exist.state == 0){       //存在记录但是关注状态是0，即未关注
       //更改为关注状态
       let result = await userModel.updateFollow(parseInt(data.uid), parseInt(data.follow_uid), 1)
+      await logModel.addFollowPeopleLog(parseInt(data.uid), parseInt(data.follow_uid))
       if(result){
         return {
           status: 200,
