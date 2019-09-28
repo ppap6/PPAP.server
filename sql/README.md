@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-25 09:07:20
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-26 00:50:14
+ * @LastEditTime: 2019-09-28 23:31:37
  -->
 ### 数据表设计
 - 用户表 user
@@ -202,6 +202,7 @@ type  - 动态类型值 1
 uid  - 用户ID
 pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
+comment_id  - 评论ID
 create_time  - 创建时间
 ```
 
@@ -212,6 +213,7 @@ type  - 动态类型值 2
 uid  - 用户ID
 pid  - 帖子ID
 targetor_id  - 回复目标人ID
+answer_id  - 回复ID
 create_time  - 创建时间
 ```
 
