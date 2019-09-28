@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-28 21:30:51
+ * @LastEditTime: 2019-09-28 23:50:36
  */
 
 /**
@@ -18,6 +18,16 @@ const notice = {
     async getCommentLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_log', {post_owner_id: userId, type: 1}, start, pageSize, {create_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取回复通知列表
+    async getAnswerLogList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_log', {targetor_id: userId, type: 2}, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }

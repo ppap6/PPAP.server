@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-28 21:56:33
+ * @LastEditTime: 2019-09-28 23:54:16
  */
 
 /**
@@ -18,6 +18,7 @@ const noticeModel = require('../model/notice')
 const userModel = require('../model/user')
 const postModel = require('../model/post')
 const commentModel = require('../model/comment')
+const answerModel = require('../model/answer')
 
 const notice = {
     
@@ -41,6 +42,39 @@ const notice = {
                 comment_id: commentLogList[i].comment_id,
                 comment_content: comment.content,
                 create_time: commentLogList[i].create_time
+              })
+            }
+            return {
+                status: 200,
+                message: noticeList
+            }
+        }
+        return {
+            status: 10003,
+            message: '未找到操作对象'
+        }
+    },
+
+    //获取回复通知列表
+    async getAnswerList(userId, pageNum, pageSize) {
+        let answerLogList = await noticeModel.getAnswerLogList(userId, pageNum, pageSize)
+        if (answerLogList) {
+            let noticeList = []
+            //遍历
+            for (let i = 0; i < answerLogList.length; i++) {
+              let user = await userModel.getUser(answerLogList[i].uid)
+              let post = await postModel.getPost(answerLogList[i].pid)
+              let answer = await answerModel.getAnswer(answerLogList[i].answer_id)
+              noticeList.push({
+                _id: answerLogList[i]._id,
+                uid: answerLogList[i].uid,
+                uname: user.name,
+                avatar: user.avatar,
+                pid: answerLogList[i].pid,
+                pname: post.title,
+                answer_id: answerLogList[i].answer_id,
+                answer_content: answer.content,
+                create_time: answerLogList[i].create_time
               })
             }
             return {
