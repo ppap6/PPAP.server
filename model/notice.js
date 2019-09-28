@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-29 00:31:02
+ * @LastEditTime: 2019-09-29 00:39:46
  */
 
 /**
@@ -48,6 +48,16 @@ const notice = {
     async getLikeLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_log', {post_owner_id: userId, type: 4}, start, pageSize, {create_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取收藏通知列表
+    async getCollectLogList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_log', {post_owner_id: userId, type: 5}, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }
