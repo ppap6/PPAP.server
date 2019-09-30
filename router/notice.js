@@ -13,5 +13,6 @@ router
     .get('/follow', notice.getFollowList)   //获取关注通知列表
     .get('/like', notice.getLikeList)   //获取点赞通知列表
     .get('/collect', notice.getCollectList)   //获取收藏通知列表
+    .get('/all', notice.getAllList)   //获取全部通知列表
 
 module.exports = router

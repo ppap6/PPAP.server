@@ -37,7 +37,7 @@ const notice = {
     //获取关注通知列表
     async getFollowLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
-        let result = await db_mongo.find('user_log', {follow_people_uid: userId, type: 3}, start, pageSize, {create_time: -1})
+        let result = await db_mongo.find('user_log', {follow_people_id: userId, type: 3}, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }
@@ -58,6 +58,26 @@ const notice = {
     async getCollectLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_log', {post_owner_id: userId, type: 5}, start, pageSize, {create_time: -1})
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取全部通知列表
+    async getAllLogList(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_log', {
+            $or: [
+                {post_owner_id: userId, type: 1},
+                {targetor_id: userId, type: 2},
+                {follow_people_id: userId, type: 3},
+                {post_owner_id: userId, type: 4},
+                {post_owner_id: userId, type: 5},
+                {uid: userId, type: 6},
+                {uid: userId, type: 7}
+            ]
+        }, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }

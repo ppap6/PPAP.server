@@ -53,6 +53,15 @@ const notice = {
         ctx.body = collects
     },
 
+    //获取全部通知列表
+    async getAllList(ctx) {
+        let userId = global.uid
+        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
+        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let alls = await noticeService.getAllList(userId, pageNum, pageSize)
+        ctx.body = alls
+    },
+
 }
 
 module.exports = notice

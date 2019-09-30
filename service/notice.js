@@ -176,6 +176,36 @@ const notice = {
     }
   },
 
+  //获取全部通知列表
+  async getAllList(userId, pageNum, pageSize) {
+    let allLogList = await noticeModel.getAllLogList(userId, pageNum, pageSize)
+    if (allLogList) {
+      // let noticeList = []
+      // //遍历
+      // for (let i = 0; i < allLogList.length; i++) {
+      //   let user = await userModel.getUser(allLogList[i].uid)
+      //   let post = await postModel.getPost(allLogList[i].pid)
+      //   noticeList.push({
+      //     _id: allLogList[i]._id,
+      //     uid: allLogList[i].uid,
+      //     uname: user.name,
+      //     avatar: user.avatar,
+      //     pid: allLogList[i].pid,
+      //     pname: post.title,
+      //     create_time: allLogList[i].create_time
+      //   })
+      // }
+      return {
+        status: 200,
+        message: allLogList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
 }
 
 module.exports = notice
