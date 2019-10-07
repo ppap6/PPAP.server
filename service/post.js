@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-26 00:56:01
+ * @LastEditTime: 2019-10-07 21:27:26
  */
 
  /**
@@ -17,6 +17,7 @@
 const postModel = require('../model/post')
 const topicModel = require('../model/topic')
 const personModel = require('../model/person')
+const logModel = require('../model/log')
 
 const post ={
 

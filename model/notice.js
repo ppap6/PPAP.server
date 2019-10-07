@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-29 00:39:46
+ * @LastEditTime: 2019-10-07 21:43:32
  */
 
 /**
@@ -75,7 +75,7 @@ const notice = {
                 {post_owner_id: userId, type: 4},
                 {post_owner_id: userId, type: 5},
                 {uid: userId, type: 6},
-                {uid: userId, type: 7}
+                // {uid: userId, type: 7}
             ]
         }, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
