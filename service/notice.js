@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-29 00:39:08
+ * @LastEditTime: 2019-10-07 22:16:30
  */
 
 /**
@@ -91,7 +91,6 @@ const notice = {
   //获取关注通知列表
   async getFollowList(userId, pageNum, pageSize) {
     let followLogList = await noticeModel.getFollowLogList(userId, pageNum, pageSize)
-    console.log(followLogList)
     if (followLogList) {
       let noticeList = []
       //遍历
@@ -180,24 +179,96 @@ const notice = {
   async getAllList(userId, pageNum, pageSize) {
     let allLogList = await noticeModel.getAllLogList(userId, pageNum, pageSize)
     if (allLogList) {
-      // let noticeList = []
-      // //遍历
-      // for (let i = 0; i < allLogList.length; i++) {
-      //   let user = await userModel.getUser(allLogList[i].uid)
-      //   let post = await postModel.getPost(allLogList[i].pid)
-      //   noticeList.push({
-      //     _id: allLogList[i]._id,
-      //     uid: allLogList[i].uid,
-      //     uname: user.name,
-      //     avatar: user.avatar,
-      //     pid: allLogList[i].pid,
-      //     pname: post.title,
-      //     create_time: allLogList[i].create_time
-      //   })
-      // }
+      let noticeList = []
+      //遍历
+      for (let i = 0; i < allLogList.length; i++) {
+        //评论通知
+        if(allLogList[i].type == 1){
+          let user = await userModel.getUser(allLogList[i].uid)
+          let post = await postModel.getPost(allLogList[i].pid)
+          let comment = await commentModel.getComment(allLogList[i].comment_id)
+          noticeList.push({
+            _id: allLogList[i]._id,
+            type: allLogList[i].type,
+            uid: allLogList[i].uid,
+            uname: user.name,
+            avatar: user.avatar,
+            pid: allLogList[i].pid,
+            pname: post.title,
+            comment_id: allLogList[i].comment_id,
+            comment_content: comment.content,
+            create_time: allLogList[i].create_time
+          })
+          continue
+        }
+        //回复通知
+        if(allLogList[i].type == 2){
+          let user = await userModel.getUser(allLogList[i].uid)
+          let post = await postModel.getPost(allLogList[i].pid)
+          let answer = await answerModel.getAnswer(allLogList[i].answer_id)
+          noticeList.push({
+            _id: allLogList[i]._id,
+            type: allLogList[i].type,
+            uid: allLogList[i].uid,
+            uname: user.name,
+            avatar: user.avatar,
+            pid: allLogList[i].pid,
+            pname: post.title,
+            answer_id: allLogList[i].answer_id,
+            answer_content: answer.content,
+            create_time: allLogList[i].create_time
+          })
+          continue
+        }
+        //关注通知
+        if(allLogList[i].type == 3){
+          let user = await userModel.getUser(allLogList[i].uid)
+          noticeList.push({
+            _id: allLogList[i]._id,
+            type: allLogList[i].type,
+            uid: allLogList[i].uid,
+            uname: user.name,
+            avatar: user.avatar,
+            create_time: allLogList[i].create_time
+          })
+          continue
+        }
+        //点赞通知
+        if(allLogList[i].type == 4){
+          let user = await userModel.getUser(allLogList[i].uid)
+          let post = await postModel.getPost(allLogList[i].pid)
+          noticeList.push({
+            _id: allLogList[i]._id,
+            type: allLogList[i].type,
+            uid: allLogList[i].uid,
+            uname: user.name,
+            avatar: user.avatar,
+            pid: allLogList[i].pid,
+            pname: post.title,
+            create_time: allLogList[i].create_time
+          })
+          continue
+        }
+        //收藏通知
+        if(allLogList[i].type == 5){
+          let user = await userModel.getUser(allLogList[i].uid)
+          let post = await postModel.getPost(allLogList[i].pid)
+          noticeList.push({
+            _id: allLogList[i]._id,
+            type: allLogList[i].type,
+            uid: allLogList[i].uid,
+            uname: user.name,
+            avatar: user.avatar,
+            pid: allLogList[i].pid,
+            pname: post.title,
+            create_time: allLogList[i].create_time
+          })
+          continue
+        }
+      }
       return {
         status: 200,
-        message: allLogList
+        message: noticeList
       }
     }
     return {
