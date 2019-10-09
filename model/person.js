@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-24 00:21:58
+ * @LastEditTime: 2019-10-10 01:11:18
  */
 
 /**
@@ -137,6 +137,18 @@ const person = {
     async getTopicList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_topic_relation', {uid: userId}, start, pageSize)
+        if (Array.isArray(result) && result.length > 0) {
+            return result
+        }
+        return false
+    },
+
+    //获取关注用户的动态列表
+    async getFollowUserDynamicList(queryArr, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let result = await db_mongo.find('user_log', {
+            $or: queryArr
+        }, start, pageSize, {create_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }

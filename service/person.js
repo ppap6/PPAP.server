@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:35:09
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-24 00:23:37
+ * @LastEditTime: 2019-10-10 01:55:59
  */
 
 /**
@@ -255,6 +255,161 @@ const person = {
             status: 10003,
             message: '未找到操作对象'
         }
+    },
+
+    //获取关注用户的动态列表
+    async getFollowUserDynamicList(pageNum, pageSize){
+        let uid = global.uid
+        let followList = await personModel.getFollowList(parseInt(uid), 1, 1000)
+        if(followList){
+            let queryArr = []
+            for(let i=0; i<followList.length; i++){
+                queryArr.push({
+                        uid: followList[i].follow_uid
+                    }
+                )
+            }
+            let dynamicList = await personModel.getFollowUserDynamicList(queryArr, parseInt(pageNum), parseInt(pageSize))
+            if(dynamicList){
+                let responseList = []
+                //遍历
+                for (let i = 0; i < dynamicList.length; i++) {
+                    //评论动态
+                    if(dynamicList[i].type == 1){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let post = await postModel.getPost(dynamicList[i].pid)
+                        let comment = await commentModel.getComment(dynamicList[i].comment_id)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            pid: dynamicList[i].pid,
+                            pname: post.title,
+                            comment_id: dynamicList[i].comment_id,
+                            comment_content: comment.content,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                    //回复动态
+                    if(dynamicList[i].type == 2){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let post = await postModel.getPost(dynamicList[i].pid)
+                        let answer = await answerModel.getAnswer(dynamicList[i].answer_id)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            pid: dynamicList[i].pid,
+                            pname: post.title,
+                            answer_id: dynamicList[i].answer_id,
+                            answer_content: answer.content,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                    //关注动态
+                    if(dynamicList[i].type == 3){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let targetor = await userModel.getUser(dynamicList[i].follow_people_id)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            targetor_id: dynamicList[i].follow_people_id,
+                            targetor_name: targetor.name,
+                            targetor_avatar: targetor.avatar,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                    //点赞动态
+                    if(dynamicList[i].type == 4){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let post = await postModel.getPost(dynamicList[i].pid)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            pid: dynamicList[i].pid,
+                            pname: post.title,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                    //收藏动态
+                    if(dynamicList[i].type == 5){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let post = await postModel.getPost(dynamicList[i].pid)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            pid: dynamicList[i].pid,
+                            pname: post.title,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                    //关注话题动态
+                    if(dynamicList[i].type == 6){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let topic = await topicModel.getTopic(dynamicList[i].follow_topic_id)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            topic_id: dynamicList[i].follow_topic_id,
+                            topic_name: topic.name,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                    //发帖动态
+                    if(dynamicList[i].type == 7){
+                        let user = await userModel.getUser(dynamicList[i].uid)
+                        let post = await postModel.getPost(dynamicList[i].pid)
+                        responseList.push({
+                            _id: dynamicList[i]._id,
+                            type: dynamicList[i].type,
+                            uid: dynamicList[i].uid,
+                            uname: user.name,
+                            avatar: user.avatar,
+                            pid: dynamicList[i].pid,
+                            pname: post.title,
+                            create_time: dynamicList[i].create_time
+                        })
+                        continue
+                    }
+                }
+                return {
+                    status: 200,
+                    message: responseList
+                }
+            }
+            return {
+                status: 10003,
+                message: '未找到操作对象'
+            }
+        }else{
+            return {
+                status: 10003,
+                message: '未找到操作对象'
+            }
+        }
+        
     },
 
 }
