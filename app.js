@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-05-21 10:08:31
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-10 01:17:05
+ * @LastEditTime: 2019-10-11 23:57:52
  */
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
@@ -11,6 +11,12 @@ const app = new Koa()
 
 const tokenUtil = require('./util/token')
 const router = require('./router')
+
+//定义不需要token的接口数组
+const nonTokenApiArr = [
+  '/user/login',
+  '/user/register',
+]
 
 //配置ctx.body解析中间件
 app.use(bodyParser())
@@ -23,7 +29,7 @@ app.use((ctx, next) => {
   }
   return next().then(() => {
     // 设置login、register接口，不需要判断token续期
-    if(ctx.path == '/user/login' || ctx.path == '/user/register'){
+    if(nonTokenApiArr.includes(ctx.path)){
       return
     }
     //判断token是否应该续期（有效时间）
@@ -48,10 +54,7 @@ app.use((ctx, next) => {
 
 app.use(jwtKoa({ secret: tokenUtil.secret }).unless({
   // 设置login、register接口，可以不需要认证访问
-  path: [
-      /^\/user\/login/,
-      /^\/user\/register/
-  ]
+  path: nonTokenApiArr
 }));
 
 //初始化路由中间件
