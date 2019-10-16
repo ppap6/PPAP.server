@@ -12,11 +12,7 @@ const app = new Koa()
 const tokenUtil = require('./util/token')
 const router = require('./router')
 
-//定义不需要token的接口数组
-const nonTokenApiArr = [
-  '/user/login',
-  '/user/register',
-]
+const jwtUnless = require('./util/jwt_unless')  //用于判断是否需要jwt验证
 
 //配置ctx.body解析中间件
 app.use(bodyParser())
@@ -28,10 +24,8 @@ app.use((ctx, next) => {
     global.token = ctx.request.header.authorization.split(' ')[1]
   }
   return next().then(() => {
-    // 设置login、register接口，不需要判断token续期
-    if(nonTokenApiArr.includes(ctx.path)){
-      return
-    }
+    //判断不需要jwt验证的接口，跳过token续期判断
+    if(jwtUnless.checkIsNonTokenApi(ctx)) return
     //判断token是否应该续期（有效时间）
     if(tokenUtil.getTokenRenewStatus()){
       //设置header
@@ -52,9 +46,16 @@ app.use((ctx, next) => {
   })
 })
 
+//配置不需要jwt验证的接口
 app.use(jwtKoa({ secret: tokenUtil.secret }).unless({
-  // 设置login、register接口，可以不需要认证访问
-  path: nonTokenApiArr
+  //自定义过滤函数，详细参考koa-unless
+  custom: ctx => {
+    if(jwtUnless.checkIsNonTokenApi(ctx)){
+      return true
+    }else{
+      return false
+    }
+  }
 }));
 
 //初始化路由中间件
