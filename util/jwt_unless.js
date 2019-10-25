@@ -21,7 +21,10 @@ const nonTokenApiArr = [
   '/person/follow',
   '/person/like',
   '/person/collect',
-  '/person/topic'
+  '/person/topic',
+  //search模块
+  '/search/post',
+  '/search/user'
 ]
 
 //定义不需要jwt验证的接口正则数组(都是get方法)
