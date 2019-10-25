@@ -10,5 +10,6 @@ const search = require('../controller/search')
 
 router
     .get('/post', search.getPostList)   //获取帖子列表
+    .get('/user', search.getUserList)   //获取用户列表
 
 module.exports = router

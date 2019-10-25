@@ -38,6 +38,21 @@ const search ={
       status: 10003,
       message: '未找到操作对象'
     }
+  },
+  
+  //获取帖子列表
+  async getUserList(keyword, pageNum, pageSize){
+    let userList = await searchModel.getUserList(keyword, pageNum, pageSize)
+    if(userList){
+      return {
+        status: 200,
+        message: userList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
   }
    
 }

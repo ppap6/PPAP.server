@@ -39,7 +39,36 @@ const search = {
       return result
     }
     return false
-  }
+  },
+
+  //获取用户列表（关键词，页数，数目）
+  async getUserList(keyword=' ', pageNum=1, pageSize=20){
+    let start = (pageNum-1)*pageSize
+    let sql
+    if(keyword === ' '){
+      sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex FROM user AS u LIMIT ${start},${pageSize}`
+    }else{
+      let keywordArr = keyword.trim().split(' ')
+      let likeStr = ''
+      for(let i=0; i<keywordArr.length; i++){
+        if(i == 0){
+          likeStr = `u.name LIKE '%${keywordArr[0]}%'`
+        }else{
+          if(keywordArr[i] == '') continue
+          likeStr += ` OR u.name LIKE '%${keywordArr[i]}%'`
+        }
+      }
+      sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex 
+             FROM user AS u 
+             WHERE (${likeStr})
+             LIMIT ${start},${pageSize}`
+    }
+    let result = await db.query(sql)
+    if(Array.isArray(result) && result.length > 0){
+      return result
+    }
+    return false
+  },
 
 }
 
