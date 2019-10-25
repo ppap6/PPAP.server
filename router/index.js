@@ -21,6 +21,7 @@ const comment = require('./comment')
 const answer = require('./answer')
 const person = require('./person')
 const notice = require('./notice')
+const search = require('./search')
 
 router.use('/', home.routes(), home.allowedMethods())
 router.use('/user', user.routes(), user.allowedMethods())
@@ -32,5 +33,6 @@ router.use('/comment', comment.routes(), comment.allowedMethods())
 router.use('/answer', answer.routes(), answer.allowedMethods())
 router.use('/person', person.routes(), person.allowedMethods())
 router.use('/notice', notice.routes(), notice.allowedMethods())
+router.use('/search', search.routes(), search.allowedMethods())
 
 module.exports = router
