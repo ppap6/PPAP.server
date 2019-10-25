@@ -35,7 +35,7 @@ const user = {
         message: '没有操作权限'
       }
     }
-    let userList = await userModel.getUserList(pageNum, pageSize)
+    let userList = await userModel.getUserList(roleId, pageNum, pageSize)
     if(userList){
       return {
         status: 200,
