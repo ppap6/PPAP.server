@@ -18,6 +18,8 @@ const postModel = require('../model/post')
 const topicModel = require('../model/topic')
 const personModel = require('../model/person')
 const logModel = require('../model/log')
+const userModel = require('../model/user')
+const tokenUtil = require('../util/token')
 
 const post ={
 
@@ -87,11 +89,35 @@ const post ={
 
   //获取帖子信息
   async getPost(id){
+    let visitorId = global.uid
+    console.log(global.uid)
     let post = await postModel.getPost(id)
     if(post){
+      let likeArr = visitorId == undefined ? [] : await userModel.getLikePost(visitorId)
+      console.log(likeArr)
+      console.log(likeArr.includes(parseInt(id)))
+      let collectArr = visitorId == undefined ? [] : await userModel.getCollectPost(visitorId)
+      let newPost = {
+        id: post.id,
+        uid: post.uid,
+        uname: post.uname,
+        title: post.title,
+        content: post.content,
+        create_time: post.create_time,
+        update_time: post.update_time,
+        pv: post.pv,
+        likes: post.likes,
+        colects: post.colects,
+        topic_id: post.topic_id,
+        topic_name: post.topic_name,
+        visitor: {
+          isLike: likeArr.includes(parseInt(id)) ? true : false,
+          isCollect: collectArr.includes(parseInt(id)) ? true : false
+        }
+      }
       return {
         status: 200,
-        message: post
+        message: newPost
       }
     }
     return {
