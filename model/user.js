@@ -15,6 +15,8 @@ const db = require('../util/db')
 const db_mongo = require('../util/db_mongo')
 const ObjectId = require('mongodb').ObjectId
 const tokenUtil = require('../util/token')
+const crypto = require('crypto')
+const salt = 'ppap'
 
 const user = {
 
@@ -106,7 +108,9 @@ const user = {
     let sql = 'SELECT password FROM user WHERE account=?'
     let result = await db.query(sql, [account])
     if(Array.isArray(result) && result.length > 0){
-      if(result[0].password === password){
+      let sha1Hash = crypto.createHash('sha1').update(password).digest('hex')
+      let md5Hash = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
+      if(result[0].password === md5Hash){
         return true
       }else{
         return false
