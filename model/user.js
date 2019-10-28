@@ -119,6 +119,28 @@ const user = {
     return false
   },
 
+  //用户注册
+  async register(data){
+    //网站用户注册
+    let sql = 'INSERT INTO user(name,account,password,create_time,update_time,role_id) VALUES(?,?,?,?,?,?)'
+    let sha1Hash = crypto.createHash('sha1').update(data.password).digest('hex')
+    let password = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
+    let values = [
+      data.name,
+      data.account,
+      password,
+      // data.email,
+      util.changeTimeToStr(new Date()),
+      util.changeTimeToStr(new Date()),
+      5
+    ]
+    let result = await db.query(sql, values)
+    if(result.insertId){
+      return result.insertId
+    }
+    return false
+  },
+
   //用户关注
   async follow(data){
     let dataObj = {

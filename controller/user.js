@@ -49,6 +49,12 @@ const user = {
     ctx.body = result
   },
 
+  //用户注册
+  async register(ctx){
+    let result = await userService.register(ctx.request.body)
+    ctx.body = result
+  },
+
   //用户关注
   async follow(ctx){
     let result = await userService.follow(ctx.request.body)

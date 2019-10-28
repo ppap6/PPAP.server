@@ -15,7 +15,7 @@ router
   .get('/:id', user.getUser)    //获取用户信息
   .put('/:id', user.updateUser)    //修改用户信息
   .post('/login', user.login)    //用户登录
-  .post('/register', user.addUser)    //用户注册
+  .post('/register', user.register)    //用户注册
 
   .get('/post/status/:id', user.getPostStatus)    //获取用户对帖子的点赞收藏状态
 

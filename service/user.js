@@ -161,6 +161,31 @@ const user = {
     }
   },
 
+  //用户注册
+  async register(data){
+    let user = await userModel.getUserByAccount(data.account)
+    if(!user){
+      let insertId = await userModel.register(data)
+      if(insertId){
+        //新增用户点赞收藏点亮模型
+        await userModel.addUserLikeCollectLightModel(insertId)
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }
+      return {
+        status: 10000,
+        message: '操作失败'
+      }
+    }else{
+      return {
+        status: 10000,
+        message: '请勿添加重复记录'
+      }
+    }
+  },
+
   //获取用户对帖子的点赞收藏状态
   async getPostStatus(id){
     let visitorId = global.uid
