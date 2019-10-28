@@ -50,18 +50,35 @@ const user = {
 
   //添加用户
   async addUser(data){
-    let insertId = await userModel.addUser(data)
-    if(insertId){
-      //新增用户点赞收藏点亮模型
-      await userModel.addUserLikeCollectLightModel(insertId)
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId >= parseInt(data.role_id) || roleId >= 3){
       return {
-        status: 200,
-        message: '操作成功'
+        status: 10004,
+        message: '没有操作权限'
       }
     }
-    return {
-      status: 10000,
-      message: '操作失败'
+    let user = await userModel.getUserByAccount(data.account)
+    if(!user){
+      let insertId = await userModel.addUser(data)
+      if(insertId){
+        //新增用户点赞收藏点亮模型
+        await userModel.addUserLikeCollectLightModel(insertId)
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }
+      return {
+        status: 10000,
+        message: '操作失败'
+      }
+    }else{
+      return {
+        status: 10000,
+        message: '用户账号已存在'
+      }
     }
   },
 
@@ -181,7 +198,7 @@ const user = {
     }else{
       return {
         status: 10000,
-        message: '请勿添加重复记录'
+        message: '用户账号已存在'
       }
     }
   },
