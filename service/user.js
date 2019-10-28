@@ -161,6 +161,23 @@ const user = {
     }
   },
 
+  //获取用户对帖子的点赞收藏状态
+  async getPostStatus(id){
+    let visitorId = global.uid
+    let likeArr = visitorId == undefined ? [] : await userModel.getLikePost(visitorId)
+    let collectArr = visitorId == undefined ? [] : await userModel.getCollectPost(visitorId)
+    let result = {
+      isLike: likeArr.includes(parseInt(id)) ? true : false,
+      isCollect: collectArr.includes(parseInt(id)) ? true : false
+    }
+    if(user){
+      return {
+        status: 200,
+        message: result
+      }
+    }
+  },
+
   //用户关注
   async follow(data){
     let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))

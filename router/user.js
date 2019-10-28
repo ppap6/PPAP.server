@@ -17,6 +17,8 @@ router
   .post('/login', user.login)    //用户登录
   .post('/register', user.addUser)    //用户注册
 
+  .get('/post/status/:id', user.getPostStatus)    //获取用户对帖子的点赞收藏状态
+
   .post('/follow', user.follow)    //用户关注
   .post('/cancel/follow', user.cancelFollow)    //用户取消关注
   .post('/follow/topic', user.followTopic)    //用户关注话题

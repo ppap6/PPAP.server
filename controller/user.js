@@ -55,6 +55,12 @@ const user = {
     ctx.body = result
   },
 
+  //获取用户对帖子的点赞收藏状态
+  async getPostStatus(ctx){
+    let result = await userService.getPostStatus(ctx.params.id)
+    ctx.body = result
+  },
+
   //用户取消关注
   async cancelFollow(ctx){
     let result = await userService.cancelFollow(ctx.request.body)
