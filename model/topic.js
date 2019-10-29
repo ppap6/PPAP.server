@@ -60,7 +60,7 @@ const topic = {
 
   //删除话题数据
   async deleteTopic(id){
-    let sql = `UPDATE topic SET name='无话题' WHERE id=?`
+    let sql = `UPDATE topic SET name='无话题',status=0 WHERE id=?`
     let result = await db.query(sql, [id])
     if(result.affectedRows){
       return true
