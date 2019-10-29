@@ -21,6 +21,8 @@ const logModel = require('../model/log')
 const commentModel = require('../model/comment')
 const answerModel = require('../model/answer')
 const tokenUtil = require('../util/token')
+const crypto = require('crypto')
+const salt = 'ppap'
 
 const user = {
 
@@ -125,18 +127,73 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
+     //获取角色权限
+     let roleId = await userModel.getRoleId()
+     //验证身份权限
+     if(roleId >= parseInt(data.role_id)){
+       return {
+         status: 10004,
+         message: '没有操作权限'
+       }
+     }
     let exist = await userModel.getUser(id)
     if(exist){
-      let result = await userModel.updateUser(id, data)
-      if(result){
-        return {
-          status: 200,
-          message: '操作成功'
+      let user = await userModel.getUserByAccount(data.account)
+      //验证修改的用户账号是否已被使用
+      if(!user || (user && user.id == id)){
+        let result = await userModel.updateUser(id, data)
+        if(result){
+          return {
+            status: 200,
+            message: '操作成功'
+          }
+        }else{
+          return {
+            status: 10000,
+            message: '操作失败'
+          }
         }
       }else{
         return {
           status: 10000,
-          message: '操作失败'
+          message: '用户账号已存在'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+  },
+
+  //修改用户密码
+  async updateUserPwd(id, data){
+    let user = await userModel.getUserById(id)
+    if(user){
+      let sha1Hash = crypto.createHash('sha1').update(data.old_password).digest('hex')
+      let md5Hash = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
+      //验证旧密码
+      if(user.password == md5Hash){
+        let newSha1Hash = crypto.createHash('sha1').update(data.password).digest('hex')
+        let newMd5Hash = crypto.createHash('md5').update(salt + newSha1Hash).digest('hex')
+        let result = await userModel.updateUserPwd(id, newMd5Hash)
+        if(result){
+          return {
+            status: 200,
+            message: '操作成功'
+          }
+        }else{
+          return {
+            status: 10000,
+            message: '操作失败'
+          }
+        }
+      }else{
+        //旧密码不对
+        return {
+          status: 10000,
+          message: '原密码错误'
         }
       }
     }else{

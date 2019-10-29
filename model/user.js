@@ -20,6 +20,18 @@ const salt = 'ppap'
 
 const user = {
 
+  //根据token获取用户角色id
+  async getRoleId(){
+    let obj = tokenUtil.parseToken()
+    let account = obj.account
+    let sql = 'SELECT * FROM user WHERE account=?'
+    let result = await db.query(sql, [account])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0].role_id
+    }
+    return false
+  },
+
   //查看用户列表
   async getUserList(roleId, pageNum, pageSize){
     let start = (pageNum-1)*pageSize
@@ -90,17 +102,41 @@ const user = {
     return false
   },
 
+  //获取用户信息(根据id)
+  async getUserById(id){
+    let sql = `SELECT u.id,u.name,u.account,u.password,u.avatar,u.sex,u.email,u.mobile,u.create_time,u.update_time,u.role_id,r.name AS role_name 
+               FROM user AS u,role AS r 
+               WHERE u.role_id=r.id AND u.id=?`
+    let result = await db.query(sql, [id])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
+
   //修改用户信息
   async updateUser(id, data){
-    let sql = 'UPDATE user SET name=?,account=?,password=?,sex=?,email=?,update_time=?,role_id=? WHERE id=?'
+    let sql = 'UPDATE user SET name=?,account=?,sex=?,email=?,update_time=?,role_id=? WHERE id=?'
     let values = [
       data.name,
       data.account,
-      data.password,
       data.sex,
       data.email,
       util.changeTimeToStr(new Date()),
       data.role_id
+    ]
+    let result = await db.query(sql, [...values,id])
+    if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
+  async updateUserPwd(id, password){
+    let sql = 'UPDATE user SET password=?,update_time=? WHERE id=?'
+    let values = [
+      password,
+      util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values,id])
     if(result.affectedRows){
@@ -402,18 +438,6 @@ const user = {
     let result = await db_mongo.updateOne('user_likes_collects_lights_relation', {uid}, setObj)
     if(result.modifiedCount){
       return result.modifiedCount
-    }
-    return false
-  },
-
-  //根据token获取用户角色id
-  async getRoleId(){
-    let obj = tokenUtil.parseToken()
-    let account = obj.account
-    let sql = 'SELECT * FROM user WHERE account=?'
-    let result = await db.query(sql, [account])
-    if(Array.isArray(result) && result.length > 0){
-      return result[0].role_id
     }
     return false
   }

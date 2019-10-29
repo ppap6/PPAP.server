@@ -14,6 +14,7 @@ router
   .del('/:id', user.deleteUser)   //删除用户
   .get('/:id', user.getUser)    //获取用户信息
   .put('/:id', user.updateUser)    //修改用户信息
+  .put('/pwd/:id', user.updateUserPwd)    //修改用户密码
   .post('/login', user.login)    //用户登录
   .post('/register', user.register)    //用户注册
 

@@ -43,6 +43,12 @@ const user = {
     ctx.body = result
   },
 
+  //修改用户密码
+  async updateUserPwd(ctx){
+    let result = await userService.updateUserPwd(ctx.params.id, ctx.request.body)
+    ctx.body = result
+  },
+
   //用户登录
   async login(ctx){
     let result = await userService.login(ctx.request.body)
