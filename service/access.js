@@ -15,6 +15,7 @@
   * 10005数据库错误
   */
 const accessModel = require('../model/access')
+const userModel = require('../model/user')
 
 const access ={
  

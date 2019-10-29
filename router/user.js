@@ -10,6 +10,7 @@ const user = require('../controller/user')
 
 router
   .get('/', user.getUserList)    //获取用户列表
+  .get('/auth', user.getUserAuthList)   //获取用户权限列表
   .post('/', user.addUser)    //添加用户
   .del('/:id', user.deleteUser)   //删除用户
   .get('/:id', user.getUser)    //获取用户信息

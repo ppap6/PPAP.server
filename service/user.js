@@ -17,6 +17,7 @@
 const userModel = require('../model/user')
 const topicModel = require('../model/topic')
 const postModel = require('../model/post')
+const roleModel = require('../model/role')
 const logModel = require('../model/log')
 const commentModel = require('../model/comment')
 const answerModel = require('../model/answer')
@@ -25,6 +26,23 @@ const crypto = require('crypto')
 const salt = 'ppap'
 
 const user = {
+
+  //获取用户权限列表
+  async getUserAuthList(){
+    //获取用户角色ID
+    let roleId = await userModel.getRoleId()
+    let roleAccess = await roleModel.getRoleAccess(roleId)
+    if(roleAccess){
+      return {
+        status: 200,
+        message: roleAccess
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
 
   //获取所有用户
   async getUserList(pageNum, pageSize){

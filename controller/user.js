@@ -10,6 +10,12 @@ const userService = require('../service/user')
 
 const user = {
 
+  //获取用户权限列表
+  async getUserAuthList(ctx){
+    let users = await userService.getUserAuthList()
+    ctx.body = users
+  },
+
   //获取用户列表
   async getUserList(ctx){
     let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
