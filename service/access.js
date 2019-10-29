@@ -20,6 +20,15 @@ const access ={
  
   //获取权限列表
   async getAccessList(pageNum, pageSize){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let accessList = await accessModel.getAccessList(pageNum, pageSize)
     if(accessList){
       //获取子级权限
@@ -44,6 +53,15 @@ const access ={
 
    //添加权限
   async addAccess(data){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let result = await accessModel.addAccess(data)
     if(result){
       return {
@@ -59,6 +77,15 @@ const access ={
 
   //获取权限信息
   async getAccess(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let access = await accessModel.getAccess(id)
     if(access){
       return {
@@ -74,6 +101,15 @@ const access ={
 
   //删除权限
   async deleteAccess(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await accessModel.getAccess(id)
     if(exist){
       let result = await accessModel.deleteAccess(id)
@@ -98,6 +134,15 @@ const access ={
 
   //修改权限信息
   async updateAccess(id, data){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await accessModel.getAccess(id)
     if(exist){
       let result = await accessModel.updateAccess(id, data)
