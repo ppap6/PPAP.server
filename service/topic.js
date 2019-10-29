@@ -15,6 +15,7 @@
   * 10005数据库错误
   */
 const topicModel = require('../model/topic')
+const userModel = require('../model/user')
 
 const topic ={
  
@@ -46,6 +47,15 @@ const topic ={
 
   //添加话题
   async addTopic(data){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 3){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let result = await topicModel.addTopic(data)
     if(result){
       return {
@@ -94,6 +104,15 @@ const topic ={
 
   //删除话题
   async deleteTopic(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 2){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await topicModel.getTopic(id)
     if(exist){
       let result = await topicModel.deleteTopic(id)

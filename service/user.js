@@ -136,15 +136,15 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
-     //获取角色权限
-     let roleId = await userModel.getRoleId()
-     //验证身份权限
-     if(roleId >= parseInt(data.role_id)){
-       return {
-         status: 10004,
-         message: '没有操作权限'
-       }
-     }
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId >= parseInt(data.role_id)){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await userModel.getUser(id)
     if(exist){
       let user = await userModel.getUserByAccount(data.account)
