@@ -64,6 +64,15 @@ const post ={
 
   //删除帖子
   async deletePost(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 4){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await postModel.getPost(id)
     if(exist){
       let result = await postModel.deletePost(id)
