@@ -15,11 +15,21 @@
   * 10005数据库错误
   */
 const roleModel = require('../model/role')
+const userModel = require('../model/user')
 
 const role ={
 
   //获取角色列表
   async getRoleList(pageNum, pageSize){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let roleList = await roleModel.getRoleList(pageNum, pageSize)
     if(roleList){
       return {
@@ -35,6 +45,15 @@ const role ={
 
   //添加角色
   async addRole(data){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let result = await roleModel.addRole(data)
     if(result){
       return {
@@ -50,6 +69,15 @@ const role ={
 
   //获取角色信息
   async getRole(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let role = await roleModel.getRole(id)
     if(role){
       return {
@@ -65,6 +93,15 @@ const role ={
 
   //删除角色
   async deleteRole(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await roleModel.getRole(id)
     if(exist){
       let result = await roleModel.deleteRole(id)
@@ -89,6 +126,15 @@ const role ={
 
   //修改角色信息
   async updateRole(id, data){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await roleModel.getRole(id)
     if(exist){
       let result = await roleModel.updateRole(id, data)
@@ -113,6 +159,15 @@ const role ={
 
   //获取角色权限
   async getRoleAccess(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let roleAccess = await roleModel.getRoleAccess(id)
     if(roleAccess){
       return {
@@ -128,6 +183,15 @@ const role ={
 
   //修改角色权限
   async updateRoleAccess(id, data){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 1){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     //先判断是否存在角色
     let exist = await roleModel.getRole(id)
     if(exist){

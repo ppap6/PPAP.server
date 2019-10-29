@@ -13,7 +13,7 @@ const role = {
   //获取角色列表
   async getRoleList(pageNum=1, pageSize=20){
     let start = (pageNum-1)*pageSize
-    let sql = 'SELECT * FROM role LIMIT ?,?'
+    let sql = 'SELECT * FROM role WHERE id!=1 LIMIT ?,?'
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
       return result
