@@ -45,6 +45,32 @@ const topic ={
     }
   },
 
+  //管理运营获取话题列表
+  async getTopicListForAdmin(pageNum, pageSize){
+    //获取一级话题
+    let topicList = await topicModel.getTopicListForAdmin(pageNum, pageSize)
+    if(topicList){
+      //获取子级话题
+      for(let i=0; i<topicList.length; i++){
+        let childTopicList = await topicModel.getChildTopicListForAdmin(topicList[i].id)
+        if(childTopicList){
+          topicList[i].child = childTopicList
+        }else{
+          topicList[i].child = []
+        }
+      }
+      return {
+        status: 200,
+        message: topicList
+      }
+    }else{
+      return {
+        status: 10008,
+        message: '未找到操作对象'
+      }
+    }
+  },
+
   //添加话题
   async addTopic(data){
     //获取角色权限

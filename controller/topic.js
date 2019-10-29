@@ -17,6 +17,14 @@ const topic = {
     ctx.body = topics
   },
 
+  //管理运营获取话题列表
+  async getTopicListForAdmin(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let topics = await topicService.getTopicListForAdmin(pageNum, pageSize)
+    ctx.body = topics
+  },
+
   //添加话题
   async addTopic(ctx){
     //验证数据
