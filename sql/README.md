@@ -277,6 +277,7 @@ create_time  - 创建时间(datetime)
 update_time  - 更新时间(datetime)
 posts  - 帖子总数(int)
 followers  - 关注总数(int)
+status  - 话题显示状态(int)(0代表隐藏)
 ```
 
 #### <span style="color:#009688"># </span>用户关注表 user_fans_relation (考虑 mongodb)

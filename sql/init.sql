@@ -94,6 +94,7 @@ CREATE TABLE `topic` (
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `posts` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '帖子总数',
     `followers` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注总数',
+    `status` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT '话题显示状态',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='话题表';
 
