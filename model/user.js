@@ -68,7 +68,9 @@ const user = {
 
   //获取用户信息(根据id)
   async getUser(id){
-    let sql = 'SELECT * FROM user WHERE id=?'
+    let sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex,u.email,u.mobile,u.create_time,u.update_time,u.role_id,r.name AS role_name 
+               FROM user AS u,role AS r 
+               WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])
     if(Array.isArray(result) && result.length > 0){
       return result[0]
@@ -78,7 +80,9 @@ const user = {
 
   //获取用户信息(根据account)
   async getUserByAccount(account){
-    let sql = 'SELECT * FROM user WHERE account=?'
+    let sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex,u.email,u.mobile,u.create_time,u.update_time,u.role_id,r.name AS role_name 
+               FROM user AS u,role AS r 
+               WHERE u.role_id=r.id AND u.account=?`
     let result = await db.query(sql, [account])
     if(Array.isArray(result) && result.length > 0){
       return result[0]
