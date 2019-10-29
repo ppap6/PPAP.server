@@ -47,6 +47,15 @@ const topic ={
 
   //管理运营获取话题列表
   async getTopicListForAdmin(pageNum, pageSize){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 3){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     //获取一级话题
     let topicList = await topicModel.getTopicListForAdmin(pageNum, pageSize)
     if(topicList){
