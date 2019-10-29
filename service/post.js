@@ -104,8 +104,17 @@ const post ={
 
   //修改帖子信息
   async updatePost(id, data){
-    let exist = await postModel.getPost(id)
-    if(exist){
+    let post = await postModel.getPost(id)
+    if(post){
+      //获取角色权限
+      let roleId = await userModel.getRoleId()
+      //验证身份权限
+      if(roleId == 5 && post.uid != global.uid){
+        return {
+          status: 10004,
+          message: '没有操作权限'
+        }
+      }
       let result = await postModel.updatePost(id, data)
       if(result){
         return {
