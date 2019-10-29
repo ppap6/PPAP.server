@@ -224,7 +224,7 @@ const user = {
       }else{
         return {
           status: 10000,
-          message: '操作失败'
+          message: '用户账号或密码错误'
         }
       }
     }else{
