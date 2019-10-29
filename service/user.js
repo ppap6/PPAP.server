@@ -86,6 +86,15 @@ const user = {
 
   //删除用户
   async deleteUser(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 2){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await userModel.getUser(id)
     if(exist){
       let result = await userModel.deleteUser(id)
