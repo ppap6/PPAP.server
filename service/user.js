@@ -194,6 +194,40 @@ const user = {
     }
   },
 
+  //用户修改自己的信息
+  async updateSelf(data){
+    let uid = global.uid
+    let exist = await userModel.getUser(uid)
+    if(exist){
+      let user = await userModel.getUserByAccount(data.account)
+      //验证修改的用户账号是否已被使用
+      if(!user || (user && user.id == uid)){
+        let result = await userModel.updateUser(uid, data)
+        if(result){
+          return {
+            status: 200,
+            message: '操作成功'
+          }
+        }else{
+          return {
+            status: 10000,
+            message: '操作失败'
+          }
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '用户账号已存在'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+  },
+
   //修改用户密码
   async updateUserPwd(id, data){
     let user = await userModel.getUserById(id)

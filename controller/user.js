@@ -49,6 +49,12 @@ const user = {
     ctx.body = result
   },
 
+  //用户修改自己的信息
+  async updateSelf(ctx){
+    let result = await userService.updateSelf(ctx.request.body)
+    ctx.body = result
+  },
+
   //修改用户密码
   async updateUserPwd(ctx){
     let result = await userService.updateUserPwd(ctx.params.id, ctx.request.body)
