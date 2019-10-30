@@ -110,6 +110,7 @@ topic_id  - 话题ID(int)
 pv  - 阅读数(int)
 likes  - 点赞数(int)
 collects  - 收藏数(int)
+status  - 帖子显示状态(int)
 ```
 
 #### <span style="color:#009688"># </span>用户的点赞收藏点亮表 user_likes_collects_lights_relation (考虑 mongodb)
@@ -137,6 +138,7 @@ content  - 评论内容
 create_time  - 创建时间
 update_time  - 更新时间
 lights  - 点亮数
+status  - 评论显示状态
 ```
 
 #### <span style="color:#009688"># </span>评论回复表 answer (考虑 mongodb)
@@ -161,6 +163,7 @@ content  - 回复内容
 create_time  - 创建时间
 update_time  - 更新时间
 lights  - 点亮数
+status  - 回复显示状态
 ```
 
 - 对回复的回复
@@ -176,6 +179,7 @@ content  - 回复内容
 create_time  - 创建时间
 update_time  - 更新时间
 lights  - 点亮数
+status  - 回复显示状态
 ```
 
 #### <span style="color:#009688"># </span>用户动态表 user_log (考虑 mongodb)
