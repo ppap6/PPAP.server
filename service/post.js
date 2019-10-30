@@ -43,6 +43,27 @@ const post ={
     }
   },
 
+  //管理运营获取帖子列表
+  async getPostListForAdmin(pageNum, pageSize, topicId){
+    let postList = await postModel.getPostListForAdmin(pageNum, pageSize, topicId)
+    if(postList){
+      for (let i = 0; i < postList.length; i++) {
+        let commentCount = await personModel.getPostCommentCount(postList[i].id)
+        let answerCount = await personModel.getPostAnswerCount(postList[i].id)
+        postList[i].comments = commentCount
+        postList[i].answers = answerCount
+      }
+      return {
+        status: 200,
+        message: postList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
   //添加帖子
   async addPost(data){
     let result = await postModel.addPost(data)
