@@ -57,6 +57,15 @@
 
   //删除帖子评论
   async deleteComment(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 4){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await commentModel.getComment(id)
     if(exist){
       let result = await commentModel.deleteComment(id)

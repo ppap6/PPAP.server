@@ -19,7 +19,6 @@ const topicModel = require('../model/topic')
 const personModel = require('../model/person')
 const logModel = require('../model/log')
 const userModel = require('../model/user')
-const tokenUtil = require('../util/token')
 
 const post ={
 
