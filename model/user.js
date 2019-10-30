@@ -38,6 +38,7 @@ const user = {
     let sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex,u.email,u.mobile,u.create_time,u.update_time,u.role_id,r.name AS role_name 
                FROM user AS u,role AS r 
                WHERE u.role_id=r.id AND u.role_id>${roleId}
+               ORDER BY u.id
                LIMIT ${start},${pageSize}`
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
