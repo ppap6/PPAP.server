@@ -49,7 +49,7 @@ const user = {
     //获取角色权限
     let roleId = await userModel.getRoleId()
     //验证身份权限
-    if(roleId > 5){
+    if(roleId > 3){
       return {
         status: 10004,
         message: '没有操作权限'
@@ -157,7 +157,7 @@ const user = {
     //获取角色权限
     let roleId = await userModel.getRoleId()
     //验证身份权限
-    if(roleId >= parseInt(data.role_id)){
+    if(roleId >= parseInt(data.role_id) && roleId > 3){
       return {
         status: 10004,
         message: '没有操作权限'

@@ -39,6 +39,15 @@
 
   //管理运营获取帖子评论列表
   async getCommentListForAdmin(pageNum, pageSize, postId){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 3){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let commentList = await commentModel.getCommentListForAdmin(pageNum, pageSize, postId)
     if(commentList){
       return {
