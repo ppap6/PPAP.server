@@ -52,7 +52,7 @@ const post = {
 
   //删除帖子数据
   async deletePost(id){
-    let sql = 'DELETE FROM post WHERE id=?'
+    let sql = 'UPDATE post SET status=0 WHERE id=?'
     let result = await db.query(sql, [id])
     if(result.affectedRows){
       return true
