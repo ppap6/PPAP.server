@@ -37,12 +37,12 @@ const post = {
     let start = (pageNum-1)*pageSize
     let sql
     if(topicId === 0){
-      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name,p.status 
         FROM post AS p,user AS u,topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id
         LIMIT ${start},${pageSize}`
     }else{
-      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name,p.status 
         FROM post AS p,user AS u,topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
         LIMIT ${start},${pageSize}`
