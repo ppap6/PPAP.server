@@ -42,6 +42,27 @@ const answer ={
     }
   },
 
+  //管理运营获取评论回复列表
+  async getAnswerListForAdmin(pageNum, pageSize, commentId){
+    if(!commentId){
+      return {
+        status: 10002,
+        message: '非法参数'
+      }
+    }
+    let answerList = await answerModel.getAnswerListForAdmin(pageNum, pageSize, commentId)
+    if(answerList){
+      return {
+        status: 200,
+        message: answerList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
   //添加评论回复
   async addAnswer(data){
     if(data.type == 1){

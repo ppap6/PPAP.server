@@ -18,6 +18,15 @@ const answer = {
     ctx.body = answers
   },
 
+  //管理运营获取评论回复列表
+  async getAnswerListForAdmin(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let commentId = ctx.params.id === undefined ? 0 : ctx.params.id
+    let answers = await answerService.getAnswerListForAdmin(pageNum, pageSize, commentId)
+    ctx.body = answers
+  },
+
   //添加评论回复
   async addAnswer(ctx){
     //验证数据
