@@ -105,8 +105,17 @@
 
   //修改帖子评论信息
   async updateComment(id, data){
-    let exist = await commentModel.getComment(id)
-    if(exist){
+    let comment = await commentModel.getComment(id)
+    if(comment){
+      //获取角色权限
+      let roleId = await userModel.getRoleId()
+      //验证身份权限
+      if(roleId == 5 && comment.uid != global.uid){
+        return {
+          status: 10004,
+          message: '没有操作权限'
+        }
+      }
       let result = await commentModel.updateComment(id, data)
       if(result){
         return {
