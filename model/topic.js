@@ -98,7 +98,7 @@ const topic = {
       util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values, id])
-    if(result){
+    if(result.affectedRows){
       return true
     }
     return false

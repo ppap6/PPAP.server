@@ -14,6 +14,16 @@ const comment = {
   //获取帖子评论数据（页数，数目，帖子id）
   async getCommentList(pageNum=1, pageSize=20, postId=0){
     let start = (pageNum-1)*pageSize
+    let result = await db_mongo.find('comment', {pid: postId, status: 1}, start, pageSize)
+    if(Array.isArray(result) && result.length > 0){
+      return result
+    }
+    return false
+  },
+  
+  //管理运营获取帖子评论数据（页数，数目，帖子id）
+  async getCommentListForAdmin(pageNum=1, pageSize=20, postId=0){
+    let start = (pageNum-1)*pageSize
     let result = await db_mongo.find('comment', {pid: postId}, start, pageSize)
     if(Array.isArray(result) && result.length > 0){
       return result
@@ -29,7 +39,8 @@ const comment = {
       content: data.content,
       create_time: util.changeTimeToStr(new Date()),
       update_time: util.changeTimeToStr(new Date()),
-      lights: 0
+      lights: 0,
+      status: 1
     }
     let result = await db_mongo.insertOne('comment', dataObj)
     if(result.insertedCount){
@@ -40,9 +51,17 @@ const comment = {
 
   //删除帖子评论
   async deleteComment(id){
-    let result = await db_mongo.deleteOne('comment', {_id: ObjectId(id)})
-    if(result.deletedCount){
-      return true
+    // let result = await db_mongo.deleteOne('comment', {_id: ObjectId(id)})
+    let setObj = {
+      $set: {
+        status: 0
+      }
+    }
+    let result = await db_mongo.updateOne('comment', {_id: ObjectId(id)}, setObj)
+    // if(result.deletedCount){
+    if(result.modifiedCount){
+      // return result.deletedCount
+      return result.modifiedCount
     }
     return false
   },

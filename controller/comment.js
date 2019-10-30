@@ -18,6 +18,15 @@ const comment = {
     ctx.body = comments
   },
 
+  //管理运营获取帖子评论列表
+  async getCommentListForAdmin(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let postId = ctx.params.id === undefined ? 0 : parseInt(ctx.params.id)
+    let comments = await commentService.getCommentList(pageNum, pageSize, postId)
+    ctx.body = comments
+  },
+
   //添加帖子评论
   async addComment(ctx){
     //验证数据

@@ -18,23 +18,39 @@
  const commentModel = require('../model/comment')
  const postModel = require('../model/post')
  const logModel = require('../model/log')
+ const userModel = require('../model/user')
 
  const comment ={
  
-   //获取帖子评论列表
-   async getCommentList(pageNum, pageSize, postId){
-     let commentList = await commentModel.getCommentList(pageNum, pageSize, postId)
-     if(commentList){
-       return {
-         status: 200,
-         message: commentList
-       }
-     }
-     return {
-       status: 10003,
-       message: '未找到操作对象'
-     }
-   },
+  //获取帖子评论列表
+  async getCommentList(pageNum, pageSize, postId){
+    let commentList = await commentModel.getCommentList(pageNum, pageSize, postId)
+    if(commentList){
+      return {
+        status: 200,
+        message: commentList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
+  //管理运营获取帖子评论列表
+  async getCommentListForAdmin(pageNum, pageSize, postId){
+    let commentList = await commentModel.getCommentListForAdmin(pageNum, pageSize, postId)
+    if(commentList){
+      return {
+        status: 200,
+        message: commentList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
 
   //添加帖子评论
   async addComment(data){
