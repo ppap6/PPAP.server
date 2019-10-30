@@ -74,9 +74,17 @@ const answer = {
 
   //删除评论单条回复
   async deleteAnswer(id){
-    let result = await db_mongo.deleteOne('answer', {_id: ObjectId(id)})
-    if(result.deletedCount){
-      return true
+    // let result = await db_mongo.deleteOne('answer', {_id: ObjectId(id)})
+    let setObj = {
+      $set: {
+        status: 0
+      }
+    }
+    let result = await db_mongo.updateOne('answer', {_id: ObjectId(id)}, setObj)
+    // if(result.deletedCount){
+    if(result.modifiedCount){
+      // return result.deletedCount
+      return result.modifiedCount
     }
     return false
   },
