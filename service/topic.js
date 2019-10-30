@@ -125,6 +125,7 @@ const topic ={
         update_time: topic.update_time,
         posts: topic.posts,
         followers: topic.followers,
+        status: topic.status
       }
       return {
         status: 200,
