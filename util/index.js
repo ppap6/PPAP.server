@@ -17,6 +17,17 @@ const changeTimeToStr = (time) => {
   return newDate
 }
 
+//验证请求携带参数合法性
+const checkParamExist = (paramList, reqParams) => {
+  for(let index in paramList){
+    if(!(paramList[index] in reqParams)){
+      return false
+    }
+  }
+  return true
+}
+
 module.exports = {
-  changeTimeToStr
+  changeTimeToStr,
+  checkParamExist
 }

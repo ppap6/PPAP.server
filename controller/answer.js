@@ -6,6 +6,7 @@
  */
 
 const answerService = require('../service/answer')
+const util = require('../util')
 
 const answer = {
 
@@ -30,6 +31,14 @@ const answer = {
   //添加评论回复
   async addAnswer(ctx){
     //验证数据
+    let paramList = ['type', 'pid', 'comment_id', 'targetor_id', 'content']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await answerService.addAnswer(ctx.request.body)
     ctx.body = result
   },
