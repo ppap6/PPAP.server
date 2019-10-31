@@ -6,11 +6,21 @@
  */
 
 const searchService = require('../service/search')
+const util = require('../util')
 
 const search = {
 
   //获取帖子列表
   async getPostList(ctx){
+    //验证数据
+    let paramList = ['keyword']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
     let keyword = ctx.query.keyword === undefined ? ' ' : ctx.query.keyword
@@ -20,6 +30,15 @@ const search = {
 
   //获取用户列表
   async getUserList(ctx){
+    //验证数据
+    let paramList = ['keyword']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
     let keyword = ctx.query.keyword === undefined ? ' ' : ctx.query.keyword
