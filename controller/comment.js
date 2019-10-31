@@ -6,6 +6,7 @@
  */
 
 const commentService = require('../service/comment')
+const util = require('../util')
 
 const comment = {
 
@@ -29,7 +30,15 @@ const comment = {
 
   //添加帖子评论
   async addComment(ctx){
-    //验证数据
+     //验证数据
+     let paramList = ['pid', 'content']
+     if(!util.checkParamExist(paramList, ctx.request.body)){
+       ctx.body = {
+         status: 10002,
+         message: '非法参数'
+       }
+       return
+     }
     let result = await commentService.addComment(ctx.request.body)
     ctx.body = result
   },
@@ -49,6 +58,15 @@ const comment = {
 
   //修改帖子评论信息
   async updateComment(ctx){
+    //验证数据
+    let paramList = ['pid', 'content']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await commentService.updateComment(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
