@@ -31,6 +31,14 @@ const post = {
   //添加帖子
   async addPost(ctx){
     //验证数据
+    let paramList = ['title', 'content', 'topic_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await postService.addPost(ctx.request.body)
     ctx.body = result
   },
@@ -50,12 +58,30 @@ const post = {
 
   //修改帖子信息
   async updatePost(ctx){
+    //验证数据
+    let paramList = ['title', 'content']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await postService.updatePost(ctx.params.id, ctx.request.body)
     ctx.body = result
   },
 
   //增加帖子阅读量
   async addPV(ctx){
+    //验证数据
+    let paramList = ['pid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await postService.addPV(ctx.request.body)
     ctx.body = result
   }
