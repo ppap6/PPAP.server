@@ -68,12 +68,30 @@ const user = {
 
   //用户修改自己的信息
   async updateSelf(ctx){
+    //验证数据
+    let paramList = ['name', 'account', 'sex', 'email', 'role_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.updateSelf(ctx.request.body)
     ctx.body = result
   },
 
   //修改用户密码
   async updateUserPwd(ctx){
+    //验证数据
+    let paramList = ['old_password', 'password']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.updateUserPwd(ctx.params.id, ctx.request.body)
     ctx.body = result
   },
@@ -95,6 +113,15 @@ const user = {
 
   //用户注册
   async register(ctx){
+    //验证数据
+    let paramList = ['name', 'account', 'password']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.register(ctx.request.body)
     ctx.body = result
   },
