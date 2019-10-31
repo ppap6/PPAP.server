@@ -6,6 +6,7 @@
  */
 
 const roleService = require('../service/role')
+const util = require('../util')
 
 const role = {
 
@@ -20,6 +21,14 @@ const role = {
   //添加角色
   async addRole(ctx){
     //验证数据
+    let paramList = ['name', 'description']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await roleService.addRole(ctx.request.body)
     ctx.body = result
   },
@@ -40,6 +49,14 @@ const role = {
   //修改角色信息
   async updateRole(ctx){
     //验证数据
+    let paramList = ['name', 'description']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await roleService.updateRole(ctx.params.id, ctx.request.body)
     ctx.body = result
   },
@@ -53,6 +70,14 @@ const role = {
   //修改角色权限
   async updateRoleAccess(ctx){
     //验证数据
+    let paramList = ['access']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await roleService.updateRoleAccess(ctx.params.id, ctx.request.body)
     ctx.body = result
   },
