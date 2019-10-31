@@ -82,7 +82,7 @@ const answer ={
         //获取准备回复的这条评论的目标人uid
         let comment = await commentModel.getComment(data.comment_id)
         //添加用户的回复动态
-        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(comment.uid), insertedId)
+        await logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(comment.uid), insertedId)
         return {
           status: 200,
           message: '操作成功'
@@ -99,7 +99,7 @@ const answer ={
         //获取准备回复的这条回复的目标人uid
         let answer = await answerModel.getAnswer(data.answer_id)
         //添加用户的回复动态
-        await logModel.addAnswerLog(parseInt(data.requestor_id), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
+        await logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
         return {
           status: 200,
           message: '操作成功'
