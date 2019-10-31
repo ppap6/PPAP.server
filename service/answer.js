@@ -18,6 +18,7 @@
 const answerModel = require('../model/answer')
 const commentModel = require('../model/comment')
 const logModel = require('../model/log')
+const userModel = require('../model/user')
 
 const answer ={
 
@@ -44,6 +45,15 @@ const answer ={
 
   //管理运营获取评论回复列表
   async getAnswerListForAdmin(pageNum, pageSize, commentId){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 3){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     if(!commentId){
       return {
         status: 10002,
@@ -104,6 +114,15 @@ const answer ={
 
   //删除评论单条回复
   async deleteAnswer(id){
+    //获取角色权限
+    let roleId = await userModel.getRoleId()
+    //验证身份权限
+    if(roleId > 4){
+      return {
+        status: 10004,
+        message: '没有操作权限'
+      }
+    }
     let exist = await answerModel.getAnswer(id)
     if(exist){
       let result = await answerModel.deleteAnswer(id)
@@ -143,8 +162,17 @@ const answer ={
 
   //修改评论回复信息
   async updateAnswer(id, data){
-    let exist = await answerModel.getAnswer(id)
-    if(exist){
+    let answer = await answerModel.getAnswer(id)
+    if(answer){
+      //获取角色权限
+      let roleId = await userModel.getRoleId()
+      //验证身份权限
+      if(roleId == 5 && answer.requestor_id != global.uid){
+        return {
+          status: 10004,
+          message: '没有操作权限'
+        }
+      }
       let result = await answerModel.updateAnswer(id, data)
       if(result){
         return {
