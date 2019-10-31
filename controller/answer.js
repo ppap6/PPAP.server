@@ -58,6 +58,15 @@ const answer = {
 
   //修改评论回复信息
   async updateAnswer(ctx){
+    //验证数据
+    let paramList = ['content']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await answerService.updateAnswer(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
