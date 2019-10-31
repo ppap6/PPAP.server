@@ -48,8 +48,13 @@ const createNewToken = () => {
 const parseToken = () => {
   
   let token = global.token
-  return jwt.verify(token, secret)
-
+  try {
+    return jwt.verify(token, secret)
+  }catch {
+    console.log('token is expired')
+    return {}
+  }
+  
 }
 
 module.exports = {
