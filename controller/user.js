@@ -27,6 +27,14 @@ const user = {
   //添加用户
   async addUser(ctx){
     //验证数据
+    let paramList = ['name', 'account', 'password', 'email', 'role_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.addUser(ctx.request.body)
     ctx.body = result
   },
@@ -45,6 +53,15 @@ const user = {
 
   //修改用户信息
   async updateUser(ctx){
+    //验证数据
+    let paramList = ['name', 'account', 'sex', 'email', 'role_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.updateUser(ctx.params.id, ctx.request.body)
     ctx.body = result
   },
@@ -63,6 +80,15 @@ const user = {
 
   //用户登录
   async login(ctx){
+    //验证数据
+    let paramList = ['account', 'password']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.login(ctx.request.body)
     ctx.body = result
   },
@@ -75,6 +101,15 @@ const user = {
 
   //用户关注
   async follow(ctx){
+    //验证数据
+    let paramList = ['follow_uid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.follow(ctx.request.body)
     ctx.body = result
   },
@@ -87,66 +122,165 @@ const user = {
 
   //用户取消关注
   async cancelFollow(ctx){
+    //验证数据
+    let paramList = ['follow_uid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.cancelFollow(ctx.request.body)
     ctx.body = result
   },
 
   //用户关注话题
   async followTopic(ctx){
+    //验证数据
+    let paramList = ['follow_topic_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.followTopic(ctx.request.body)
     ctx.body = result
   },
 
   //用户取消关注话题
   async cancelFollowTopic(ctx){
+    //验证数据
+    let paramList = ['follow_topic_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.cancelFollowTopic(ctx.request.body)
     ctx.body = result
   },
 
   //用户点赞帖子
   async likePost(ctx){
+    //验证数据
+    let paramList = ['pid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.likePost(ctx.request.body)
     ctx.body = result
   },
 
   //用户取消点赞帖子
   async cancelLikePost(ctx){
+    //验证数据
+    let paramList = ['pid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.cancelLikePost(ctx.request.body)
     ctx.body = result
   },
 
   //用户收藏帖子
   async collectPost(ctx){
+    //验证数据
+    let paramList = ['pid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.collectPost(ctx.request.body)
     ctx.body = result
   },
 
   //用户取消收藏帖子
   async cancelCollectPost(ctx){
+    //验证数据
+    let paramList = ['pid']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.cancelCollectPost(ctx.request.body)
     ctx.body = result
   },
   
   //用户点亮评论
   async lightComment(ctx){
+    //验证数据
+    let paramList = ['comment_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.lightComment(ctx.request.body)
     ctx.body = result
   },
 
   //用户取消点亮评论
   async cancelLightComment(ctx){
+    //验证数据
+    let paramList = ['comment_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.cancelLightComment(ctx.request.body)
     ctx.body = result
   },
 
   //用户点亮回复
   async lightAnswer(ctx){
+    //验证数据
+    let paramList = ['answer_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.lightAnswer(ctx.request.body)
     ctx.body = result
   },
 
   //用户取消点亮回复
   async cancelLightAnswer(ctx){
+    //验证数据
+    let paramList = ['answer_id']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await userService.cancelLightAnswer(ctx.request.body)
     ctx.body = result
   },
