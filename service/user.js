@@ -340,12 +340,12 @@ const user = {
 
   //用户关注
   async follow(data){
-    let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))
+    let exist = await userModel.getFollow(parseInt(global.uid), parseInt(data.follow_uid))
     if(!exist){       //判断是否已存在关注记录
       //添加关注记录
       let result = await userModel.follow(data)
       if(result){
-        await logModel.addFollowPeopleLog(parseInt(data.uid), parseInt(data.follow_uid))
+        await logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
         return {
           status: 200,
           message: '操作成功'
@@ -358,8 +358,8 @@ const user = {
       }
     }else if(exist && exist.state == 0){       //存在记录但是关注状态是0，即未关注
       //更改为关注状态
-      let result = await userModel.updateFollow(parseInt(data.uid), parseInt(data.follow_uid), 1)
-      await logModel.addFollowPeopleLog(parseInt(data.uid), parseInt(data.follow_uid))
+      let result = await userModel.updateFollow(parseInt(global.uid), parseInt(data.follow_uid), 1)
+      await logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
       if(result){
         return {
           status: 200,
@@ -381,11 +381,11 @@ const user = {
 
   //用户取消关注
   async cancelFollow(data){
-    let exist = await userModel.getFollow(parseInt(data.uid), parseInt(data.follow_uid))
+    let exist = await userModel.getFollow(parseInt(global.uid), parseInt(data.follow_uid))
     //判断是否已存在关注记录，且关注状态是1，即已关注
     if(exist && exist.state == 1){      
       //更改为未关注状态
-      let result = await userModel.updateFollow(parseInt(data.uid), parseInt(data.follow_uid), 0)
+      let result = await userModel.updateFollow(parseInt(global.uid), parseInt(data.follow_uid), 0)
       if(result){
         return {
           status: 200,
@@ -407,7 +407,7 @@ const user = {
 
   //用户关注话题
   async followTopic(data){
-    let exist = await userModel.getFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id))
+    let exist = await userModel.getFollowTopic(parseInt(global.uid), parseInt(data.follow_topic_id))
     if(!exist){     //判断是否已存在关注记录
       //添加关注记录
       let result = await userModel.followTopic(data)
@@ -415,7 +415,7 @@ const user = {
         //话题关注数加一
         await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
         //添加用户关注话题动态
-        await logModel.addFollowTopicLog(parseInt(data.uid), parseInt(data.follow_topic_id))
+        await logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
         return {
           status: 200,
           message: '操作成功'
@@ -428,12 +428,12 @@ const user = {
       }
     }else if(exist && exist.state == 0){       //存在记录但是关注状态是0，即未关注
       //更改为关注状态
-      let result = await userModel.updateFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id), 1)
+      let result = await userModel.updateFollowTopic(parseInt(global.uid), parseInt(data.follow_topic_id), 1)
       if(result){
         //话题关注数加一
         await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
         //添加用户关注话题动态
-        await logModel.addFollowTopicLog(parseInt(data.uid), parseInt(data.follow_topic_id))
+        await logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
         return {
           status: 200,
           message: '操作成功'
@@ -454,11 +454,11 @@ const user = {
 
   //用户取消关注话题
   async cancelFollowTopic(data){
-    let exist = await userModel.getFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id))
+    let exist = await userModel.getFollowTopic(parseInt(global.uid), parseInt(data.follow_topic_id))
     //判断是否已存在关注记录，且关注状态是1，即已关注
     if(exist && exist.state == 1){      
       //更改为未关注状态
-      let result = await userModel.updateFollowTopic(parseInt(data.uid), parseInt(data.follow_topic_id), 0)
+      let result = await userModel.updateFollowTopic(parseInt(global.uid), parseInt(data.follow_topic_id), 0)
       if(result){
         //话题关注数减一
         await topicModel.updateTopicStatistics(data.follow_topic_id, 'decreaseFollowers')
@@ -483,17 +483,17 @@ const user = {
   //用户点赞帖子
   async likePost(data){
     //获取用户点赞帖子数组
-    let posts = await userModel.getLikePost(parseInt(data.uid))
+    let posts = await userModel.getLikePost(parseInt(global.uid))
     if(!posts.includes(parseInt(data.pid))){    //判断是否已点赞   
       //不存在=>添加
       posts.unshift(parseInt(data.pid))
       //修改点赞帖子记录
-      let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
+      let result = await userModel.updateLikePosts(parseInt(global.uid), posts)
       if(result){
         //获取帖子up主uid
         let post = await postModel.getPost(parseInt(data.pid))
         //添加用户点赞帖子动态
-        await logModel.addLikePostLog(parseInt(data.uid), parseInt(data.pid), post.uid)
+        await logModel.addLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
         //增加帖子点赞数
         postModel.updateLikes(parseInt(data.pid), 'increase')
         return {
@@ -518,12 +518,12 @@ const user = {
   //用户取消点赞帖子
   async cancelLikePost(data){
     //获取用户点赞帖子数组
-    let posts = await userModel.getLikePost(parseInt(data.uid))
+    let posts = await userModel.getLikePost(parseInt(global.uid))
     if(posts.includes(parseInt(data.pid))){     //判断是否已点赞
       //存在=>移除
       posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
       //修改点赞帖子记录
-      let result = await userModel.updateLikePosts(parseInt(data.uid), posts)
+      let result = await userModel.updateLikePosts(parseInt(global.uid), posts)
       if(result){
         //减少帖子点赞数
         postModel.updateLikes(parseInt(data.pid), 'decrease')
@@ -549,17 +549,17 @@ const user = {
   //用户收藏帖子
   async collectPost(data){
     //获取用户收藏帖子数组
-    let posts = await userModel.getCollectPost(parseInt(data.uid))
+    let posts = await userModel.getCollectPost(parseInt(global.uid))
     if(!posts.includes(parseInt(data.pid))){    //判断是否已收藏  
       //不存在=>添加
       posts.unshift(parseInt(data.pid))
       //修改收藏帖子记录
-      let result = await userModel.updateCollectPosts(parseInt(data.uid), posts)
+      let result = await userModel.updateCollectPosts(parseInt(global.uid), posts)
       if(result){
         //获取帖子up主uid
         let post = await postModel.getPost(parseInt(data.pid))
         //添加用户收藏帖子动态
-        await logModel.addCollectPostLog(parseInt(data.uid), parseInt(data.pid), post.uid)
+        await logModel.addCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
         //增加帖子收藏数
         postModel.updateCollects(parseInt(data.pid), 'increase')
         return {
@@ -584,12 +584,12 @@ const user = {
   //用户取消收藏帖子
   async cancelCollectPost(data){
     //获取用户收藏帖子数组
-    let posts = await userModel.getCollectPost(parseInt(data.uid))
+    let posts = await userModel.getCollectPost(parseInt(global.uid))
     if(posts.includes(parseInt(data.pid))){    //判断是否已收藏  
       //存在=>移除
       posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
       //修改收藏帖子记录
-      let result = await userModel.updateCollectPosts(parseInt(data.uid), posts)
+      let result = await userModel.updateCollectPosts(parseInt(global.uid), posts)
       if(result){
         //减少帖子收藏数
         postModel.updateCollects(parseInt(data.pid), 'decrease')
@@ -615,12 +615,12 @@ const user = {
   //用户点亮评论
   async lightComment(data){
     //获取用户点亮评论数组
-    let comments = await userModel.getLightComment(parseInt(data.uid))
+    let comments = await userModel.getLightComment(parseInt(global.uid))
     if(!comments.includes(data.comment_id)){    //判断是否已点亮
       //不存在=>添加
       comments.push(data.comment_id)
       //修改点亮评论记录
-      let result = await userModel.updateLightComments(parseInt(data.uid), comments)
+      let result = await userModel.updateLightComments(parseInt(global.uid), comments)
       //修改评论点亮计数
       let comment = await commentModel.getComment(data.comment_id)
       userModel.increaseCommentLightsCount(comment._id, comment.lights)
@@ -647,12 +647,12 @@ const user = {
   //用户取消点亮评论
   async cancelLightComment(data){
     //获取用户点亮评论数组
-    let comments = await userModel.getLightComment(parseInt(data.uid))
+    let comments = await userModel.getLightComment(parseInt(global.uid))
     if(comments.includes(data.comment_id)){    //判断是否已点亮
       //存在=>移除
       comments.splice(comments.findIndex(item => item == data.comment_id), 1)
       //修改点亮评论记录
-      let result = await userModel.updateLightComments(parseInt(data.uid), comments)
+      let result = await userModel.updateLightComments(parseInt(global.uid), comments)
       //修改评论点亮计数
       let comment = await commentModel.getComment(data.comment_id)
       userModel.decreaseCommentLightsCount(comment._id, comment.lights)
@@ -679,12 +679,12 @@ const user = {
   //用户点亮回复
   async lightAnswer(data){
     //获取用户点亮回复数组
-    let answers = await userModel.getLightAnswer(parseInt(data.uid))
+    let answers = await userModel.getLightAnswer(parseInt(global.uid))
     if(!answers.includes(data.answer_id)){    //判断是否已点亮
       //不存在=>添加
       answers.push(data.answer_id)
       //修改点亮回复记录
-      let result = await userModel.updateLightAnswers(parseInt(data.uid), answers)
+      let result = await userModel.updateLightAnswers(parseInt(global.uid), answers)
       //修改回复点亮计数
       let answer = await answerModel.getAnswer(data.answer_id)
       userModel.increaseAnswerLightsCount(answer._id, answer.lights)
@@ -711,12 +711,12 @@ const user = {
   //用户取消点亮回复
   async cancelLightAnswer(data){
     //获取用户点亮回复数组
-    let answers = await userModel.getLightAnswer(parseInt(data.uid))
+    let answers = await userModel.getLightAnswer(parseInt(global.uid))
     if(answers.includes(data.answer_id)){    //判断是否已点亮
       //存在=>移除
       answers.splice(answers.findIndex(item => item == data.answer_id), 1)
       //修改点亮回复记录
-      let result = await userModel.updateLightAnswers(parseInt(data.uid), answers)
+      let result = await userModel.updateLightAnswers(parseInt(global.uid), answers)
       //修改回复点亮计数
       let answer = await answerModel.getAnswer(data.answer_id)
       userModel.decreaseAnswerLightsCount(answer._id, answer.lights)

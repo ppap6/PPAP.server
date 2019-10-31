@@ -187,7 +187,7 @@ const user = {
   //用户关注
   async follow(data){
     let dataObj = {
-      uid: parseInt(data.uid),
+      uid: parseInt(global.uid),
       follow_uid: parseInt(data.follow_uid),
       create_time: util.changeTimeToStr(new Date()),
       state: 1
@@ -226,7 +226,7 @@ const user = {
   //用户关注话题
   async followTopic(data){
     let dataObj = {
-      uid: parseInt(data.uid),
+      uid: parseInt(global.uid),
       follow_topic_id: parseInt(data.follow_topic_id),
       create_time: util.changeTimeToStr(new Date()),
       state: 1
@@ -320,7 +320,7 @@ const user = {
     return false
   },
 
-  //修改用户帖子点赞数组数据
+  //修改用户帖子收藏数组数据
   async updateCollectPosts(uid, posts){
     let dataObj = {
       collect_posts: posts
