@@ -22,6 +22,14 @@ app.use((ctx, next) => {
   //获取token，保存全局变量
   if(ctx.request.header.authorization){
     global.token = ctx.request.header.authorization.split(' ')[1]
+    //检测当前token是否到达续期时间段
+    let obj = tokenUtil.parseToken()
+    //解析token携带的信息
+    global.uid = obj.uid
+    global.name = obj.name
+    global.account = obj.account
+    global.roleId = obj.roleId
+    //先解析全局变量再执行next()，保证函数实时获取到变量值
   }
   return next().then(() => {
     //判断不需要jwt验证的接口，跳过token续期判断
