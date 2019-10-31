@@ -6,6 +6,7 @@
  */
 
 const accessService = require('../service/access')
+const util = require('../util')
 
 const access = {
 
@@ -20,6 +21,14 @@ const access = {
   //添加权限
   async addAccess(ctx){
     //验证数据
+    let paramList = ['sid', 'name', 'code', 'description']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await accessService.addAccess(ctx.request.body)
     ctx.body = result
   },
@@ -40,6 +49,14 @@ const access = {
   //修改权限信息
   async updateAccess(ctx){
     //验证数据
+    let paramList = ['sid', 'name', 'code', 'description']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await accessService.updateAccess(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
