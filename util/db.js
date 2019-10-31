@@ -6,12 +6,13 @@
  */
 
 const mysql = require('mysql')
+const config = require('../config/config')
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'ppap',
+  host: config.host,
+  user: config.user,
+  password: config.password,
+  database: config.database,
   timezone: '08:00'
 })
 

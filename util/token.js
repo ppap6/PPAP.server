@@ -5,7 +5,7 @@
  * @LastEditTime: 2019-09-10 01:15:06
  */
 const jwt = require('jsonwebtoken')
-const secret = 'secret'
+const secret = require('../config/config').secret
 
 //判断token是否应该更新有效期（续期）
 const getTokenRenewStatus = () => {

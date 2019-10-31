@@ -23,7 +23,7 @@ const commentModel = require('../model/comment')
 const answerModel = require('../model/answer')
 const tokenUtil = require('../util/token')
 const crypto = require('crypto')
-const salt = 'ppap'
+const salt = require('../config/config').salt
 
 const user = {
 

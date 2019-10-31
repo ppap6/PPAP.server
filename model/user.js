@@ -16,7 +16,7 @@ const db_mongo = require('../util/db_mongo')
 const ObjectId = require('mongodb').ObjectId
 const tokenUtil = require('../util/token')
 const crypto = require('crypto')
-const salt = 'ppap'
+const salt = require('../config/config').salt
 
 const user = {
 

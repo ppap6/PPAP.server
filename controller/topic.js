@@ -6,6 +6,7 @@
  */
 
 const topicService = require('../service/topic')
+const util = require('../util')
 
 const topic = {
 

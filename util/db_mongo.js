@@ -6,8 +6,9 @@
  */
 
 const MongoClient = require('mongodb').MongoClient
+const config = require('../config/config')
 
-const url = 'mongodb://localhost:27017/'
+const url = `mongodb://${config.mongo_host}:${config.mongo_port}/`
 
 
 /**
@@ -16,7 +17,7 @@ const url = 'mongodb://localhost:27017/'
 let DB
 MongoClient.connect( url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
   if(err) throw err
-  DB = client.db('ppap')
+  DB = client.db(config.mongo_database)
 })
 
 
