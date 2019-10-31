@@ -62,7 +62,7 @@ const post = {
   async addPost(data){
     let sql = 'INSERT INTO post(uid,title,content,create_time,update_time,topic_id) VALUES(?,?,?,?,?,?)'
     let values = [
-      data.uid,
+      global.uid,
       data.title,
       data.content,
       util.changeTimeToStr(new Date()),

@@ -78,7 +78,6 @@ const comment = {
   //修改帖子评论信息
   async updateComment(id, data){
     let dataObj = {
-      uid: parseInt(global.uid),
       pid: parseInt(data.pid),
       content: data.content,
       update_time: util.changeTimeToStr(new Date())
