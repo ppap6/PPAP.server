@@ -28,6 +28,14 @@ const topic = {
   //添加话题
   async addTopic(ctx){
     //验证数据
+    let paramList = ['sid', 'name', 'intro']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await topicService.addTopic(ctx.request.body)
     ctx.body = result
   },
@@ -48,6 +56,14 @@ const topic = {
   //修改话题信息
   async updateTopic(ctx){
     //验证数据
+    let paramList = ['name', 'intro']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
     let result = await topicService.updateTopic(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
