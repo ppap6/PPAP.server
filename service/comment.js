@@ -68,7 +68,7 @@
       //获取帖子up主uid
       let post = await postModel.getPost(parseInt(data.pid))
       //添加用户评论动态
-      await logModel.addCommentLog(parseInt(data.uid), parseInt(data.pid), post.uid, insertedId)
+      await logModel.addCommentLog(parseInt(global.uid), parseInt(data.pid), post.uid, insertedId)
       return {
         status: 200,
         message: '操作成功'
