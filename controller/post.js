@@ -5,7 +5,6 @@
  * @LastEditTime: 2019-08-05 23:26:10
  */
 
-const userCode = require('../code/user')
 const postService = require('../service/post')
 const util = require('../util')
 

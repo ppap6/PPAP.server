@@ -4,7 +4,6 @@
  * @LastEditors: jwchan1996
  * @LastEditTime: 2019-10-10 00:54:20
  */
-const userCode = require('../code/user')
 const personService = require('../service/person')
 
 const person = {

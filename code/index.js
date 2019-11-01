@@ -4,7 +4,7 @@
  * @LastEditors: jwchan1996
  * @LastEditTime: 2019-05-21 19:50:23
  */
-const userCode = {
+const code = {
 
   FAIL_EMAIL_IS_EXIST: '邮箱已被注册',
 
@@ -18,4 +18,4 @@ const userCode = {
 
 }
 
-module.exports = userCode
+module.exports = code
