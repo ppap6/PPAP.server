@@ -274,13 +274,23 @@ const user = {
         return {
           status: 200,
           message: '登录成功',
-          token: tokenUtil.getToken({
+          user: {
             uid: user.id,
-            name: user.name,
-            account: data.account, 
-            password: data.password,
-            roleId: user.role_id
-          })
+            uname: user.name,
+            account: data.account,
+            avatar: user.avatar,
+            sex: user.sex,
+            email: user.email,
+            identity: user.role_id,
+            create_time: user.create_time,
+            token: tokenUtil.getToken({
+              uid: user.id,
+              name: user.name,
+              account: data.account, 
+              password: data.password,
+              roleId: user.role_id
+            })
+          }
         }
       }else{
         return {
