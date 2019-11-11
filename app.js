@@ -9,6 +9,8 @@ const bodyParser = require('koa-bodyparser')
 const jwtKoa = require('koa-jwt')  // 用于路由权限控制
 const app = new Koa()
 
+const config = require('../config/config')
+
 const tokenUtil = require('./util/token')
 const router = require('./router')
 
@@ -70,4 +72,4 @@ app.use(jwtKoa({ secret: tokenUtil.secret }).unless({
 app.use(router.routes()).use(router.allowedMethods())
 
 //监听启动窗口
-app.listen(2333, () => console.log("PPAP.server is run on localhost:2333"))
+app.listen(config.port, () => console.log(`PPAP.server is run on localhost:${config.port}`))
