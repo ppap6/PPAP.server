@@ -9,7 +9,7 @@ const bodyParser = require('koa-bodyparser')
 const jwtKoa = require('koa-jwt')  // 用于路由权限控制
 const app = new Koa()
 
-const config = require('../config/config')
+const config = require('./config/config')
 
 const tokenUtil = require('./util/token')
 const router = require('./router')

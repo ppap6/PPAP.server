@@ -88,7 +88,7 @@ const post = {
 
   //获取帖子信息(根据id)
   async getPost(id){
-    let sql = `SELECT p.id,p.uid,u.name AS uname,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name,p.status 
+    let sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name,p.status 
       FROM post AS p,user AS u,topic AS t 
       WHERE p.topic_id=t.id AND p.uid=u.id AND p.id=?`
     let result = await db.query(sql, [id])
