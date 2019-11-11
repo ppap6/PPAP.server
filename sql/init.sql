@@ -73,7 +73,7 @@ CREATE TABLE `post` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
     `uid` INT UNSIGNED NOT NULL COMMENT '用户ID',
     `title` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '贴子标题',
-    `content` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '帖子内容',
+    `content` TEXT NOT NULL DEFAULT '' COMMENT '帖子内容',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `topic_id` INT UNSIGNED NOT NULL COMMENT '话题ID',
