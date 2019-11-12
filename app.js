@@ -21,6 +21,11 @@ app.use(bodyParser())
 
 // 错误处理
 app.use((ctx, next) => {
+  //设置CORS跨域
+  ctx.set("Access-Control-Allow-Origin", "*")
+  ctx.set("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, POST, DELETE")
+  ctx.set("Access-Control-Allow-Headers", "x-requested-with, accept, origin, content-type, Authorization")
+  ctx.set("Content-Type", "application/json;charset=utf-8")
   //获取token，保存全局变量
   if(ctx.request.header.authorization){
     global.token = ctx.request.header.authorization.split(' ')[1]
