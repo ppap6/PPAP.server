@@ -11,7 +11,7 @@ CREATE TABLE `user` (
     `name` VARCHAR(100) NOT NULL COMMENT '昵称',
     `account` VARCHAR(20) NOT NULL COMMENT '账号',
     `password` VARCHAR(100) NOT NULL COMMENT '密码',
-    `avatar` VARCHAR(200) NOT NULL DEFAULT 'https://jwchan.cn/images/avatar.gif' COMMENT '头像',
+    `avatar` VARCHAR(200) NOT NULL DEFAULT 'https://i.loli.net/2019/11/12/9fbF4wGvU6jYBXA.png' COMMENT '头像',
     `sex` INT NOT NULL DEFAULT 0 COMMENT '性别',
     `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '邮箱',
     `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '手机号',
