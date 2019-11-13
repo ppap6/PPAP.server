@@ -44,6 +44,21 @@ const user = {
     }
   },
 
+  //获取用户登录状态
+  async getUserLoginStatus(){
+    let user = await userModel.getUser(global.uid)
+    if(user){
+      return {
+        status: 200,
+        message: user
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
   //获取所有用户
   async getUserList(pageNum, pageSize){
     //获取角色权限

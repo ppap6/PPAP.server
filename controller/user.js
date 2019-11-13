@@ -16,6 +16,12 @@ const user = {
     ctx.body = users
   },
 
+  //获取用户登录状态
+  async getUserLoginStatus(ctx){
+    let result = await userService.getUserLoginStatus()
+    ctx.body = result
+  },
+
   //获取用户列表
   async getUserList(ctx){
     let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
