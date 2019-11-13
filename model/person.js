@@ -87,6 +87,34 @@ const person = {
         return false
     },
 
+    //获取用户帖子总数
+    async getUserPostCount(userId){
+        let sql = `SELECT COUNT(uid) FROM post WHERE uid=?`
+        let count = await db.query(sql, [userId])
+        if(count[0]['COUNT(uid)']){
+            return count[0]['COUNT(uid)']
+        }
+        return 0
+    },
+
+    //获取用户评论总数
+    async getUserCommentCount(userId){
+        let count = await db_mongo.count('comment', {uid: userId, status: 1})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
+    //获取用户回复总数
+    async getUserAnswerCount(userId){
+        let count = await db_mongo.count('answer', {requestor_id: userId, status: 1})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
     //获取用户粉丝总数
     async getUserFansCount(userId){
         let count = await db_mongo.count('user_fans_relation', {follow_uid: userId, state: 1})
@@ -105,16 +133,41 @@ const person = {
         return 0
     },
 
-    //获取用户点赞帖子数组（分页page）
-    async getLikePidArr(userId, pageNum, pageSize){
-        let start = (pageNum - 1) * pageSize
+    //获取用户点赞总数
+    async getUserLikeCount(userId){
         let likePosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
         if (Array.isArray(likePosts) && likePosts.length > 0) {
             let pidArr = likePosts[0].like_posts
-            if(pidArr.length - start > pageSize){
-                return pidArr.slice(start, pageSize)
-            }
-            return pidArr.slice(start)
+            return pidArr.length
+        }
+        return 0
+    },
+
+    //获取用户点赞总数
+    async getUserLikeCount(userId){
+        let likePosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
+        if (Array.isArray(likePosts) && likePosts.length > 0) {
+            let pidArr = likePosts[0].like_posts
+            return pidArr.length
+        }
+        return 0
+    },
+
+    //获取用户收藏总数
+    async getUserCollectCount(userId){
+        let collectPosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
+        if (Array.isArray(collectPosts) && collectPosts.length > 0) {
+            let pidArr = collectPosts[0].collect_posts
+            return pidArr.length
+        }
+        return 0
+    },
+
+    //获取用户话题总数
+    async getUserTopicCount(userId){
+        let count = await db_mongo.count('user_topic_relation', {uid: userId, state: 1})
+        if (count) {
+            return count
         }
         return 0
     },
