@@ -50,7 +50,7 @@ app.use((ctx, next) => {
     }
   }).catch((err) => {
       if(err.status === 401){
-          ctx.status = 401;
+          ctx.status = 200
           ctx.body = {
             status: 401,
             message: '未携带token令牌或者token令牌已过期'
