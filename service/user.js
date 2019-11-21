@@ -178,9 +178,30 @@ const user = {
   async getUser(id){
     let user = await userModel.getUser(id)
     if(user){
+      let result = {
+        id: user.id,
+        name: user.name,
+        account: user.account,
+        avatar: user.avatar,
+        sex: user.sex,
+        email: user.email,
+        create_time: user.create_time,
+        role_id: user.role_id,
+        role_name: user.role_name,
+        count: {
+          posts: await personModel.getUserPostCount(global.uid),
+          comments: await personModel.getUserCommentCount(global.uid),
+          answers: await personModel.getUserAnswerCount(global.uid),
+          fans: await personModel.getUserFansCount(global.uid),
+          follows: await personModel.getUserFollowCount(global.uid),
+          likes: await personModel.getUserLikeCount(global.uid),
+          collects: await personModel.getUserCollectCount(global.uid),
+          topics: await personModel.getUserTopicCount(global.uid)
+        }
+      }
       return {
         status: 200,
-        message: user
+        message: result
       }
     }
     return {
