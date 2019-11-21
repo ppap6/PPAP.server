@@ -47,13 +47,13 @@ const user = {
 
   //删除用户
   async deleteUser(ctx){
-    let result = await userService.deleteUser(ctx.params.id)
+    let result = await userService.deleteUser(parseInt(ctx.params.id))
     ctx.body = result
   },
 
   //获取用户信息
   async getUser(ctx){
-    let result = await userService.getUser(ctx.params.id)
+    let result = await userService.getUser(parseInt(ctx.params.id))
     ctx.body = result
   },
 
@@ -68,7 +68,7 @@ const user = {
       }
       return
     }
-    let result = await userService.updateUser(ctx.params.id, ctx.request.body)
+    let result = await userService.updateUser(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   },
 
@@ -98,7 +98,7 @@ const user = {
       }
       return
     }
-    let result = await userService.updateUserPwd(ctx.params.id, ctx.request.body)
+    let result = await userService.updateUserPwd(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   },
 
@@ -149,7 +149,7 @@ const user = {
 
   //获取用户对帖子的点赞收藏状态
   async getPostStatus(ctx){
-    let result = await userService.getPostStatus(ctx.params.id)
+    let result = await userService.getPostStatus(parseInt(ctx.params.id))
     ctx.body = result
   },
 
