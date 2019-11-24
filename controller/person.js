@@ -13,7 +13,7 @@ const person = {
     async getPostList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -31,7 +31,7 @@ const person = {
     async getCommentList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -49,7 +49,7 @@ const person = {
     async getAnswerList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -67,7 +67,7 @@ const person = {
     async getFansList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -85,7 +85,7 @@ const person = {
     async getFollowList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -103,7 +103,7 @@ const person = {
     async getLikeList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -121,7 +121,7 @@ const person = {
     async getCollectList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
@@ -139,7 +139,7 @@ const person = {
     async getTopicList(ctx) {
         //验证数据
         let paramList = ['user_id']
-        if(!util.checkParamExist(paramList, ctx.request.body)){
+        if(!util.checkParamExist(paramList, ctx.query)){
             ctx.body = {
                 status: 10002,
                 message: '非法参数'
