@@ -14,7 +14,7 @@ const search = {
   async getPostList(ctx){
     //验证数据
     let paramList = ['keyword']
-    if(!util.checkParamExist(paramList, ctx.request.body)){
+    if(!util.checkParamExist(paramList, ctx.query)){
       ctx.body = {
         status: 10002,
         message: '非法参数'
@@ -32,7 +32,7 @@ const search = {
   async getUserList(ctx){
     //验证数据
     let paramList = ['keyword']
-    if(!util.checkParamExist(paramList, ctx.request.body)){
+    if(!util.checkParamExist(paramList, ctx.query)){
       ctx.body = {
         status: 10002,
         message: '非法参数'
