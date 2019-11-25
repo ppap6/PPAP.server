@@ -44,9 +44,22 @@ const search ={
   async getUserList(keyword, pageNum, pageSize){
     let userList = await searchModel.getUserList(keyword, pageNum, pageSize)
     if(userList){
+      let newUserList = []
+      //遍历
+      for (let i = 0; i < userList.length; i++) {
+        let fansCount = await personModel.getUserFansCount(parseInt(userList[i].id))
+        let followCount = await personModel.getUserFollowCount(parseInt(userList[i].id))
+        newUserList.push({
+            id: userList[i].id,
+            name: userList[i].name,
+            avatar: userList[i].avatar,
+            fans_count: fansCount,
+            follow_count: followCount
+        })
+      }
       return {
         status: 200,
-        message: userList
+        message: newUserList
       }
     }
     return {
