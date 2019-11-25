@@ -172,6 +172,20 @@ const person = {
         return 0
     },
 
+    //获取用户点赞帖子数组（分页page）
+    async getLikePidArr(userId, pageNum, pageSize){
+        let start = (pageNum - 1) * pageSize
+        let likePosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
+        if (Array.isArray(likePosts) && likePosts.length > 0) {
+            let pidArr = likePosts[0].like_posts
+            if(pidArr.length - start > pageSize){
+                return pidArr.slice(start, pageSize)
+            }
+            return pidArr.slice(start)
+        }
+        return 0
+    },
+
     //获取用户收藏帖子数组（分页page）
     async getCollectPidArr(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
