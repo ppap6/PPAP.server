@@ -54,11 +54,12 @@ const topic = {
 
   //添加话题
   async addTopic(data){
-    let sql = 'INSERT INTO topic(sid,name,intro,create_time,update_time) VALUES(?,?,?,?,?)'
+    let sql = 'INSERT INTO topic(sid,name,intro,icon,create_time,update_time) VALUES(?,?,?,?,?)'
     let values = [
       data.sid,
       data.name,
       data.intro,
+      data.icon,
       util.changeTimeToStr(new Date()),
       util.changeTimeToStr(new Date())
     ]
@@ -91,10 +92,11 @@ const topic = {
 
   //修改话题信息
   async updateTopic(id, data){
-    let sql = 'UPDATE topic SET name=?,intro=?,update_time=? WHERE id=?'
+    let sql = 'UPDATE topic SET name=?,intro=?,icon=?,update_time=? WHERE id=?'
     let values = [
       data.name,
       data.intro,
+      data.icon,
       util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values, id])

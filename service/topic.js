@@ -121,6 +121,7 @@ const topic ={
         sname: sname,
         name: topic.name,
         intro: topic.intro,
+        icon: topic.icon,
         create_time: topic.create_time,
         update_time: topic.update_time,
         posts: topic.posts,
