@@ -91,6 +91,7 @@ CREATE TABLE `topic` (
     `sid` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级话题ID',
     `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '话题名称',
     `intro` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '话题简介',
+    `icon` VARCHAR(255) NOT NULL DEFAULT 'https://files.catbox.moe/ggkfkb.png' COMMENT '话题图标',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `posts` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '帖子总数',
