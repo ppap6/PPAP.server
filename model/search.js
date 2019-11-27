@@ -48,7 +48,7 @@ const search = {
     let start = (pageNum-1)*pageSize
     let sql
     if(keyword === ' '){
-      sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex FROM user AS u LIMIT ${start},${pageSize}`
+      sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex FROM user AS u ORDER BY u.id ASC LIMIT ${start},${pageSize}`
     }else{
       let keywordArr = keyword.trim().split(' ')
       let likeStr = ''
@@ -63,6 +63,7 @@ const search = {
       sql = `SELECT u.id,u.name,u.account,u.avatar,u.sex 
              FROM user AS u 
              WHERE (${likeStr})
+             ORDER BY u.id ASC
              LIMIT ${start},${pageSize}`
     }
     let result = await db.query(sql)
