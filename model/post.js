@@ -23,18 +23,18 @@ const post = {
     }else{
       if(sid){
         //话题id为父级
-      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
-        FROM post AS p,user AS u,topic AS t,topic AS parent 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
-        ORDER BY p.create_time DESC
-        LIMIT ${start},${pageSize}`
+        sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+          FROM post AS p,user AS u,topic AS t,topic AS parent 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
+          ORDER BY p.create_time DESC
+          LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
-      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
-        FROM post AS p,user AS u,topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
-        ORDER BY p.create_time DESC
-        LIMIT ${start},${pageSize}`
+        sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+          FROM post AS p,user AS u,topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
+          ORDER BY p.create_time DESC
+          LIMIT ${start},${pageSize}`
       }
     }
     let result = await db.query(sql)
@@ -45,7 +45,7 @@ const post = {
   },
 
   //管理运营获取帖子数据（页数，数目，话题id）
-  async getPostListForAdmin(pageNum=1,pageSize=20,topicId=0){
+  async getPostListForAdmin(pageNum=1,pageSize=20,topicId=0,sid){
     let start = (pageNum-1)*pageSize
     let sql
     if(topicId === 0){
@@ -55,11 +55,21 @@ const post = {
         ORDER BY p.create_time DESC
         LIMIT ${start},${pageSize}`
     }else{
-      sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name,p.status 
-        FROM post AS p,user AS u,topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
-        ORDER BY p.create_time DESC
-        LIMIT ${start},${pageSize}`
+      if(sid){
+        //话题id为父级
+        sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+          FROM post AS p,user AS u,topic AS t,topic AS parent 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id
+          ORDER BY p.create_time DESC
+          LIMIT ${start},${pageSize}`
+      }else{
+        //话题id为子级
+        sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+          FROM post AS p,user AS u,topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
+          ORDER BY p.create_time DESC
+          LIMIT ${start},${pageSize}`
+      }
     }
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){

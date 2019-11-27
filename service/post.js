@@ -53,7 +53,15 @@ const post ={
 
   //管理运营获取帖子列表
   async getPostListForAdmin(pageNum, pageSize, topicId){
-    let postList = await postModel.getPostListForAdmin(pageNum, pageSize, topicId)
+    //判断话题是否是父级
+    let topic = await topicModel.getTopic(topicId)
+    let sid
+    if(topic.sid == 0){
+      sid = true
+    }else{
+      sid = false
+    }
+    let postList = await postModel.getPostListForAdmin(pageNum, pageSize, topicId, sid)
     if(postList){
       for (let i = 0; i < postList.length; i++) {
         let commentCount = await personModel.getPostCommentCount(postList[i].id)
