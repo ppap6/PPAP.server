@@ -406,6 +406,26 @@ const user = {
     }
   },
 
+  //获取用户对话题的关注状态
+  async getTopicStatus(id){
+    let visitorId = global.uid
+    let userTopic = await userModel.getUserTopic(parseInt(visitorId), id)
+    let result
+    if(userTopic){
+      result = {
+        isFollow: userTopic.state ? true : false
+      }
+    }else{
+      result = {
+        isFollow: false
+      }
+    }
+    return {
+      status: 200,
+      message: result
+    }
+  },
+
   //用户关注
   async follow(data){
     let exist = await userModel.getFollow(parseInt(global.uid), parseInt(data.follow_uid))

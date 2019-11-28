@@ -441,7 +441,16 @@ const user = {
       return result.modifiedCount
     }
     return false
-  }
+  },
+
+  //获取用户关注话题记录
+  async getUserTopic(uid, follow_topic_id){
+    let result = await db_mongo.find('user_topic_relation', {uid, follow_topic_id})
+    if(Array.isArray(result)){
+      return result[0]
+    }
+    return false
+  },
 }
 
 module.exports = user

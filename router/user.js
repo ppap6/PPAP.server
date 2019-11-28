@@ -22,6 +22,7 @@ router
   .post('/register', user.register)    //用户注册
 
   .get('/post/status/:id', user.getPostStatus)    //获取用户对帖子的点赞收藏状态
+  .get('/topic/status/:id', user.getTopicStatus)    //获取用户对话题的关注状态
 
   .post('/follow', user.follow)    //用户关注
   .post('/cancel/follow', user.cancelFollow)    //用户取消关注
