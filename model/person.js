@@ -203,7 +203,7 @@ const person = {
     //获取用户关注话题列表
     async getTopicList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
-        let result = await db_mongo.find('user_topic_relation', {uid: userId}, start, pageSize)
+        let result = await db_mongo.find('user_topic_relation', {uid: userId, state: 1}, start, pageSize)
         if (Array.isArray(result) && result.length > 0) {
             return result
         }
