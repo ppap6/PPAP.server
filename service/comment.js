@@ -26,6 +26,11 @@
   async getCommentList(pageNum, pageSize, postId){
     let commentList = await commentModel.getCommentList(pageNum, pageSize, postId)
     if(commentList){
+      for(let i=0; i<commentList.length; i++){
+        let user = await userModel.getUser(commentList[i].uid)
+        commentList[i].uname = user.name
+        commentList[i].avatar = user.avatar
+      }
       return {
         status: 200,
         message: commentList
@@ -50,6 +55,11 @@
     }
     let commentList = await commentModel.getCommentListForAdmin(pageNum, pageSize, postId)
     if(commentList){
+      for(let i=0; i<commentList.length; i++){
+        let user = await userModel.getUser(commentList[i].uid)
+        commentList[i].uname = user.name
+        commentList[i].avatar = user.avatar
+      }
       return {
         status: 200,
         message: commentList
@@ -117,6 +127,9 @@
   async getComment(id){
     let comment = await commentModel.getComment(id)
     if(comment){
+      let user = await userModel.getUser(comment.uid)
+      comment.uname = user.name
+      comment.avatar = user.avatar
       return {
         status: 200,
         message: comment
