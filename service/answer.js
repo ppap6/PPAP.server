@@ -32,6 +32,14 @@ const answer ={
     }
     let answerList = await answerModel.getAnswerList(pageNum, pageSize, commentId)
     if(answerList){
+      for(let i=0; i<answerList.length; i++){
+        let requestor = await userModel.getUser(answerList[i].requestor_id)
+        answerList[i].requestor_name = requestor.name
+        answerList[i].requestor_avatar = requestor.avatar
+        let targetor = await userModel.getUser(answerList[i].targetor_id)
+        answerList[i].targetor_name = targetor.name
+        answerList[i].targetor_avatar = targetor.avatar
+      }
       return {
         status: 200,
         message: answerList
@@ -62,6 +70,14 @@ const answer ={
     }
     let answerList = await answerModel.getAnswerListForAdmin(pageNum, pageSize, commentId)
     if(answerList){
+      for(let i=0; i<answerList.length; i++){
+        let requestor = await userModel.getUser(answerList[i].requestor_id)
+        answerList[i].requestor_name = requestor.name
+        answerList[i].requestor_avatar = requestor.avatar
+        let targetor = await userModel.getUser(answerList[i].targetor_id)
+        answerList[i].targetor_name = targetor.name
+        answerList[i].targetor_avatar = targetor.avatar
+      }
       return {
         status: 200,
         message: answerList
@@ -149,6 +165,12 @@ const answer ={
   async getAnswer(id){
     let answer = await answerModel.getAnswer(id)
     if(answer){
+      let requestor = await userModel.getUser(answer.requestor_id)
+      answer.requestor_name = requestor.name
+      answer.requestor_avatar = requestor.avatar
+      let targetor = await userModel.getUser(answer.targetor_id)
+      answer.targetor_name = targetor.name
+      answer.targetor_avatar = targetor.avatar
       return {
         status: 200,
         message: answer
