@@ -296,6 +296,7 @@ const person = {
                     //回复动态
                     if(dynamicList[i].type == 2){
                         let user = await userModel.getUser(dynamicList[i].uid)
+                        let targetor = await userModel.getUser(dynamicList[i].targetor_id)
                         let post = await postModel.getPost(dynamicList[i].pid)
                         let answer = await answerModel.getAnswer(dynamicList[i].answer_id)
                         responseList.push({
@@ -306,6 +307,9 @@ const person = {
                             avatar: user.avatar,
                             pid: dynamicList[i].pid,
                             pname: post.title,
+                            targetor_id: dynamicList[i].targetor_id,
+                            targetor_name: targetor.name,
+                            targetor_avatar: targetor.avatar,
                             answer_id: dynamicList[i].answer_id,
                             answer_content: answer.content,
                             create_time: dynamicList[i].create_time
