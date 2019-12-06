@@ -45,11 +45,11 @@ const log = {
   },
 
   //添加用户关注他人动态
-  async addFollowPeopleLog(uid, follow_people_uid){
+  async addFollowPeopleLog(uid, follow_people_id){
     let dataObj = {
       type: 3,
       uid,
-      follow_people_uid,
+      follow_people_id,
       create_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
