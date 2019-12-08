@@ -35,14 +35,14 @@ const role = {
 
   //获取角色信息
   async getRole(ctx){
-    let result = await roleService.getRole(ctx.params.id)
+    let result = await roleService.getRole(parseInt(ctx.params.id))
     ctx.body = result
   },
 
   //删除角色
   async deleteRole(ctx){
     //验证身份
-    let result = await roleService.deleteRole(ctx.params.id)
+    let result = await roleService.deleteRole(parseInt(ctx.params.id))
     ctx.body = result
   },
 
@@ -57,13 +57,13 @@ const role = {
       }
       return
     }
-    let result = await roleService.updateRole(ctx.params.id, ctx.request.body)
+    let result = await roleService.updateRole(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   },
 
   //获取角色权限
   async getRoleAccess(ctx){
-    let result = await roleService.getRoleAccess(ctx.params.id)
+    let result = await roleService.getRoleAccess(parseInt(ctx.params.id))
     ctx.body = result
   },
 
@@ -78,7 +78,7 @@ const role = {
       }
       return
     }
-    let result = await roleService.updateRoleAccess(ctx.params.id, ctx.request.body)
+    let result = await roleService.updateRoleAccess(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   },
 

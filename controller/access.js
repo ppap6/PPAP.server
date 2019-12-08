@@ -35,14 +35,14 @@ const access = {
 
   //获取权限信息
   async getAccess(ctx){
-    let result = await accessService.getAccess(ctx.params.id)
+    let result = await accessService.getAccess(parseInt(ctx.params.id))
     ctx.body = result
   },
 
   //删除权限
   async deleteAccess(ctx){
     //验证身份
-    let result = await accessService.deleteAccess(ctx.params.id)
+    let result = await accessService.deleteAccess(parseInt(ctx.params.id))
     ctx.body = result
   },
 
@@ -57,7 +57,7 @@ const access = {
       }
       return
     }
-    let result = await accessService.updateAccess(ctx.params.id, ctx.request.body)
+    let result = await accessService.updateAccess(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   }
 

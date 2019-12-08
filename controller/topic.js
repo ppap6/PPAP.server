@@ -43,14 +43,14 @@ const topic = {
 
   //获取话题信息
   async getTopic(ctx){
-    let result = await topicService.getTopic(ctx.params.id)
+    let result = await topicService.getTopic(parseInt(ctx.params.id))
     ctx.body = result
   },
 
   //删除话题
   async deleteTopic(ctx){
     //验证身份
-    let result = await topicService.deleteTopic(ctx.params.id)
+    let result = await topicService.deleteTopic(parseInt(ctx.params.id))
     ctx.body = result
   },
 
@@ -65,7 +65,7 @@ const topic = {
       }
       return
     }
-    let result = await topicService.updateTopic(ctx.params.id, ctx.request.body)
+    let result = await topicService.updateTopic(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   }
 

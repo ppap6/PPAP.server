@@ -46,13 +46,13 @@ const post = {
   //删除帖子
   async deletePost(ctx){
     //验证身份
-    let result = await postService.deletePost(ctx.params.id)
+    let result = await postService.deletePost(parseInt(ctx.params.id))
     ctx.body = result
   },
 
   //获取帖子信息
   async getPost(ctx){
-    let result = await postService.getPost(ctx.params.id)
+    let result = await postService.getPost(parseInt(ctx.params.id))
     ctx.body = result
   },
 
@@ -67,7 +67,7 @@ const post = {
       }
       return
     }
-    let result = await postService.updatePost(ctx.params.id, ctx.request.body)
+    let result = await postService.updatePost(parseInt(ctx.params.id), ctx.request.body)
     ctx.body = result
   },
 

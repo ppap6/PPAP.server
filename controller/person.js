@@ -20,9 +20,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let posts = await personService.getPostList(userId, pageNum, pageSize)
         ctx.body = posts
     },
@@ -38,9 +38,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let comments = await personService.getCommentList(userId, pageNum, pageSize)
         ctx.body = comments
     },
@@ -56,9 +56,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let answers = await personService.getAnswerList(userId, pageNum, pageSize)
         ctx.body = answers
     },
@@ -74,9 +74,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let fansList = await personService.getFansList(userId, pageNum, pageSize)
         ctx.body = fansList
     },
@@ -92,9 +92,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let followList = await personService.getFollowList(userId, pageNum, pageSize)
         ctx.body = followList
     },
@@ -110,9 +110,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let likeList = await personService.getLikeList(userId, pageNum, pageSize)
         ctx.body = likeList
     },
@@ -128,9 +128,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let collectList = await personService.getCollectList(userId, pageNum, pageSize)
         ctx.body = collectList
     },
@@ -146,9 +146,9 @@ const person = {
             }
             return
         }
-        let userId = ctx.query.user_id
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let userId = parseInt(ctx.query.user_id)
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let topicList = await personService.getTopicList(userId, pageNum, pageSize)
         ctx.body = topicList
     },
@@ -156,8 +156,8 @@ const person = {
     
     //获取关注用户的动态列表
     async getFollowUserDynamicList(ctx){
-        let pageNum = ctx.query.page_num === undefined ? 1 : ctx.query.page_num
-        let pageSize = ctx.query.page_size === undefined ? 20 : ctx.query.page_size
+        let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+        let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
         let dynamicList = await personService.getFollowUserDynamicList(pageNum, pageSize)
         ctx.body = dynamicList
     },
