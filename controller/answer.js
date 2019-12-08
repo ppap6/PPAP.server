@@ -14,7 +14,7 @@ const answer = {
   async getAnswerList(ctx){
     let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
-    let commentId = ctx.params.id === undefined ? 0 : parseInt(ctx.params.id)
+    let commentId = ctx.params.id === undefined ? 0 : ctx.params.id
     let answers = await answerService.getAnswerList(pageNum, pageSize, commentId)
     ctx.body = answers
   },
@@ -23,7 +23,7 @@ const answer = {
   async getAnswerListForAdmin(ctx){
     let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
-    let commentId = ctx.params.id === undefined ? 0 : parseInt(ctx.params.id)
+    let commentId = ctx.params.id === undefined ? 0 : ctx.params.id
     let answers = await answerService.getAnswerListForAdmin(pageNum, pageSize, commentId)
     ctx.body = answers
   },
@@ -46,13 +46,13 @@ const answer = {
   //删除评论单条回复
   async deleteAnswer(ctx){
     //验证身份
-    let result = await answerService.deleteAnswer(parseInt(ctx.params.id))
+    let result = await answerService.deleteAnswer(ctx.params.id)
     ctx.body = result
   },
 
   //获取评论单条回复信息
   async getAnswer(ctx){
-    let result = await answerService.getAnswer(parseInt(ctx.params.id))
+    let result = await answerService.getAnswer(ctx.params.id)
     ctx.body = result
   },
 
@@ -67,7 +67,7 @@ const answer = {
       }
       return
     }
-    let result = await answerService.updateAnswer(parseInt(ctx.params.id), ctx.request.body)
+    let result = await answerService.updateAnswer(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
 

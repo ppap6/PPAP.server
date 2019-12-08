@@ -46,13 +46,13 @@ const comment = {
   //删除帖子评论
   async deleteComment(ctx){
     //验证身份
-    let result = await commentService.deleteComment(parseInt(ctx.params.id))
+    let result = await commentService.deleteComment(ctx.params.id)
     ctx.body = result
   },
 
   //获取帖子评论信息
   async getComment(ctx){
-    let result = await commentService.getComment(parseInt(ctx.params.id))
+    let result = await commentService.getComment(ctx.params.id)
     ctx.body = result
   },
 
@@ -67,7 +67,7 @@ const comment = {
       }
       return
     }
-    let result = await commentService.updateComment(parseInt(ctx.params.id), ctx.request.body)
+    let result = await commentService.updateComment(ctx.params.id, ctx.request.body)
     ctx.body = result
   }
 
