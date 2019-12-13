@@ -70,6 +70,7 @@ CREATE TABLE `admin_log` (
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
+<<<<<<< HEAD
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
     `uid` INT UNSIGNED NOT NULL COMMENT '用户ID',
     `title` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '贴子标题',
@@ -84,6 +85,20 @@ CREATE TABLE `post` (
     `status` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '帖子显示状态',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='帖子表';
+=======
+  `id` int(10) UNSIGNED NOT NULL COMMENT '帖子ID',
+  `uid` int(10) UNSIGNED NOT NULL COMMENT '用户ID',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '贴子标题',
+  `content` text NOT NULL COMMENT '帖子内容',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `pv` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读数',
+  `likes` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数',
+  `collects` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收藏数',
+  `topic_id` int(10) UNSIGNED NOT NULL COMMENT '话题ID',
+  `status` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '帖子显示状态（0代表隐藏）'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='帖子表';
+>>>>>>> 5520c9abcf789eccaae02c00db1bb014399b9264
 
 
 DROP TABLE IF EXISTS `topic`;
