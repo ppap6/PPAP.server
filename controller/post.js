@@ -31,7 +31,7 @@ const post = {
   //添加帖子
   async addPost(ctx){
     //验证数据
-    let paramList = ['title', 'content', 'topic_id']
+    let paramList = ['title', 'content', 'md', 'topic_id']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
@@ -59,7 +59,7 @@ const post = {
   //修改帖子信息
   async updatePost(ctx){
     //验证数据
-    let paramList = ['title', 'content']
+    let paramList = ['title', 'content', 'md']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,

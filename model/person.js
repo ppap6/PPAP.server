@@ -18,7 +18,7 @@ const person = {
     //获取用户帖子列表
     async getPostList(userId, pageNum, pageSize) {
         let start = (pageNum - 1) * pageSize
-        let sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
+        let sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.md,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
             FROM post AS p,user AS u,topic AS t 
             WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=? AND p.status=1
             ORDER BY p.create_time DESC
