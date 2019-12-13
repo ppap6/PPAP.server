@@ -2,7 +2,7 @@
  * @Author: jwchan1996
  * @Date: 2019-09-10 01:37:44
  * @LastEditors: jwchan1996
- * @LastEditTime: 2019-10-10 01:11:18
+ * @LastEditTime: 2019-12-13 14:41:58
  */
 
 /**
@@ -20,7 +20,8 @@ const person = {
         let start = (pageNum - 1) * pageSize
         let sql = `SELECT p.id,p.uid,u.name AS uname,u.avatar,p.title,p.content,p.create_time,p.update_time,p.pv,p.likes,p.collects,p.topic_id,t.name AS topic_name 
             FROM post AS p,user AS u,topic AS t 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=? AND p.status=1
+            ORDER BY p.create_time DESC
             LIMIT ${start},${pageSize}`
         let result = await db.query(sql, [userId])
         if (Array.isArray(result) && result.length > 0) {
