@@ -451,6 +451,15 @@ const user = {
     }
     return false
   },
+
+  //获取用户关注用户记录
+  async getUserFollow(uid, follow_uid){
+    let result = await db_mongo.find('user_fans_relation', {uid, follow_uid})
+    if(Array.isArray(result)){
+      return result[0]
+    }
+    return false
+  },
 }
 
 module.exports = user

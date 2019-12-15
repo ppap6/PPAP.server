@@ -159,6 +159,12 @@ const user = {
     ctx.body = result
   },
 
+  //获取用户对用户的关注状态
+  async getUserStatus(ctx){
+    let result = await userService.getUserStatus(parseInt(ctx.params.id))
+    ctx.body = result
+  },
+
   //用户取消关注
   async cancelFollow(ctx){
     //验证数据
