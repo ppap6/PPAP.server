@@ -160,7 +160,7 @@ const user = {
   },
 
   //获取用户对用户的关注状态
-  async geFollowStatus(ctx){
+  async getFollowStatus(ctx){
     let result = await userService.getFollowStatus(parseInt(ctx.params.id))
     ctx.body = result
   },
