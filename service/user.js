@@ -427,7 +427,7 @@ const user = {
   },
 
   //获取用户对用户的关注状态
-  async getUserStatus(id){
+  async getFollowStatus(id){
     let visitorId = global.uid
     let userFollow = await userModel.getUserFollow(parseInt(visitorId), id)
     let result
