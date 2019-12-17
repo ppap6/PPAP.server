@@ -121,11 +121,12 @@ const post = {
 
   //修改帖子信息
   async updatePost(id, data){
-    let sql = 'UPDATE post SET title=?,content=?,md=?,update_time=? WHERE id=?'
+    let sql = 'UPDATE post SET title=?,content=?,md=?,topic_id=?,update_time=? WHERE id=?'
     let values = [
       data.title,
       data.content,
       data.md,
+      data.topic_id,
       util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values, id])
