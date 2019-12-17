@@ -166,6 +166,13 @@ const post ={
       }
       let result = await postModel.updatePost(id, data)
       if(result){
+        //判断原话题是否与新话题一样
+        if(post.topic_id != data.topic_id){
+          //原话题贴子数减一
+          topicModel.updateTopicStatistics(post.topic_id, 'decreasePosts')
+          //新话题帖子数加一
+          topicModel.updateTopicStatistics(data.topic_id, 'increasePosts')
+        }
         return {
           status: 200,
           message: '操作成功'
