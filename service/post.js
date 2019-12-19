@@ -1,8 +1,8 @@
 /*
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
- * @LastEditors: jwchan1996
- * @LastEditTime: 2019-10-07 21:27:26
+ * @LastEditors  : jwchan1996
+ * @LastEditTime : 2019-12-19 17:29:15
  */
 
  /**
@@ -82,11 +82,11 @@ const post ={
 
   //添加帖子
   async addPost(data){
-    let result = await postModel.addPost(data)
-    if(result){
+    let pid = await postModel.addPost(data)
+    if(pid){
       topicModel.updateTopicStatistics(data.topic_id, 'increasePosts')
       //添加用户发布帖子动态
-      await logModel.addPostLog(parseInt(data.uid), parseInt(result))
+      await logModel.addPostLog(parseInt(global.uid), parseInt(pid))
       return {
         status: 200,
         message: '操作成功'

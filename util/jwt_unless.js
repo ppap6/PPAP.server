@@ -2,12 +2,9 @@
  * 用于判断客户端当前请求接口是否需要jwt验证
  */
 
-//定义不需要jwt验证的接口数组
+//定义不需要jwt验证的接口数组(get方法)
 const nonTokenApiArr = [
   '/',
-  //user模块
-  '/user/login',
-  '/user/register',
   //topic模块
   '/topic',
   //post模块
@@ -27,7 +24,7 @@ const nonTokenApiArr = [
   '/search/user'
 ]
 
-//定义不需要jwt验证的接口正则数组(都是get方法)
+//定义不需要jwt验证的接口正则数组(get方法)
 const nonTokenApiRegArr = [
   /^\/user\/\d/,
   /^\/topic\/\d/, 
@@ -53,9 +50,13 @@ const isNonTokenRegApi = (path) => {
 
 //判断当前请求api是否不需要jwt验证
 const checkIsNonTokenApi = (ctx) => {
-  if(isNonTokenApi(ctx.path) || (isNonTokenRegApi(ctx.path) && ctx.method == 'GET')){
+  if((isNonTokenApi(ctx.path) || isNonTokenRegApi(ctx.path)) && ctx.method == 'GET'){
     return true
   }else{
+    //特殊post接口，不需要验证jwt
+    if(ctx.path == '/user/login' || ctx.path == '/user/register'){
+      return true
+    }
     return false
   }
 }
