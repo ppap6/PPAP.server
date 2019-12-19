@@ -9,7 +9,6 @@ const nonTokenApiArr = [
   '/topic',
   //post模块
   '/post',
-  '/post/add/pv',
   //person模块
   '/person/post',
   '/person/comment',
@@ -54,7 +53,7 @@ const checkIsNonTokenApi = (ctx) => {
     return true
   }else{
     //特殊post接口，不需要验证jwt
-    if(ctx.path == '/user/login' || ctx.path == '/user/register'){
+    if(ctx.path == '/user/login' || ctx.path == '/user/register' || ctx.path == '/post/add/pv'){
       return true
     }
     return false
