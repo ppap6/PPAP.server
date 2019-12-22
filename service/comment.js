@@ -16,6 +16,7 @@
   */
  
  const commentModel = require('../model/comment')
+ const answerModel = require('../model/answer')
  const postModel = require('../model/post')
  const logModel = require('../model/log')
  const userModel = require('../model/user')
@@ -30,6 +31,20 @@
         let user = await userModel.getUser(commentList[i].uid)
         commentList[i].uname = user.name
         commentList[i].avatar = user.avatar
+        let answerList = await answerModel.getAnswerList(pageNum, pageSize, commentList[i]._id.toString())
+        if(answerList){
+          for(let i=0; i<answerList.length; i++){
+            let requestor = await userModel.getUser(answerList[i].requestor_id)
+            answerList[i].requestor_name = requestor.name
+            answerList[i].requestor_avatar = requestor.avatar
+            let targetor = await userModel.getUser(answerList[i].targetor_id)
+            answerList[i].targetor_name = targetor.name
+            answerList[i].targetor_avatar = targetor.avatar
+          }
+          commentList[i].answer_list = answerList
+        }else{
+          commentList[i].answer_list = []
+        }
       }
       return {
         status: 200,
@@ -58,7 +73,21 @@
       for(let i=0; i<commentList.length; i++){
         let user = await userModel.getUser(commentList[i].uid)
         commentList[i].uname = user.name
-        commentList[i].avatar = user.avatar
+        commentList[i].avatar = user.avatar        
+        let answerList = await answerModel.getAnswerListForAdmin(pageNum, pageSize, commentList[i]._id.toString())
+        if(answerList){
+          for(let i=0; i<answerList.length; i++){
+            let requestor = await userModel.getUser(answerList[i].requestor_id)
+            answerList[i].requestor_name = requestor.name
+            answerList[i].requestor_avatar = requestor.avatar
+            let targetor = await userModel.getUser(answerList[i].targetor_id)
+            answerList[i].targetor_name = targetor.name
+            answerList[i].targetor_avatar = targetor.avatar
+          }
+          commentList[i].answer_list = answerList
+        }else{
+          commentList[i].answer_list = []
+        }
       }
       return {
         status: 200,
