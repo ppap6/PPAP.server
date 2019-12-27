@@ -1,8 +1,8 @@
 /*
  * @Author: jwchan1996
  * @Date: 2019-05-21 20:00:06
- * @LastEditors: jwchan1996
- * @LastEditTime: 2019-10-10 00:54:37
+ * @LastEditors  : jwchan1996
+ * @LastEditTime : 2019-12-27 10:26:59
  */
 
  /**
@@ -347,7 +347,17 @@ const user = {
               account: data.account, 
               password: data.password,
               roleId: user.role_id
-            })
+            }),
+            count: {
+              posts: await personModel.getUserPostCount(user.id),
+              comments: await personModel.getUserCommentCount(user.id),
+              answers: await personModel.getUserAnswerCount(user.id),
+              fans: await personModel.getUserFansCount(user.id),
+              follows: await personModel.getUserFollowCount(user.id),
+              likes: await personModel.getUserLikeCount(user.id),
+              collects: await personModel.getUserCollectCount(user.id),
+              topics: await personModel.getUserTopicCount(user.id)
+            }
           }
         }
       }else{
