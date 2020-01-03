@@ -1,8 +1,8 @@
 /*
  * @Author: jwchan1996
  * @Date: 2019-10-25 10:25:00
- * @LastEditors: jwchan1996
- * @LastEditTime: 2019-10-25 10:25:00
+ * @LastEditors  : jwchan1996
+ * @LastEditTime : 2020-01-03 15:51:30
  */
 
  /**
@@ -40,7 +40,7 @@ const search ={
     }
   },
   
-  //获取帖子列表
+  //获取用户列表
   async getUserList(keyword, pageNum, pageSize){
     let userList = await searchModel.getUserList(keyword, pageNum, pageSize)
     if(userList){
