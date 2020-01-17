@@ -1,15 +1,15 @@
 /*
  * @Author: jwchan1996
  * @Date: 2019-06-10 11:09:36
- * @LastEditors: jwchan1996
- * @LastEditTime: 2019-09-22 00:19:58
+ * @LastEditors  : jwchan1996
+ * @LastEditTime : 2020-01-17 14:21:40
  */
 
 const MongoClient = require('mongodb').MongoClient
 const config = require('../config/config')
 
-const url = `mongodb://${config.mongo_host}:${config.mongo_port}/`
-
+const url = `mongodb://${config.mongo_user}:${config.mongo_password}@${config.mongo_host}:${config.mongo_port}/`
+console.log(url)
 
 /**
  * 创建数据库连接对象

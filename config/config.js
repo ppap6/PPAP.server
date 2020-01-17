@@ -7,13 +7,15 @@ const port = 2333
 //mysql数据库相关
 const sql_host = 'localhost'
 const sql_port = 3306
-const sql_user = 'root'
-const sql_password = ''
+const sql_user = 'ppap'
+const sql_password = 'ppap'
 const sql_database = 'ppap'
 //mongodb数据库相关
 const mongo_host = 'localhost'
 const mongo_port = 27017
 const mongo_database = 'ppap'
+const mongo_user = 'root'
+const mongo_password = 'ppap'
 
 module.exports = {
   secret,
@@ -26,5 +28,7 @@ module.exports = {
   sql_database,
   mongo_host,
   mongo_port,
-  mongo_database
+  mongo_database,
+  mongo_user,
+  mongo_password
 }
