@@ -31,6 +31,17 @@
         let user = await userModel.getUser(commentList[i].uid)
         commentList[i].uname = user.name
         commentList[i].avatar = user.avatar
+        if(parseInt(global.uid)){
+          //获取用户点亮评论数组
+          let comments = await userModel.getLightComment(parseInt(global.uid))
+          if(comments.includes(commentList[i]._id.toString())){
+            commentList[i].is_light = true
+          }else{
+            commentList[i].is_light = false
+          }
+        }else{
+          commentList[i].is_light = false
+        }
         let answerList = await answerModel.getAnswerList(pageNum, pageSize, commentList[i]._id.toString())
         if(answerList){
           for(let i=0; i<answerList.length; i++){
@@ -40,6 +51,17 @@
             let targetor = await userModel.getUser(answerList[i].targetor_id)
             answerList[i].targetor_name = targetor.name
             answerList[i].targetor_avatar = targetor.avatar
+            if(parseInt(global.uid)){
+              //获取用户点亮回复数组
+              let answers = await userModel.getLightAnswer(parseInt(global.uid))
+              if(answers.includes(answerList[i]._id)){
+                answerList[i].is_light = true
+              }else{
+                answerList[i].is_light = false
+              }
+            }else{
+              answerList[i].is_light = false
+            }
           }
           commentList[i].answer_list = answerList
         }else{

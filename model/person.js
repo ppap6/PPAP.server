@@ -144,16 +144,6 @@ const person = {
         return 0
     },
 
-    //获取用户点赞总数
-    async getUserLikeCount(userId){
-        let likePosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
-        if (Array.isArray(likePosts) && likePosts.length > 0) {
-            let pidArr = likePosts[0].like_posts
-            return pidArr.length
-        }
-        return 0
-    },
-
     //获取用户收藏总数
     async getUserCollectCount(userId){
         let collectPosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
@@ -211,7 +201,7 @@ const person = {
         return false
     },
 
-    //获取关注用户的动态列表
+    //获取关注用户的动态列表（分页page）
     async getFollowUserDynamicList(queryArr, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_log', {
