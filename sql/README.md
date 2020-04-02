@@ -42,6 +42,8 @@ email  - 邮箱(varchar)
 mobile  - 手机号(varchar)
 create_time  - 创建时间(datetime)
 update_time  - 更新时间(datetime)
+fans  - 粉丝数(int)
+follows  - 关注数(int)
 role_id  - 角色ID(int)
 ```
 
@@ -110,6 +112,8 @@ update_time  - 更新时间(datetime)
 pv  - 阅读数(int)
 likes  - 点赞数(int)
 collects  - 收藏数(int)
+comments  - 评论数(int)
+answers  - 回复数(int)
 topic_id  - 话题ID(int)
 status  - 帖子显示状态(int)
 ```

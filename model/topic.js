@@ -11,8 +11,8 @@ const db = require('../util/db')
 const topic = {
 
   //获取一级话题数据（页数，数目）
-  async getTopicList(pageNum=1,pageSize=20){
-    let start = (pageNum-1)*pageSize
+  async getTopicList(pageNum=1, pageSize=20){
+    let start = (pageNum-1) * pageSize
     let sql = 'SELECT * FROM topic WHERE sid=0 AND status=1 ORDER BY name DESC LIMIT ?,?'
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
@@ -32,8 +32,8 @@ const topic = {
   },
 
   //管理运营获取一级话题数据（页数，数目）
-  async getTopicListForAdmin(pageNum=1,pageSize=20){
-    let start = (pageNum-1)*pageSize
+  async getTopicListForAdmin(pageNum=1, pageSize=20){
+    let start = (pageNum-1) * pageSize
     let sql = 'SELECT * FROM topic WHERE sid=0 ORDER BY name DESC LIMIT ?,?'
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
@@ -54,7 +54,7 @@ const topic = {
 
   //添加话题
   async addTopic(data){
-    let sql = 'INSERT INTO topic(sid,name,intro,icon,create_time,update_time) VALUES(?,?,?,?,?)'
+    let sql = 'INSERT INTO topic(sid, name, intro, icon, create_time, update_time) VALUES(?, ?, ?, ?, ?)'
     let values = [
       data.sid,
       data.name,
@@ -92,7 +92,7 @@ const topic = {
 
   //修改话题信息
   async updateTopic(id, data){
-    let sql = 'UPDATE topic SET name=?,intro=?,icon=?,update_time=? WHERE id=?'
+    let sql = 'UPDATE topic SET name=?, intro=?, icon=?, update_time=? WHERE id=?'
     let values = [
       data.name,
       data.intro,

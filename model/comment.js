@@ -13,7 +13,7 @@ const comment = {
 
   //获取帖子评论数据（页数，数目，帖子id）
   async getCommentList(pageNum=1, pageSize=20, postId=0){
-    let start = (pageNum-1)*pageSize
+    let start = (pageNum-1) * pageSize
     let result = await db_mongo.find('comment', {pid: postId, status: 1}, start, pageSize, {create_time: 1})
     if(Array.isArray(result) && result.length > 0){
       return result
@@ -23,7 +23,7 @@ const comment = {
   
   //管理运营获取帖子评论数据（页数，数目，帖子id）
   async getCommentListForAdmin(pageNum=1, pageSize=20, postId=0){
-    let start = (pageNum-1)*pageSize
+    let start = (pageNum-1) * pageSize
     let result = await db_mongo.find('comment', {pid: postId}, start, pageSize, {create_time: -1})
     if(Array.isArray(result) && result.length > 0){
       return result
