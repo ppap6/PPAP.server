@@ -13,7 +13,7 @@ const answer = {
 
   //获取评论回复数据（页数，数目，评论id）
   async getAnswerList(pageNum=1, pageSize=20, commentId){
-    let start = (pageNum-1)*pageSize
+    let start = (pageNum-1) * pageSize
     let result = await db_mongo.find('answer', {comment_id: commentId, status: 1}, start, pageSize, {create_time: 1})
     if(Array.isArray(result) && result.length > 0){
       return result
@@ -23,7 +23,7 @@ const answer = {
 
   //管理运营获取评论回复数据（页数，数目，评论id）
   async getAnswerListForAdmin(pageNum=1, pageSize=20, commentId){
-    let start = (pageNum-1)*pageSize
+    let start = (pageNum-1) * pageSize
     let result = await db_mongo.find('answer', {comment_id: commentId}, start, pageSize, {create_time: -1})
     if(Array.isArray(result) && result.length > 0){
       return result

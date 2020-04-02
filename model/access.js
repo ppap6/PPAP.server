@@ -33,7 +33,7 @@ const access = {
 
   //添加权限
   async addAccess(data){
-    let sql = 'INSERT INTO access(sid,name,code,create_time,update_time,description) VALUES(?,?,?,?,?,?)'
+    let sql = 'INSERT INTO access(sid, name, code, create_time, update_time, description) VALUES(?, ?, ?, ?, ?, ?)'
     let values = [
       data.sid,
       data.name,
@@ -71,7 +71,7 @@ const access = {
 
   //修改权限信息
   async updateAccess(id, data){
-    let sql = 'UPDATE access SET name=?,code=?,description=?,update_time=? WHERE id=?'
+    let sql = 'UPDATE access SET name=?, code=?, description=?, update_time=? WHERE id=?'
     let values = [
       data.name,
       data.code,
