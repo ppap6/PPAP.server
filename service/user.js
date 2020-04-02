@@ -463,7 +463,12 @@ const user = {
       //添加关注记录
       let result = await userModel.follow(data)
       if(result){
-        await logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        //B用户粉丝数加一
+        userModel.updateUserStatistics(data.follow_uid, 'increaseFans')
+        //A用户关注数加一
+        userModel.updateUserStatistics(global.uid, 'increaseFollows')
+        //添加用户关注动态
+        logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
         return {
           status: 200,
           message: '操作成功'
@@ -477,8 +482,13 @@ const user = {
     }else if(exist && exist.state == 0){       //存在记录但是关注状态是0，即未关注
       //更改为关注状态
       let result = await userModel.updateFollow(parseInt(global.uid), parseInt(data.follow_uid), 1)
-      await logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
       if(result){
+        //B用户粉丝数加一
+        userModel.updateUserStatistics(data.follow_uid, 'increaseFans')
+        //A用户关注数加一
+        userModel.updateUserStatistics(global.uid, 'increaseFollows')
+        //添加用户关注动态
+        logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
         return {
           status: 200,
           message: '操作成功'
@@ -505,6 +515,10 @@ const user = {
       //更改为未关注状态
       let result = await userModel.updateFollow(parseInt(global.uid), parseInt(data.follow_uid), 0)
       if(result){
+        //B用户粉丝数减一
+        userModel.updateUserStatistics(data.follow_uid, 'decreaseFans')
+        //A用户关注数减一
+        userModel.updateUserStatistics(global.uid, 'decreaseFollows')
         return {
           status: 200,
           message: '操作成功'
@@ -531,9 +545,9 @@ const user = {
       let result = await userModel.followTopic(data)
       if(result){
         //话题关注数加一
-        await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
+        topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
         //添加用户关注话题动态
-        await logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
         return {
           status: 200,
           message: '操作成功'
@@ -549,9 +563,9 @@ const user = {
       let result = await userModel.updateFollowTopic(parseInt(global.uid), parseInt(data.follow_topic_id), 1)
       if(result){
         //话题关注数加一
-        await topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
+        topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
         //添加用户关注话题动态
-        await logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
         return {
           status: 200,
           message: '操作成功'
@@ -579,7 +593,7 @@ const user = {
       let result = await userModel.updateFollowTopic(parseInt(global.uid), parseInt(data.follow_topic_id), 0)
       if(result){
         //话题关注数减一
-        await topicModel.updateTopicStatistics(data.follow_topic_id, 'decreaseFollowers')
+        topicModel.updateTopicStatistics(data.follow_topic_id, 'decreaseFollowers')
         return {
           status: 200,
           message: '操作成功'
@@ -611,7 +625,7 @@ const user = {
         //获取帖子up主uid
         let post = await postModel.getPost(parseInt(data.pid))
         //添加用户点赞帖子动态
-        await logModel.addLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        logModel.addLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
         //增加帖子点赞数
         postModel.updateLikes(parseInt(data.pid), 'increase')
         return {
@@ -677,7 +691,7 @@ const user = {
         //获取帖子up主uid
         let post = await postModel.getPost(parseInt(data.pid))
         //添加用户收藏帖子动态
-        await logModel.addCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        logModel.addCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
         //增加帖子收藏数
         postModel.updateCollects(parseInt(data.pid), 'increase')
         return {

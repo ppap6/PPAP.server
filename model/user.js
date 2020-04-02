@@ -460,6 +460,37 @@ const user = {
     }
     return false
   },
+
+  //更新用户统计
+  async updateUserStatistics(id, action){
+    /**
+     * increaseFollows  增加关注数
+     * decreaseFollows  减少关注数
+     * increaseFans  增加粉丝数
+     * decreaseFans  减少粉丝数
+     */
+    let sql = ''
+    if(action == 'increaseFollows'){
+      sql = 'UPDATE user SET follows=follows+1, update_time=? WHERE id=?'
+    }else if(action == 'decreaseFollows'){
+      sql = 'UPDATE user SET follows=follows-1, update_time=? WHERE id=?'
+    }else if(action == 'increaseFans'){
+      sql = 'UPDATE user SET fans=fans+1, update_time=? WHERE id=?'
+    }else if(action == 'decreaseFans'){
+      sql = 'UPDATE user SET fans=fans-1, update_time=? WHERE id=?'
+    }else{
+      return false
+    }
+    let values = [
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values, id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
 }
 
 module.exports = user
