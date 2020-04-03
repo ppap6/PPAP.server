@@ -174,7 +174,34 @@ const post = {
       return true
     }
     return false
-  }
+  },
+
+  //更新帖子统计
+  async updatePostStatistics(id, action){
+    /**
+     * increaseComments  增加评论数
+     * decreaseComments  减少评论数
+     * increaseAnswers  增加回复数
+     * decreaseAnswers  减少回复数
+     */
+    let sql = ''
+    if(action == 'increaseComments'){
+      sql = 'UPDATE post SET comments=comments+1 WHERE id=?'
+    }else if(action == 'decreaseComments'){
+      sql = 'UPDATE post SET comments=comments-1 WHERE id=?'
+    }else if(action == 'increaseAnswers'){
+      sql = 'UPDATE post SET answers=answers+1 WHERE id=?'
+    }else if(action == 'decreaseAnswers'){
+      sql = 'UPDATE post SET answers=answers-1 WHERE id=?'
+    }else{
+      return false
+    }
+    let result = await db.query(sql, [id])
+    if(result){
+      return true
+    }
+    return false
+  },
 
 }
 

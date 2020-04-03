@@ -128,8 +128,10 @@
     if(insertedId){
       //获取帖子up主uid
       let post = await postModel.getPost(parseInt(data.pid))
+      //帖子评论数加一
+      postModel.updatePostStatistics(parseInt(data.pid), 'increaseComments')
       //添加用户评论动态
-      await logModel.addCommentLog(parseInt(global.uid), parseInt(data.pid), post.uid, insertedId)
+      logModel.addCommentLog(parseInt(global.uid), parseInt(data.pid), post.uid, insertedId)
       return {
         status: 200,
         message: '操作成功'
@@ -152,10 +154,12 @@
         message: '没有操作权限'
       }
     }
-    let exist = await commentModel.getComment(id)
-    if(exist){
+    let comment = await commentModel.getComment(id)
+    if(comment){
       let result = await commentModel.deleteComment(id)
       if(result){
+        //帖子评论数减一
+        postModel.updatePostStatistics(comment.pid, 'decreaseComments')
         return {
           status: 200,
           message: '操作成功'

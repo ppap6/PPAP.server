@@ -97,8 +97,10 @@ const answer ={
       if(insertedId){
         //获取准备回复的这条评论的目标人uid
         let comment = await commentModel.getComment(data.comment_id)
+        //帖子回复数加一
+        postModel.updatePostStatistics(parseInt(data.pid), 'increaseAnswers')
         //添加用户的回复动态
-        await logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(comment.uid), insertedId)
+        logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(comment.uid), insertedId)
         return {
           status: 200,
           message: '操作成功'
@@ -114,8 +116,10 @@ const answer ={
       if(insertedId){
         //获取准备回复的这条回复的目标人uid
         let answer = await answerModel.getAnswer(data.answer_id)
+        //帖子回复数加一
+        postModel.updatePostStatistics(parseInt(data.pid), 'decreaseAnswers')
         //添加用户的回复动态
-        await logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
+        logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
         return {
           status: 200,
           message: '操作成功'
@@ -139,10 +143,12 @@ const answer ={
         message: '没有操作权限'
       }
     }
-    let exist = await answerModel.getAnswer(id)
-    if(exist){
+    let answer = await answerModel.getAnswer(id)
+    if(answer){
       let result = await answerModel.deleteAnswer(id)
       if(result){
+        //帖子回复数减一
+        postModel.updatePostStatistics(answer.pid, 'decreaseAnswers')
         return {
           status: 200,
           message: '操作成功'
