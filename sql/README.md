@@ -213,6 +213,7 @@ pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
 comment_id  - 评论ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 - 回复类型动态
@@ -224,6 +225,7 @@ pid  - 帖子ID
 targetor_id  - 回复目标人ID
 answer_id  - 回复ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 - 关注他人类型动态
@@ -233,6 +235,7 @@ type  - 动态类型值 3
 uid  - 用户ID
 follow_people_id  - 关注的人ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 - 点赞类型动态
@@ -243,6 +246,7 @@ uid  - 用户ID
 pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 - 收藏类型动态
@@ -253,6 +257,7 @@ uid  - 用户ID
 pid  - 帖子ID
 post_owner_id  - 帖子发表人ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 - 关注话题类型动态
@@ -262,6 +267,7 @@ type  - 动态类型值 6
 uid  - 用户ID
 follow_topic_id  - 关注的话题ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 - 发布帖子类型动态
@@ -271,6 +277,7 @@ type  - 动态类型值 7
 uid  - 用户ID
 pid  - 帖子ID
 create_time  - 创建时间
+update_time  - 更新时间
 ```
 
 #### <span style="color:#009688"># </span>话题表 topic
