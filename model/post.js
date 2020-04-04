@@ -15,7 +15,7 @@ const post = {
     let start = (pageNum-1) * pageSize
     let sql
     if(topicId === 0){
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1
         ORDER BY p.create_time DESC
@@ -23,14 +23,14 @@ const post = {
     }else{
       if(sid){
         //话题id为父级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
           ORDER BY p.create_time DESC
           LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
           ORDER BY p.create_time DESC
@@ -49,7 +49,7 @@ const post = {
     let start = (pageNum-1) * pageSize
     let sql
     if(topicId === 0){
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name, p.status 
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id
         ORDER BY p.create_time DESC
@@ -57,14 +57,14 @@ const post = {
     }else{
       if(sid){
         //话题id为父级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id
           ORDER BY p.create_time DESC
           LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
           ORDER BY p.create_time DESC

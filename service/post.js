@@ -34,12 +34,6 @@ const post ={
     }
     let postList = await postModel.getPostList(pageNum, pageSize, topicId, sid)
     if(postList){
-      for (let i = 0; i < postList.length; i++) {
-        let commentCount = await personModel.getPostCommentCount(postList[i].id)
-        let answerCount = await personModel.getPostAnswerCount(postList[i].id)
-        postList[i].comments = commentCount
-        postList[i].answers = answerCount
-      }
       return {
         status: 200,
         message: postList
@@ -63,12 +57,6 @@ const post ={
     }
     let postList = await postModel.getPostListForAdmin(pageNum, pageSize, topicId, sid)
     if(postList){
-      for (let i = 0; i < postList.length; i++) {
-        let commentCount = await personModel.getPostCommentCount(postList[i].id)
-        let answerCount = await personModel.getPostAnswerCount(postList[i].id)
-        postList[i].comments = commentCount
-        postList[i].answers = answerCount
-      }
       return {
         status: 200,
         message: postList
