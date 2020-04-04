@@ -725,8 +725,15 @@ const user = {
       if(result){
         //获取帖子up主uid
         let post = await postModel.getPost(parseInt(data.pid))
-        //添加用户收藏帖子动态
-        logModel.addCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        //获取用户收藏帖子动态记录
+        let log = logModel.getCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        if(log){
+          //修改用户收藏帖子动态记录
+          logModel.updateCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        }else{
+          //添加用户收藏帖子动态记录
+          logModel.addCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        }
         //增加帖子收藏数
         postModel.updateCollects(parseInt(data.pid), 'increase')
         return {
