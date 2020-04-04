@@ -560,8 +560,15 @@ const user = {
       if(result){
         //话题关注数加一
         topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
-        //添加用户关注话题动态
-        logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        //获取用户关注动态记录
+        let log = logModel.getFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        if(log){
+          //修改用户关注动态记录
+          logModel.updateFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        }else{
+          //添加用户关注话题动态
+          logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        }
         return {
           status: 200,
           message: '操作成功'
@@ -578,8 +585,15 @@ const user = {
       if(result){
         //话题关注数加一
         topicModel.updateTopicStatistics(data.follow_topic_id, 'increaseFollowers')
-        //添加用户关注话题动态
-        logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        //获取用户关注动态记录
+        let log = logModel.getFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        if(log){
+          //修改用户关注动态记录
+          logModel.updateFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        }else{
+          //添加用户关注话题动态
+          logModel.addFollowTopicLog(parseInt(global.uid), parseInt(data.follow_topic_id))
+        }
         return {
           status: 200,
           message: '操作成功'

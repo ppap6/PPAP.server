@@ -136,6 +136,30 @@ const log = {
     return false
   },
 
+  //获取用户关注话题动态记录
+  async getFollowTopicLog(uid, follow_topic_id){
+    let result = await db_mongo.find('user_log', {type: 6, uid, follow_topic_id})
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
+
+  //修改用户关注话题动态记录
+  async updateFollowTopicLog(uid, follow_topic_id){
+    let dataObj = {
+      update_time: util.changeTimeToStr(new Date())
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_log', {type: 6, uid, follow_topic_id}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
   //添加用户发布帖子动态
   async addPostLog(uid, pid){
     let dataObj = {
