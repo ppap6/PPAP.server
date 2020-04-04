@@ -467,8 +467,15 @@ const user = {
         userModel.updateUserStatistics(data.follow_uid, 'increaseFans')
         //A用户关注数加一
         userModel.updateUserStatistics(global.uid, 'increaseFollows')
-        //添加用户关注动态
-        logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        //获取用户关注动态记录
+        let log = logModel.getFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        if(log){
+          //修改用户关注动态记录
+          logModel.updateFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        }else{
+          //添加用户关注动态记录
+          logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        }
         return {
           status: 200,
           message: '操作成功'
@@ -487,8 +494,15 @@ const user = {
         userModel.updateUserStatistics(data.follow_uid, 'increaseFans')
         //A用户关注数加一
         userModel.updateUserStatistics(global.uid, 'increaseFollows')
-        //添加用户关注动态
-        logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        //获取用户关注动态记录
+        let log = logModel.getFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        if(log){
+          //修改用户关注动态记录
+          logModel.updateFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        }else{
+          //添加用户关注动态记录
+          logModel.addFollowPeopleLog(parseInt(global.uid), parseInt(data.follow_uid))
+        }
         return {
           status: 200,
           message: '操作成功'
