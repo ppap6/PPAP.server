@@ -124,10 +124,6 @@ const post ={
   async getPost(id){
     let post = await postModel.getPost(id)
     if(post){
-      let commentCount = await personModel.getPostCommentCount(post.id)
-      let answerCount = await personModel.getPostAnswerCount(post.id)
-      post.comments = commentCount
-      post.answers = answerCount
       return {
         status: 200,
         message: post
