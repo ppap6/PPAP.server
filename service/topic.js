@@ -150,8 +150,8 @@ const topic ={
         message: '没有操作权限'
       }
     }
-    let exist = await topicModel.getTopic(id)
-    if(exist){
+    let topic = await topicModel.getTopic(id)
+    if(topic){
       let result = await topicModel.deleteTopic(id)
       if(result){
         return {
@@ -183,8 +183,8 @@ const topic ={
         message: '没有操作权限'
       }
     }
-    let exist = await topicModel.getTopic(id)
-    if(exist){
+    let topic = await topicModel.getTopic(id)
+    if(topic){
       let result = await topicModel.updateTopic(id, data)
       if(result){
         return {

@@ -97,11 +97,11 @@ const post ={
         message: '没有操作权限'
       }
     }
-    let exist = await postModel.getPost(id)
-    if(exist){
+    let post = await postModel.getPost(id)
+    if(post){
       let result = await postModel.deletePost(id)
       if(result){
-        topicModel.updateTopicStatistics(exist.topic_id, 'decreasePosts')
+        topicModel.updateTopicStatistics(post.topic_id, 'decreasePosts')
         return {
           status: 200,
           message: '操作成功'
@@ -177,8 +177,8 @@ const post ={
 
   //增加帖子阅读量
   async addPV(data){
-    let exist = await postModel.getPost(parseInt(data.pid))
-    if(exist){
+    let post = await postModel.getPost(parseInt(data.pid))
+    if(post){
       let result = await postModel.addPV(parseInt(data.pid))
       if(result){
         return {

@@ -150,8 +150,8 @@ const user = {
         message: '没有操作权限'
       }
     }
-    let exist = await userModel.getUser(id)
-    if(exist){
+    let user = await userModel.getUser(id)
+    if(user){
       let result = await userModel.deleteUser(id)
       if(result){
         //删除用户点赞收藏点亮模型
@@ -221,8 +221,8 @@ const user = {
         message: '没有操作权限'
       }
     }
-    let exist = await userModel.getUser(id)
-    if(exist){
+    let user = await userModel.getUser(id)
+    if(user){
       let user = await userModel.getUserByAccount(data.account)
       //验证修改的用户账号是否已被使用
       if(!user || (user && user.id == id)){
@@ -255,8 +255,8 @@ const user = {
   //用户修改自己的信息
   async updateSelf(data){
     let uid = global.uid
-    let exist = await userModel.getUser(uid)
-    if(exist){
+    let user = await userModel.getUser(uid)
+    if(user){
       let user = await userModel.getUserByAccount(data.account)
       //验证修改的用户账号是否已被使用
       if(!user || (user && user.id == uid)){

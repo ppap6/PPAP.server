@@ -111,8 +111,8 @@ const access ={
         message: '没有操作权限'
       }
     }
-    let exist = await accessModel.getAccess(id)
-    if(exist){
+    let access = await accessModel.getAccess(id)
+    if(access){
       let result = await accessModel.deleteAccess(id)
       if(result){
         return {
@@ -144,8 +144,8 @@ const access ={
         message: '没有操作权限'
       }
     }
-    let exist = await accessModel.getAccess(id)
-    if(exist){
+    let access = await accessModel.getAccess(id)
+    if(access){
       let result = await accessModel.updateAccess(id, data)
       if(result){
         return {

@@ -102,8 +102,8 @@ const role ={
         message: '没有操作权限'
       }
     }
-    let exist = await roleModel.getRole(id)
-    if(exist){
+    let role = await roleModel.getRole(id)
+    if(role){
       let result = await roleModel.deleteRole(id)
       if(result){
         return {
@@ -135,8 +135,8 @@ const role ={
         message: '没有操作权限'
       }
     }
-    let exist = await roleModel.getRole(id)
-    if(exist){
+    let role = await roleModel.getRole(id)
+    if(role){
       let result = await roleModel.updateRole(id, data)
       if(result){
         return {
@@ -193,8 +193,8 @@ const role ={
       }
     }
     //先判断是否存在角色
-    let exist = await roleModel.getRole(id)
-    if(exist){
+    let role = await roleModel.getRole(id)
+    if(role){
       //删除角色权限关联记录
       await roleModel.deleteRoleAccessRelation(id)
       //添加角色权限关联记录
