@@ -652,8 +652,15 @@ const user = {
       if(result){
         //获取帖子up主uid
         let post = await postModel.getPost(parseInt(data.pid))
-        //添加用户点赞帖子动态
-        logModel.addLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        //获取用户点赞帖子动态记录
+        let log = logModel.getLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        if(log){
+          //修改用户点赞帖子动态记录
+          logModel.updateLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        }else{
+          //添加用户点赞帖子动态记录
+          logModel.addLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
+        }
         //增加帖子点赞数
         postModel.updateLikes(parseInt(data.pid), 'increase')
         return {

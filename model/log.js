@@ -103,6 +103,30 @@ const log = {
     return false
   },
 
+  //获取用户点赞帖子动态记录
+  async getLikePostLog(uid, pid, post_owner_id){
+    let result = await db_mongo.find('user_log', {type: 4, uid, pid, post_owner_id})
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
+
+  //修改用户点赞帖子动态记录
+  async updateLikePostLog(uid, pid, post_owner_id){
+    let dataObj = {
+      update_time: util.changeTimeToStr(new Date())
+    }
+    let setObj = {
+      $set: dataObj
+    }
+    let result = await db_mongo.updateOne('user_log', {type: 4, uid, pid, post_owner_id}, setObj)
+    if(result.modifiedCount){
+      return result.modifiedCount
+    }
+    return false
+  },
+
   //添加用户收藏帖子动态
   async addCollectPostLog(uid, pid, post_owner_id){
     let dataObj = {
