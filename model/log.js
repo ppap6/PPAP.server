@@ -18,7 +18,8 @@ const log = {
       pid,
       post_owner_id,
       comment_id,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
@@ -35,7 +36,8 @@ const log = {
       pid,
       targetor_id,
       answer_id,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
@@ -50,7 +52,8 @@ const log = {
       type: 3,
       uid,
       follow_people_id,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
@@ -66,7 +69,8 @@ const log = {
       uid,
       pid,
       post_owner_id,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
@@ -82,7 +86,8 @@ const log = {
       uid,
       pid,
       post_owner_id,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
@@ -97,7 +102,8 @@ const log = {
       type: 6,
       uid,
       follow_topic_id,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
@@ -112,7 +118,8 @@ const log = {
       type: 7,
       uid,
       pid,
-      create_time: util.changeTimeToStr(new Date())
+      create_time: util.changeTimeToStr(new Date()),
+      update_time: util.changeTimeToStr(new Date())
     }
     let result = await db_mongo.insertOne('user_log', dataObj)
     if(result.insertedCount){
