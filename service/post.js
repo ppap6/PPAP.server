@@ -68,6 +68,29 @@ const post ={
     }
   },
 
+  //获取热门帖子列表
+  async getHotPostList(pageNum, pageSize, topicId){
+    //判断话题是否是父级
+    let topic = await topicModel.getTopic(topicId)
+    let sid
+    if(topic.sid == 0){
+      sid = true
+    }else{
+      sid = false
+    }
+    let postList = await postModel.getHotPostList(pageNum, pageSize, topicId, sid)
+    if(postList){
+      return {
+        status: 200,
+        message: postList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
   //添加帖子
   async addPost(data){
     let pid = await postModel.addPost(data)

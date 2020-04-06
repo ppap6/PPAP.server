@@ -28,6 +28,15 @@ const post = {
     ctx.body = posts
   },
 
+  //获取热门帖子列表
+  async getHotPostList(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let topicId = ctx.query.topic_id === undefined ? 0 : parseInt(ctx.query.topic_id)
+    let posts = await postService.getHotPostList(pageNum, pageSize, topicId)
+    ctx.body = posts
+  },
+
   //添加帖子
   async addPost(ctx){
     //验证数据
