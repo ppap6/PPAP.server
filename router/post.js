@@ -12,6 +12,7 @@ router
     .get('/', post.getPostList)     //获取帖子列表
     .get('/admin', post.getPostListForAdmin)   //管理运营获取帖子列表
     .get('/hot', post.getHotPostList)   //获取热门帖子列表
+    .get('/recommend', post.getRecommendPostList)   //获取推荐帖子列表
     .post('/', post.addPost)     //添加帖子
     .del('/:id', post.deletePost)   //删除帖子
     .get('/:id', post.getPost)    //获取帖子信息

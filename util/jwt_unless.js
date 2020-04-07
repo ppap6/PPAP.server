@@ -10,6 +10,7 @@ const nonTokenApiArr = [
   //post模块
   '/post',
   '/post/hot',
+  '/post/recommend',
   //person模块
   '/person/post',
   '/person/comment',

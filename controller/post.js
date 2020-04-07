@@ -37,6 +37,15 @@ const post = {
     ctx.body = posts
   },
 
+  //获取推荐帖子列表
+  async getRecommendPostList(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let postId = ctx.query.post_id === undefined ? 0 : parseInt(ctx.query.post_id)
+    let posts = await postService.getRecommendPostList(pageNum, pageSize, postId)
+    ctx.body = posts
+  },
+
   //添加帖子
   async addPost(ctx){
     //验证数据

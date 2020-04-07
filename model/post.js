@@ -7,6 +7,8 @@
 
 const util = require('../util')
 const db = require('../util/db')
+const { Segment, useDefault } = require('segmentit')
+const segmentit = useDefault(new Segment())
 
 const post = {
 
@@ -79,7 +81,7 @@ const post = {
   },
 
   //获取热门帖子数据（页数，数目，话题id）
-  async getHotPostList(pageNum=1, pageSize=20, topicId=0, sid){
+  async getHotPostList(pageNum=1, pageSize=20, topicId=0, sid=false){
     let time1 = util.changeTimeToStr(new Date(new Date().setDate(new Date().getDate()-15)))
     let time2 = util.changeTimeToStr(new Date(new Date().setDate(new Date().getDate()+15)))
     let start = (pageNum-1) * pageSize
@@ -108,6 +110,52 @@ const post = {
       }
     }
     let result = await db.query(sql)
+    if(Array.isArray(result) && result.length > 0){
+      return result
+    }
+    return false
+  },
+
+  //获取推荐帖子数据（页数，数目，帖子标题）
+  async getRecommendPostList(pageNum=1, pageSize=20, postId=0, keyword=''){
+    let start = (pageNum-1) * pageSize
+    let sql
+    if(keyword === ' '){
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, p.topic_id, t.name AS topic_name 
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND p.id!=?
+        ORDER BY similarity DESC
+        LIMIT ${start},${pageSize}`
+    }else{
+      let keywordArr = segmentit.doSegment(keyword).map(i => i.w)
+      let likeStr = ''
+      let cond = ''
+      let index = 99
+      for(let i=0; i<keywordArr.length; i++){
+        if(i == 0){
+          likeStr = `p.title LIKE '%${keywordArr[0]}%'`
+          cond += ` WHEN p.title='${keywordArr[0]}' THEN ${index-1}`
+          cond += ` WHEN p.title LIKE '${keywordArr[0]}%' THEN ${index-2}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[0]}%' THEN ${index-3}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[0]}' THEN ${index-4}`
+          index -= 4
+        }else{
+          if(keywordArr[i] == '') continue
+          likeStr += ` OR p.title LIKE '%${keywordArr[i]}%'`
+          cond += ` WHEN p.title='${keywordArr[i]}' THEN ${index-1}`
+          cond += ` WHEN p.title LIKE '${keywordArr[i]}%' THEN ${index-2}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[i]}%' THEN ${index-3}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[i]}' THEN ${index-4}`
+          index -= 4
+        }
+      }
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr}) AND p.id!=?
+        ORDER BY similarity DESC
+        LIMIT ${start},${pageSize}`
+    }
+    let result = await db.query(sql, [postId])
     if(Array.isArray(result) && result.length > 0){
       return result
     }

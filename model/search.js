@@ -6,7 +6,7 @@
  */
 
 const db = require('../util/db')
-const { Segment, useDefault, cnPOSTag } = require('segmentit')
+const { Segment, useDefault } = require('segmentit')
 const segmentit = useDefault(new Segment())
 
 const search = {

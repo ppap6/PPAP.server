@@ -91,6 +91,38 @@ const post ={
     }
   },
 
+  //获取推荐帖子列表
+  async getRecommendPostList(pageNum, pageSize, postId){
+    //获取帖子信息
+    let post = await postModel.getPost(postId)
+    if(post){
+      let postList = await postModel.getRecommendPostList(pageNum, pageSize, post.id, post.title)
+      if(postList){
+        return {
+          status: 200,
+          message: postList
+        }
+      }
+      //如果推荐帖子列表为空，则获取热门帖子列表
+      let hotList = await postModel.getHotPostList(pageNum, pageSize)
+      if(hotList){
+        return {
+          status: 200,
+          message: hotList
+        }
+      }
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+  },
+
   //添加帖子
   async addPost(data){
     let pid = await postModel.addPost(data)
