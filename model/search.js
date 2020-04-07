@@ -6,6 +6,8 @@
  */
 
 const db = require('../util/db')
+const { Segment, useDefault, cnPOSTag } = require('segmentit')
+const segmentit = useDefault(new Segment())
 
 const search = {
 
@@ -20,7 +22,7 @@ const search = {
         ORDER BY p.create_time DESC
         LIMIT ${start},${pageSize}`
     }else{
-      let keywordArr = keyword.trim().split(' ')
+      let keywordArr = segmentit.doSegment(keyword).map(i => i.w)
       let likeStr = ''
       let cond = ''
       let index = 99
@@ -62,7 +64,7 @@ const search = {
     if(keyword === ' '){
       sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex FROM user AS u ORDER BY u.id ASC LIMIT ${start},${pageSize}`
     }else{
-      let keywordArr = keyword.trim().split(' ')
+      let keywordArr = segmentit.doSegment(keyword).map(i => i.w)
       let likeStr = ''
       let cond = ''
       let index = 99
