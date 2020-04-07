@@ -54,7 +54,8 @@ const search ={
             name: userList[i].name,
             avatar: userList[i].avatar,
             fans_count: fansCount,
-            follow_count: followCount
+            follow_count: followCount,
+            similarity: userList[i].similarity
         })
       }
       return {

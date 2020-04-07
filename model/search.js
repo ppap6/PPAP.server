@@ -22,18 +22,30 @@ const search = {
     }else{
       let keywordArr = keyword.trim().split(' ')
       let likeStr = ''
+      let cond = ''
+      let index = 99
       for(let i=0; i<keywordArr.length; i++){
         if(i == 0){
           likeStr = `p.title LIKE '%${keywordArr[0]}%'`
+          cond += ` WHEN p.title='${keywordArr[0]}' THEN ${index-1}`
+          cond += ` WHEN p.title LIKE '${keywordArr[0]}%' THEN ${index-2}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[0]}%' THEN ${index-3}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[0]}' THEN ${index-4}`
+          index -= 4
         }else{
           if(keywordArr[i] == '') continue
           likeStr += ` OR p.title LIKE '%${keywordArr[i]}%'`
+          cond += ` WHEN p.title='${keywordArr[i]}' THEN ${index-1}`
+          cond += ` WHEN p.title LIKE '${keywordArr[i]}%' THEN ${index-2}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[i]}%' THEN ${index-3}`
+          cond += ` WHEN p.title LIKE '%${keywordArr[i]}' THEN ${index-4}`
+          index -= 4
         }
       }
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, (p.pv/100 + p.likes + p.collects*2) AS hot, p.topic_id, t.name AS topic_name 
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2) AS similarity, (p.pv/100 + p.likes + p.collects*2) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr})
-        ORDER BY hot DESC
+        ORDER BY similarity DESC
         LIMIT ${start},${pageSize}`
     }
     let result = await db.query(sql)
@@ -52,18 +64,30 @@ const search = {
     }else{
       let keywordArr = keyword.trim().split(' ')
       let likeStr = ''
+      let cond = ''
+      let index = 99
       for(let i=0; i<keywordArr.length; i++){
         if(i == 0){
           likeStr = `u.name LIKE '%${keywordArr[0]}%'`
+          cond += ` WHEN u.name='${keywordArr[0]}' THEN ${index-1}`
+          cond += ` WHEN u.name LIKE '${keywordArr[0]}%' THEN ${index-2}`
+          cond += ` WHEN u.name LIKE '%${keywordArr[0]}%' THEN ${index-3}`
+          cond += ` WHEN u.name LIKE '%${keywordArr[0]}' THEN ${index-4}`
+          index -= 4
         }else{
           if(keywordArr[i] == '') continue
           likeStr += ` OR u.name LIKE '%${keywordArr[i]}%'`
+          cond += ` WHEN u.name='${keywordArr[i]}' THEN ${index-1}`
+          cond += ` WHEN u.name LIKE '${keywordArr[i]}%' THEN ${index-2}`
+          cond += ` WHEN u.name LIKE '%${keywordArr[i]}%' THEN ${index-3}`
+          cond += ` WHEN u.name LIKE '%${keywordArr[i]}' THEN ${index-4}`
+          index -= 4
         }
       }
-      sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex 
+      sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, (CASE ${cond} END) AS similarity 
              FROM user AS u 
              WHERE (${likeStr})
-             ORDER BY u.id ASC
+             ORDER BY similarity DESC
              LIMIT ${start},${pageSize}`
     }
     let result = await db.query(sql)
