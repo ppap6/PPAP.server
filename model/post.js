@@ -87,25 +87,25 @@ const post = {
     let start = (pageNum-1) * pageSize
     let sql
     if(topicId === 0){
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2) AS hot, p.topic_id, t.name AS topic_name 
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')
-        ORDER BY hot DESC
+        ORDER BY hots DESC
         LIMIT ${start},${pageSize}`
     }else{
       if(sid){
         //话题id为父级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2) AS hot, p.topic_id, t.name AS topic_name 
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')
-          ORDER BY hot DESC
+          ORDER BY hots DESC
           LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2) AS hot, p.topic_id, t.name AS topic_name 
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')
-          ORDER BY hot DESC
+          ORDER BY hots DESC
           LIMIT ${start},${pageSize}`
       }
     }
@@ -149,7 +149,7 @@ const post = {
           index -= 4
         }
       }
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr}) AND p.id!=?
         ORDER BY similarity DESC
