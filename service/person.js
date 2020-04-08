@@ -27,13 +27,6 @@ const person = {
     async getPostList(userId, pageNum, pageSize) {
         let postList = await personModel.getPostList(userId, pageNum, pageSize)
         if (postList) {
-            //遍历
-            for (let i = 0; i < postList.length; i++) {
-                let commentCount = await personModel.getPostCommentCount(postList[i].id)
-                let answerCount = await personModel.getPostAnswerCount(postList[i].id)
-                postList[i].comments = commentCount
-                postList[i].answers = answerCount
-            }
             return {
                 status: 200,
                 message: postList
@@ -47,6 +40,7 @@ const person = {
 
     //获取个人评论列表
     async getCommentList(userId, pageNum, pageSize) {
+        let count = await personModel.getUserCommentCount(parseInt(userId))
         let commentList = await personModel.getCommentList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (commentList) {
             let newList = []
@@ -66,7 +60,12 @@ const person = {
             }
             return {
                 status: 200,
-                message: newList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: newList
+                }
             }
         }
         return {
@@ -77,6 +76,7 @@ const person = {
 
     //获取个人回复列表
     async getAnswerList(userId, pageNum, pageSize) {
+        let count = await personModel.getUserAnswerCount(parseInt(userId))
         let answerList = await personModel.getAnswerList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (answerList) {
             let newList = []
@@ -107,7 +107,12 @@ const person = {
             }
             return {
                 status: 200,
-                message: newList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: newList
+                }
             }
         }
         return {
@@ -118,25 +123,29 @@ const person = {
 
     //获取个人粉丝列表
     async getFansList(userId, pageNum, pageSize) {
+        let count = await personModel.getUserFansCount(parseInt(userId))
         let fansList = await personModel.getFansList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (fansList) {
-            let newFansList = []
+            let newList = []
             //遍历
             for (let i = 0; i < fansList.length; i++) {
                 let user = await userModel.getUser(fansList[i].uid)
-                let fansCount = await personModel.getUserFansCount(parseInt(fansList[i].uid))
-                let followCount = await personModel.getUserFollowCount(parseInt(fansList[i].uid))
-                newFansList.push({
+                newList.push({
                     id: user.id,
                     name: user.name,
                     avatar: user.avatar,
-                    fans_count: fansCount,
-                    follow_count: followCount
+                    fans: user.fans,
+                    follows: user.follows
                 })
             }
             return {
                 status: 200,
-                message: newFansList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: newList
+                }
             }
         }
         return {
@@ -147,25 +156,29 @@ const person = {
 
     //获取个人关注列表
     async getFollowList(userId, pageNum, pageSize) {
+        let count = await personModel.getUserFollowCount(parseInt(userId))
         let followList = await personModel.getFollowList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (followList) {
-            let newFollowList = []
+            let newList = []
             //遍历
             for (let i = 0; i < followList.length; i++) {
                 let user = await userModel.getUser(followList[i].follow_uid)
-                let fansCount = await personModel.getUserFansCount(parseInt(followList[i].follow_uid))
-                let followCount = await personModel.getUserFollowCount(parseInt(followList[i].follow_uid))
-                newFollowList.push({
+                newList.push({
                     id: user.id,
                     name: user.name,
                     avatar: user.avatar,
-                    fans_count: fansCount,
-                    follow_count: followCount
+                    fans: user.fans,
+                    follows: user.follows
                 })
             }
             return {
                 status: 200,
-                message: newFollowList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: newList
+                }
             }
         }
         return {
@@ -176,6 +189,7 @@ const person = {
 
     //获取个人点赞列表
     async getLikeList(userId, pageNum, pageSize){
+        let count = await personModel.getUserLikeCount(parseInt(userId))
         let pidArr = await personModel.getLikePidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (pidArr) {
             let likeList = []
@@ -186,7 +200,12 @@ const person = {
             }
             return {
                 status: 200,
-                message: likeList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: likeList
+                }
             }
         }
         return {
@@ -197,6 +216,7 @@ const person = {
 
     //获取个人收藏列表
     async getCollectList(userId, pageNum, pageSize){
+        let count = await personModel.getUserCollectCount(parseInt(userId))
         let pidArr = await personModel.getCollectPidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (pidArr) {
             let collectList = []
@@ -207,7 +227,12 @@ const person = {
             }
             return {
                 status: 200,
-                message: collectList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: collectList
+                }
             }
         }
         return {
@@ -218,6 +243,7 @@ const person = {
 
     //获取个人话题列表
     async getTopicList(userId, pageNum, pageSize){
+        let count = await personModel.getUserTopicCount(parseInt(userId))
         let followTopicList = await personModel.getTopicList(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
         if (followTopicList) {
             let topicList = []
@@ -248,7 +274,12 @@ const person = {
             }
             return {
                 status: 200,
-                message: topicList
+                message: {
+                    page_num: pageNum,
+                    page_size: pageSize,
+                    total: count,
+                    list: topicList
+                }
             }
         }
         return {
@@ -269,6 +300,7 @@ const person = {
                     }
                 )
             }
+            let count = await personModel.getUserLogCount(queryArr)
             let dynamicList = await personModel.getFollowUserDynamicList(queryArr, parseInt(pageNum), parseInt(pageSize))
             if(dynamicList){
                 let responseList = []
@@ -400,7 +432,12 @@ const person = {
                 }
                 return {
                     status: 200,
-                    message: responseList
+                    message: {
+                        page_num: pageNum,
+                        page_size: pageSize,
+                        total: count,
+                        list: responseList
+                    }
                 }
             }
             return {

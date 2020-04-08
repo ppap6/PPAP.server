@@ -18,14 +18,24 @@ const person = {
     //获取用户帖子列表
     async getPostList(userId, pageNum, pageSize) {
         let start = (pageNum - 1) * pageSize
-        let sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+        let countSql = `SELECT COUNT(*)
+            FROM post AS p, user AS u, topic AS t 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=? AND p.status=1`
+
+        let sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
             FROM post AS p, user AS u, topic AS t 
             WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=? AND p.status=1
             ORDER BY p.create_time DESC
             LIMIT ${start},${pageSize}`
+        let countResult = await db.query(countSql, [userId])
         let result = await db.query(sql, [userId])
         if (Array.isArray(result) && result.length > 0) {
-            return result
+            return {
+                page_num: pageNum,
+                page_size: pageSize,
+                total: countResult[0]['COUNT(*)'],
+                list: result
+            }
         }
         return false
     },
@@ -51,7 +61,7 @@ const person = {
     //获取用户评论列表
     async getCommentList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
-        let result = await db_mongo.find('comment', {uid: userId}, start, pageSize, {update_time: -1})
+        let result = await db_mongo.find('comment', {uid: userId, status: 1}, start, pageSize, {update_time: -1})
         if (Array.isArray(result) && result.length > 0) {
             return result
         }
@@ -211,6 +221,15 @@ const person = {
             return result
         }
         return false
+    },
+
+    //获取关注用户的动态总数
+    async getUserLogCount(queryArr){
+        let count = await db_mongo.count('user_log', {$or: queryArr})
+        if (count) {
+            return count
+        }
+        return 0
     },
 
 }
