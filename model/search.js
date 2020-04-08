@@ -14,9 +14,14 @@ const search = {
   //获取帖子列表（关键词，页数，数目）
   async getPostList(keyword=' ', pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
+    let countSql
     let sql
     if(keyword === ' '){
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.topic_id, t.name AS topic_name 
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id`
+
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id
         ORDER BY p.create_time DESC
@@ -44,15 +49,25 @@ const search = {
           index -= 4
         }
       }
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2) AS similarity, (p.pv/100 + p.likes + p.collects*2) AS hots, p.topic_id, t.name AS topic_name 
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr})`
+
+      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2) AS similarity, (p.pv/100 + p.likes + p.collects*2) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr})
         ORDER BY similarity DESC
         LIMIT ${start},${pageSize}`
     }
+    let countResult = await db.query(countSql)
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
@@ -60,9 +75,11 @@ const search = {
   //获取用户列表（关键词，页数，数目）
   async getUserList(keyword=' ', pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
+    let countSql
     let sql
     if(keyword === ' '){
-      sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex FROM user AS u ORDER BY u.id ASC LIMIT ${start},${pageSize}`
+      countSql = `SELECT COUNT(*) FROM user`
+      sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.fans, u.follows, FROM user AS u ORDER BY u.id ASC LIMIT ${start},${pageSize}`
     }else{
       let keywordArr = segmentit.doSegment(keyword).map(i => i.w)
       let likeStr = ''
@@ -86,15 +103,25 @@ const search = {
           index -= 4
         }
       }
-      sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, (CASE ${cond} END) AS similarity 
-             FROM user AS u 
-             WHERE (${likeStr})
-             ORDER BY similarity DESC
-             LIMIT ${start},${pageSize}`
+      countSql = `SELECT COUNT(*) FROM user AS u WHERE (${likeStr})`
+
+      sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.fans, u.follows, (CASE ${cond} END) AS similarity 
+        FROM user AS u 
+        WHERE (${likeStr})
+        ORDER BY similarity DESC
+        LIMIT ${start},${pageSize}`
     }
+    let countResult = await db.query(countSql)
+    console.log(countResult)
     let result = await db.query(sql)
+    console.log(result)
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },

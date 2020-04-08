@@ -23,12 +23,6 @@ const search ={
   async getPostList(keyword, pageNum, pageSize){
     let postList = await searchModel.getPostList(keyword, pageNum, pageSize)
     if(postList){
-      for (let i = 0; i < postList.length; i++) {
-        let commentCount = await personModel.getPostCommentCount(postList[i].id)
-        let answerCount = await personModel.getPostAnswerCount(postList[i].id)
-        postList[i].comments = commentCount
-        postList[i].answers = answerCount
-      }
       return {
         status: 200,
         message: postList
@@ -44,23 +38,9 @@ const search ={
   async getUserList(keyword, pageNum, pageSize){
     let userList = await searchModel.getUserList(keyword, pageNum, pageSize)
     if(userList){
-      let newUserList = []
-      //遍历
-      for (let i = 0; i < userList.length; i++) {
-        let fansCount = await personModel.getUserFansCount(parseInt(userList[i].id))
-        let followCount = await personModel.getUserFollowCount(parseInt(userList[i].id))
-        newUserList.push({
-            id: userList[i].id,
-            name: userList[i].name,
-            avatar: userList[i].avatar,
-            fans_count: fansCount,
-            follow_count: followCount,
-            similarity: userList[i].similarity
-        })
-      }
       return {
         status: 200,
-        message: newUserList
+        message: userList
       }
     }
     return {
