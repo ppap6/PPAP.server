@@ -33,14 +33,14 @@ const access ={
     let accessList = await accessModel.getAccessList(pageNum, pageSize)
     if(accessList){
       //获取子级权限
-    for(let i=0; i<accessList.length; i++){
-      let childAccessList = await accessModel.getChildAccessList(accessList[i].id)
-      if(childAccessList){
-        accessList[i].child = childAccessList
-      }else{
-        accessList[i].child = []
+      for(let i=0; i<accessList.list.length; i++){
+        let childAccessList = await accessModel.getChildAccessList(accessList.list[i].id)
+        if(childAccessList){
+          accessList.list[i].child = childAccessList
+        }else{
+          accessList.list[i].child = []
+        }
       }
-    }
       return {
         status: 200,
         message: accessList

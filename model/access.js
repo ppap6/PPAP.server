@@ -13,10 +13,17 @@ const access = {
   //获取一级权限列表
   async getAccessList(pageNum=1, pageSize=20){
     let start = (pageNum-1)*pageSize
-    let sql = 'SELECT * FROM access WHERE sid=0 LIMIT ?,?'
+    let countSql = `SELECT COUNT(*) FROM access WHERE sid=0`
+    let sql = `SELECT * FROM access WHERE sid=0 LIMIT ?,?`
+    let countResult = await db.query(countSql)
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
