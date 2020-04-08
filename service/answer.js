@@ -30,6 +30,7 @@ const answer ={
         message: '非法参数'
       }
     }
+    let count = await answerModel.getAnswerCount(commentId)
     let answerList = await answerModel.getAnswerList(pageNum, pageSize, commentId)
     if(answerList){
       for(let i=0; i<answerList.length; i++){
@@ -42,7 +43,12 @@ const answer ={
       }
       return {
         status: 200,
-        message: answerList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: answerList
+        }
       }
     }
     return {
@@ -68,6 +74,7 @@ const answer ={
         message: '非法参数'
       }
     }
+    let count = await answerModel.getAnswerCountForAdmin(commentId)
     let answerList = await answerModel.getAnswerListForAdmin(pageNum, pageSize, commentId)
     if(answerList){
       for(let i=0; i<answerList.length; i++){
@@ -80,7 +87,12 @@ const answer ={
       }
       return {
         status: 200,
-        message: answerList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: answerList
+        }
       }
     }
     return {
