@@ -13,10 +13,17 @@ const role = {
   //获取角色列表
   async getRoleList(pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
-    let sql = 'SELECT * FROM role WHERE id!=1 LIMIT ?,?'
+    let countSql = `SELECT COUNT(*) FROM role WHERE id!=1`
+    let sql = `SELECT * FROM role WHERE id!=1 LIMIT ?,?`
+    let countResult = await db.query(countSql)
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
