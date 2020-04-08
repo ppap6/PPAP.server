@@ -112,9 +112,7 @@ const search = {
         LIMIT ${start},${pageSize}`
     }
     let countResult = await db.query(countSql)
-    console.log(countResult)
     let result = await db.query(sql)
-    console.log(result)
     if(Array.isArray(result) && result.length > 0){
       return {
         page_num: pageNum,

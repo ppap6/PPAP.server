@@ -24,6 +24,15 @@ const notice = {
         return false
     },
 
+    //获取评论通知总数
+    async getCommentLogCount(userId){
+        let count = await db_mongo.count('user_log', {post_owner_id: userId, type: 1})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
     //获取回复通知列表
     async getAnswerLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
@@ -32,6 +41,15 @@ const notice = {
             return result
         }
         return false
+    },
+
+    //获取回复通知总数
+    async getAnswerLogCount(userId){
+        let count = await db_mongo.count('user_log', {targetor_id: userId, type: 2})
+        if (count) {
+            return count
+        }
+        return 0
     },
 
     //获取关注通知列表
@@ -44,6 +62,15 @@ const notice = {
         return false
     },
 
+    //获取关注通知总数
+    async getFollowLogCount(userId){
+        let count = await db_mongo.count('user_log', {follow_people_id: userId, type: 3})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
     //获取点赞通知列表
     async getLikeLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
@@ -54,6 +81,15 @@ const notice = {
         return false
     },
 
+    //获取点赞通知总数
+    async getLikeLogCount(userId){
+        let count = await db_mongo.count('user_log', {post_owner_id: userId, type: 4})
+        if (count) {
+            return count
+        }
+        return 0
+    },
+
     //获取收藏通知列表
     async getCollectLogList(userId, pageNum, pageSize){
         let start = (pageNum - 1) * pageSize
@@ -62,6 +98,15 @@ const notice = {
             return result
         }
         return false
+    },
+
+    //获取收藏通知总数
+    async getCollectLogCount(userId){
+        let count = await db_mongo.count('user_log', {post_owner_id: userId, type: 5})
+        if (count) {
+            return count
+        }
+        return 0
     },
 
     //获取全部通知列表
@@ -82,6 +127,25 @@ const notice = {
             return result
         }
         return false
+    },
+
+    //获取全部通知总数
+    async getAllLogCount(userId){
+        let count = await db_mongo.count('user_log', {
+            $or: [
+                {post_owner_id: userId, type: 1},
+                {targetor_id: userId, type: 2},
+                {follow_people_id: userId, type: 3},
+                {post_owner_id: userId, type: 4},
+                {post_owner_id: userId, type: 5},
+                {uid: userId, type: 6},
+                // {uid: userId, type: 7}
+            ]
+        })
+        if (count) {
+            return count
+        }
+        return 0
     },
 
 }

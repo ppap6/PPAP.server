@@ -24,6 +24,7 @@ const notice = {
 
   //获取评论通知列表
   async getCommentList(userId, pageNum, pageSize) {
+    let count = await noticeModel.getCommentLogCount(userId)
     let commentLogList = await noticeModel.getCommentLogList(userId, pageNum, pageSize)
     if (commentLogList) {
       let noticeList = []
@@ -46,7 +47,12 @@ const notice = {
       }
       return {
         status: 200,
-        message: noticeList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: noticeList
+        }
       }
     }
     return {
@@ -57,6 +63,7 @@ const notice = {
 
   //获取回复通知列表
   async getAnswerList(userId, pageNum, pageSize) {
+    let count = await noticeModel.getAnswerLogCount(userId)
     let answerLogList = await noticeModel.getAnswerLogList(userId, pageNum, pageSize)
     if (answerLogList) {
       let noticeList = []
@@ -79,7 +86,12 @@ const notice = {
       }
       return {
         status: 200,
-        message: noticeList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: noticeList
+        }
       }
     }
     return {
@@ -90,6 +102,7 @@ const notice = {
 
   //获取关注通知列表
   async getFollowList(userId, pageNum, pageSize) {
+    let count = await noticeModel.getFollowLogCount(userId)
     let followLogList = await noticeModel.getFollowLogList(userId, pageNum, pageSize)
     if (followLogList) {
       let noticeList = []
@@ -106,7 +119,12 @@ const notice = {
       }
       return {
         status: 200,
-        message: noticeList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: noticeList
+        }
       }
     }
     return {
@@ -117,6 +135,7 @@ const notice = {
 
   //获取点赞通知列表
   async getLikeList(userId, pageNum, pageSize) {
+    let count = await noticeModel.getLikeLogCount(userId)
     let likeLogList = await noticeModel.getLikeLogList(userId, pageNum, pageSize)
     if (likeLogList) {
       let noticeList = []
@@ -136,7 +155,12 @@ const notice = {
       }
       return {
         status: 200,
-        message: noticeList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: noticeList
+        }
       }
     }
     return {
@@ -147,6 +171,7 @@ const notice = {
 
   //获取收藏通知列表
   async getCollectList(userId, pageNum, pageSize) {
+    let count = await noticeModel.getCollectLogCount(userId)
     let collectLogList = await noticeModel.getCollectLogList(userId, pageNum, pageSize)
     if (collectLogList) {
       let noticeList = []
@@ -166,7 +191,12 @@ const notice = {
       }
       return {
         status: 200,
-        message: noticeList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: noticeList
+        }
       }
     }
     return {
@@ -177,6 +207,7 @@ const notice = {
 
   //获取全部通知列表
   async getAllList(userId, pageNum, pageSize) {
+    let count = await noticeModel.getAllLogCount(userId)
     let allLogList = await noticeModel.getAllLogList(userId, pageNum, pageSize)
     if (allLogList) {
       let noticeList = []
@@ -268,7 +299,12 @@ const notice = {
       }
       return {
         status: 200,
-        message: noticeList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: count,
+          list: noticeList
+        }
       }
     }
     return {
