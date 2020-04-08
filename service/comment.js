@@ -25,6 +25,7 @@
  
   //获取帖子评论列表
   async getCommentList(pageNum, pageSize, postId){
+    let post = await postModel.getPost(postId)
     let commentList = await commentModel.getCommentList(pageNum, pageSize, postId)
     if(commentList){
       for(let i=0; i<commentList.length; i++){
@@ -42,6 +43,7 @@
         }else{
           commentList[i].is_light = false
         }
+        let answerCount = await answerModel.getAnswerCount(commentList[i]._id.toString())
         let answerList = await answerModel.getAnswerList(pageNum, pageSize, commentList[i]._id.toString())
         if(answerList){
           for(let i=0; i<answerList.length; i++){
@@ -63,14 +65,29 @@
               answerList[i].is_light = false
             }
           }
-          commentList[i].answer_list = answerList
+          commentList[i].answer = {
+            page_num: pageNum,
+            page_size: pageSize,
+            total: answerCount,
+            list: answerList
+          }
         }else{
-          commentList[i].answer_list = []
+          commentList[i].answer = {
+            page_num: pageNum,
+            pageSize: pageSize,
+            total: answerCount,
+            list: []
+          }
         }
       }
       return {
         status: 200,
-        message: commentList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: post.comments,
+          list: commentList
+        }
       }
     }
     return {
@@ -90,12 +107,14 @@
         message: '没有操作权限'
       }
     }
+    let post = await postModel.getPost(postId)
     let commentList = await commentModel.getCommentListForAdmin(pageNum, pageSize, postId)
     if(commentList){
       for(let i=0; i<commentList.length; i++){
         let user = await userModel.getUser(commentList[i].uid)
         commentList[i].uname = user.name
-        commentList[i].avatar = user.avatar        
+        commentList[i].avatar = user.avatar
+        let answerCount = await answerModel.getAnswerCount(commentList[i]._id.toString())        
         let answerList = await answerModel.getAnswerListForAdmin(pageNum, pageSize, commentList[i]._id.toString())
         if(answerList){
           for(let i=0; i<answerList.length; i++){
@@ -106,14 +125,29 @@
             answerList[i].targetor_name = targetor.name
             answerList[i].targetor_avatar = targetor.avatar
           }
-          commentList[i].answer_list = answerList
+          commentList[i].answer = {
+            page_num: pageNum,
+            page_size: pageSize,
+            total: answerCount,
+            list: answerList
+          }
         }else{
-          commentList[i].answer_list = []
+          commentList[i].answer = {
+            page_num: pageNum,
+            page_size: pageSize,
+            total: answerCount,
+            list: []
+          }
         }
       }
       return {
         status: 200,
-        message: commentList
+        message: {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: post.comments,
+          list: commentList
+        }
       }
     }
     return {

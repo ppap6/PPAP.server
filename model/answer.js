@@ -21,6 +21,15 @@ const answer = {
     return false
   },
 
+  //获取评论回复总数
+  async getAnswerCount(commentId){
+    let count = await db_mongo.count('answer', {comment_id: commentId, status: 1})
+    if (count) {
+        return count
+    }
+    return 0
+  },
+
   //管理运营获取评论回复数据（页数，数目，评论id）
   async getAnswerListForAdmin(pageNum=1, pageSize=20, commentId){
     let start = (pageNum-1) * pageSize
@@ -29,6 +38,15 @@ const answer = {
       return result
     }
     return false
+  },
+
+  //管理运营者获取评论回复总数
+  async getAnswerCountForAdmin(commentId){
+    let count = await db_mongo.count('answer', {comment_id: commentId})
+    if (count) {
+        return count
+    }
+    return 0
   },
 
   //添加对评论的回复
