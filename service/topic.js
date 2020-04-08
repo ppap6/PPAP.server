@@ -25,12 +25,12 @@ const topic ={
     let topicList = await topicModel.getTopicList(pageNum, pageSize)
     if(topicList){
       //获取子级话题
-      for(let i=0; i<topicList.length; i++){
-        let childTopicList = await topicModel.getChildTopicList(topicList[i].id)
+      for(let i=0; i<topicList.list.length; i++){
+        let childTopicList = await topicModel.getChildTopicList(topicList.list[i].id)
         if(childTopicList){
-          topicList[i].child = childTopicList
+          topicList.list[i].child = childTopicList
         }else{
-          topicList[i].child = []
+          topicList.list[i].child = []
         }
       }
       return {
@@ -60,12 +60,12 @@ const topic ={
     let topicList = await topicModel.getTopicListForAdmin(pageNum, pageSize)
     if(topicList){
       //获取子级话题
-      for(let i=0; i<topicList.length; i++){
-        let childTopicList = await topicModel.getChildTopicListForAdmin(topicList[i].id)
+      for(let i=0; i<topicList.list.length; i++){
+        let childTopicList = await topicModel.getChildTopicListForAdmin(topicList.list[i].id)
         if(childTopicList){
-          topicList[i].child = childTopicList
+          topicList.list[i].child = childTopicList
         }else{
-          topicList[i].child = []
+          topicList.list[i].child = []
         }
       }
       return {

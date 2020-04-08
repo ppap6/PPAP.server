@@ -13,10 +13,17 @@ const topic = {
   //获取一级话题数据（页数，数目）
   async getTopicList(pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
+    let countSql = `SELECT COUNT(*) FROM topic WHERE sid=0 AND status=1`
     let sql = 'SELECT * FROM topic WHERE sid=0 AND status=1 ORDER BY name DESC LIMIT ?,?'
+    let countResult = await db.query(countSql)
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
@@ -34,10 +41,17 @@ const topic = {
   //管理运营获取一级话题数据（页数，数目）
   async getTopicListForAdmin(pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
+    let countSql = `SELECT COUNT(*) FROM topic WHERE sid=0`
     let sql = 'SELECT * FROM topic WHERE sid=0 ORDER BY name DESC LIMIT ?,?'
+    let countResult = await db.query(countSql)    
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
