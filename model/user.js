@@ -35,14 +35,25 @@ const user = {
   //查看用户列表
   async getUserList(roleId, pageNum, pageSize){
     let start = (pageNum-1) * pageSize
+    let countSql = `SELECT COUNT(*) 
+                    FROM user AS u, role AS r 
+                    WHERE u.role_id=r.id AND u.role_id>${roleId}`
+
     let sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.role_id>${roleId}
                ORDER BY u.id
                LIMIT ${start},${pageSize}`
+
+    let countResult = await db.query(countSql)
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
