@@ -15,8 +15,13 @@ const post = {
   //获取帖子数据（页数，数目，话题id）
   async getPostList(pageNum=1, pageSize=20, topicId=0, sid){
     let start = (pageNum-1) * pageSize
+    let countSql
     let sql
     if(topicId === 0){
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1`
+        
       sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1
@@ -25,6 +30,10 @@ const post = {
     }else{
       if(sid){
         //话题id为父级
+        countSql = `SELECT COUNT(*)
+          FROM post AS p, user AS u, topic AS t, topic AS parent 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1`
+
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
@@ -32,6 +41,10 @@ const post = {
           LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
+        countSql = `SELECT COUNT(*)
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1`
+
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
@@ -39,9 +52,15 @@ const post = {
           LIMIT ${start},${pageSize}`
       }
     }
+    let countResult = await db.query(countSql)
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
@@ -49,8 +68,13 @@ const post = {
   //管理运营获取帖子数据（页数，数目，话题id）
   async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sid){
     let start = (pageNum-1) * pageSize
+    let countSql
     let sql
     if(topicId === 0){
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id`
+
       sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id
@@ -59,34 +83,53 @@ const post = {
     }else{
       if(sid){
         //话题id为父级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+        countSql = `SELECT COUNT(*)
+          FROM post AS p, user AS u, topic AS t, topic AS parent 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id`
+
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id
           ORDER BY p.create_time DESC
           LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+        countSql = `SELECT COUNT(*)
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}`
+
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
           ORDER BY p.create_time DESC
           LIMIT ${start},${pageSize}`
       }
     }
+    let countResult = await db.query(countSql)
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
 
   //获取热门帖子数据（页数，数目，话题id）
   async getHotPostList(pageNum=1, pageSize=20, topicId=0, sid=false){
-    let time1 = util.changeTimeToStr(new Date(new Date().setDate(new Date().getDate()-15)))
-    let time2 = util.changeTimeToStr(new Date(new Date().setDate(new Date().getDate()+15)))
+    let time1 = util.changeTimeToStr(new Date(new Date().setDate(new Date().getDate()-60)))
+    let time2 = util.changeTimeToStr(new Date())
     let start = (pageNum-1) * pageSize
+    let countSql
     let sql
     if(topicId === 0){
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')`
+
       sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')
@@ -95,6 +138,10 @@ const post = {
     }else{
       if(sid){
         //话题id为父级
+        countSql = `SELECT COUNT(*)
+          FROM post AS p, user AS u, topic AS t, topic AS parent 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')`
+
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')
@@ -102,6 +149,10 @@ const post = {
           LIMIT ${start},${pageSize}`
       }else{
         //话题id为子级
+        countSql = `SELECT COUNT(*)
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')`
+
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1 AND (p.create_time BETWEEN '${time1}' AND '${time2}')
@@ -109,9 +160,15 @@ const post = {
           LIMIT ${start},${pageSize}`
       }
     }
+    let countResult = await db.query(countSql)
     let result = await db.query(sql)
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
@@ -119,8 +176,13 @@ const post = {
   //获取推荐帖子数据（页数，数目，帖子标题）
   async getRecommendPostList(pageNum=1, pageSize=20, postId=0, keyword=''){
     let start = (pageNum-1) * pageSize
+    let countSql
     let sql
     if(keyword === ' '){
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND p.id!=?`
+
       sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND p.id!=?
@@ -149,15 +211,25 @@ const post = {
           index -= 4
         }
       }
+      countSql = `SELECT COUNT(*)
+        FROM post AS p, user AS u, topic AS t 
+        WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr}) AND p.id!=?`
+
       sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr}) AND p.id!=?
         ORDER BY similarity DESC
         LIMIT ${start},${pageSize}`
     }
+    let countResult = await db.query(countSql, [postId])
     let result = await db.query(sql, [postId])
     if(Array.isArray(result) && result.length > 0){
-      return result
+      return {
+        page_num: pageNum,
+        page_size: pageSize,
+        total: countResult[0]['COUNT(*)'],
+        list: result
+      }
     }
     return false
   },
