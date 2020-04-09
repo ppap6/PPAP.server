@@ -15,7 +15,6 @@
   * 10005数据库错误
   */
 const searchModel = require('../model/search')
-const personModel = require('../model/person')
 
 const search ={
  

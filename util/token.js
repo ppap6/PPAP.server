@@ -12,11 +12,6 @@ const getTokenRenewStatus = () => {
 
   //检测当前token是否到达续期时间段
   let obj = parseToken()
-  //解析token携带的信息
-  // global.uid = obj.uid
-  // global.name = obj.name
-  // global.account = obj.account
-  // global.roleId = obj.roleId
   //更新时间段在过期前3天
   if(obj.exp - new Date().getTime()/1000 > 60*60*24*3){
     return false
