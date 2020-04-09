@@ -32,6 +32,21 @@ const search ={
       message: '未找到操作对象'
     }
   },
+ 
+  //获取帖子列表（索引）
+  async getPostListByIndex(keyword, pageNum, pageSize){
+    let postList = await searchModel.getPostListByIndex(keyword, pageNum, pageSize)
+    if(postList){
+      return {
+        status: 200,
+        message: postList
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
   
   //获取用户列表
   async getUserList(keyword, pageNum, pageSize){
