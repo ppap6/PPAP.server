@@ -1,6 +1,6 @@
 # Mysql
 ## 安装
-略
+版本 5.7.6 以上
 ## 配置
 ### 创建用户账户密码
 略
@@ -18,16 +18,15 @@ character-set-client-handshake = FALSE
 character-set-server = utf8mb4
 collation-server = utf8mb4_bin
 ```
-保存后重启 Mysql
 ### 设置全文索引
-MySQL全文索引查询关键词最小长度限制  
+MySQL全文索引配置
 找到配置文件，在配置文件添加
 ```bash
 [mysqld]
 ft_min_word_len = 1
+ngram_token_size = 2
 ```
 保存后重启 Mysql
-> 注：重新设置配置后，已经设置的索引需要重新设置生成索引
 
 ### 创建数据库
 #### 命令行导入
@@ -46,6 +45,11 @@ ft_min_word_len = 1
 4.导入数据库文件
 ```bash
 > source ppap.sql;
+```
+> 注：如果没有设置索引，则需要手动设置生成索引
+
+```bash
+> CREATE FULLTEXT INDEX ft_index ON post (title, content) WITH PARSER ngram;
 ```
 #### 可视化工具导入
 ```bash
