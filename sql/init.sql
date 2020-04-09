@@ -87,7 +87,7 @@ CREATE TABLE `post` (
   `topic_id` INT(10) UNSIGNED NOT NULL COMMENT '话题ID',
   `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '帖子显示状态（0代表隐藏）'
   PRIMARY KEY (`id`)
-  FULLTEXT(`title`, `content`)
+  FULLTEXT (`title`, `content`) WITH PARSER ngram
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='帖子表';
 
 
