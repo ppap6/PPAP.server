@@ -121,7 +121,7 @@ const user = {
       let insertId = await userModel.addUser(data)
       if(insertId){
         //新增用户点赞收藏点亮模型
-        await userModel.addUserLikeCollectLightModel(insertId)
+        userModel.addUserLikeCollectLightModel(insertId)
         return {
           status: 200,
           message: '操作成功'
@@ -155,7 +155,7 @@ const user = {
       let result = await userModel.deleteUser(id)
       if(result){
         //删除用户点赞收藏点亮模型
-        await userModel.deleteUserLikeCollectLightModel(id)
+        // userModel.deleteUserLikeCollectLightModel(id)
         return {
           status: 200,
           message: '操作成功'
@@ -381,7 +381,7 @@ const user = {
       let insertId = await userModel.register(data)
       if(insertId){
         //新增用户点赞收藏点亮模型
-        await userModel.addUserLikeCollectLightModel(insertId)
+        userModel.addUserLikeCollectLightModel(insertId)
         return {
           status: 200,
           message: '操作成功'
@@ -644,6 +644,12 @@ const user = {
   async likePost(data){
     //获取用户点赞帖子数组
     let posts = await userModel.getLikePost(parseInt(global.uid))
+    if(!posts){
+      //用户点赞收藏点亮模型不存在
+      posts = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(!posts.includes(parseInt(data.pid))){    //判断是否已点赞   
       //不存在=>添加
       posts.unshift(parseInt(data.pid))
@@ -686,6 +692,12 @@ const user = {
   async cancelLikePost(data){
     //获取用户点赞帖子数组
     let posts = await userModel.getLikePost(parseInt(global.uid))
+    if(!posts){
+      //用户点赞收藏点亮模型不存在
+      posts = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(posts.includes(parseInt(data.pid))){     //判断是否已点赞
       //存在=>移除
       posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
@@ -717,6 +729,12 @@ const user = {
   async collectPost(data){
     //获取用户收藏帖子数组
     let posts = await userModel.getCollectPost(parseInt(global.uid))
+    if(!posts){
+      //用户点赞收藏点亮模型不存在
+      posts = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(!posts.includes(parseInt(data.pid))){    //判断是否已收藏  
       //不存在=>添加
       posts.unshift(parseInt(data.pid))
@@ -759,6 +777,12 @@ const user = {
   async cancelCollectPost(data){
     //获取用户收藏帖子数组
     let posts = await userModel.getCollectPost(parseInt(global.uid))
+    if(!posts){
+      //用户点赞收藏点亮模型不存在
+      posts = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(posts.includes(parseInt(data.pid))){    //判断是否已收藏  
       //存在=>移除
       posts.splice(posts.findIndex(item => item == parseInt(data.pid)), 1)
@@ -790,6 +814,12 @@ const user = {
   async lightComment(data){
     //获取用户点亮评论数组
     let comments = await userModel.getLightComment(parseInt(global.uid))
+    if(!comments){
+      //用户点赞收藏点亮模型不存在
+      comments = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(!comments.includes(data.comment_id)){    //判断是否已点亮
       //不存在=>添加
       comments.push(data.comment_id)
@@ -822,6 +852,12 @@ const user = {
   async cancelLightComment(data){
     //获取用户点亮评论数组
     let comments = await userModel.getLightComment(parseInt(global.uid))
+    if(!comments){
+      //用户点赞收藏点亮模型不存在
+      comments = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(comments.includes(data.comment_id)){    //判断是否已点亮
       //存在=>移除
       comments.splice(comments.findIndex(item => item == data.comment_id), 1)
@@ -854,6 +890,12 @@ const user = {
   async lightAnswer(data){
     //获取用户点亮回复数组
     let answers = await userModel.getLightAnswer(parseInt(global.uid))
+    if(!answers){
+      //用户点赞收藏点亮模型不存在
+      answers = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(!answers.includes(data.answer_id)){    //判断是否已点亮
       //不存在=>添加
       answers.push(data.answer_id)
@@ -886,6 +928,12 @@ const user = {
   async cancelLightAnswer(data){
     //获取用户点亮回复数组
     let answers = await userModel.getLightAnswer(parseInt(global.uid))
+    if(!answers){
+      //用户点赞收藏点亮模型不存在
+      answers = []
+      //新增用户点赞收藏点亮模型
+      userModel.addUserLikeCollectLightModel(parseInt(global.uid))
+    }
     if(answers.includes(data.answer_id)){    //判断是否已点亮
       //存在=>移除
       answers.splice(answers.findIndex(item => item == data.answer_id), 1)

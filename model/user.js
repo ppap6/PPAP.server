@@ -82,7 +82,8 @@ const user = {
 
   //删除用户
   async deleteUser(id){
-    let sql = 'DELETE FROM user WHERE id=?'
+    // let sql = 'DELETE FROM user WHERE id=?'
+    let sql = 'UPDATE user SET status=0 WHERE id=?'
     let result = await db.query(sql, [id])
     if(result.affectedRows){
       return true
