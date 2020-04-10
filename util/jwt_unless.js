@@ -23,6 +23,8 @@ const nonTokenApiArr = [
   //search模块
   '/search/post',
   '/search/user',
+  '/search/post/char',
+  '/search/user/char',
   '/search/post/index'
 ]
 
