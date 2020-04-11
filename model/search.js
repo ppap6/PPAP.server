@@ -136,14 +136,11 @@ const search = {
   //获取帖子列表（索引）（关键词，页数，数目）
   async getPostListByIndex(keyword=' ', pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
-    let countSql
-    let sql
-    
-      countSql = `SELECT COUNT(*)
+    let countSql = `SELECT COUNT(*)
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND MATCH(title, content) AGAINST(?)`
 
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2) AS hots, p.topic_id, t.name AS topic_name 
+    let sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, p.content, p.md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND MATCH(title, content) AGAINST(?)
         LIMIT ${start},${pageSize}`
@@ -227,7 +224,6 @@ const search = {
       let cond = ''
       let index = 99
       for(let i=0; i<keywordArr.length; i++){
-        console.log(keywordArr[i])
         if(i == 0){
           likeStr = `u.name LIKE '%${keywordArr[0]}%'`
           cond += ` WHEN u.name='${keywordArr[0]}' THEN ${index-1}`
