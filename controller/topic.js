@@ -29,7 +29,7 @@ const topic = {
   //添加话题
   async addTopic(ctx){
     //验证数据
-    let paramList = ['sid', 'name', 'intro', 'icon']
+    let paramList = ['sid', 'name', 'intro', 'num', 'icon']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
@@ -57,7 +57,7 @@ const topic = {
   //修改话题信息
   async updateTopic(ctx){
     //验证数据
-    let paramList = ['name', 'intro', 'icon']
+    let paramList = ['name', 'intro', 'icon', 'num']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,

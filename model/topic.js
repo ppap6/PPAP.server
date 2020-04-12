@@ -68,12 +68,13 @@ const topic = {
 
   //添加话题
   async addTopic(data){
-    let sql = 'INSERT INTO topic(sid, name, intro, icon, create_time, update_time) VALUES(?, ?, ?, ?, ?)'
+    let sql = 'INSERT INTO topic(sid, name, intro, icon, num, create_time, update_time) VALUES(?, ?, ?, ?, ?, ?)'
     let values = [
       data.sid,
       data.name,
       data.intro,
       data.icon,
+      data.num,
       util.changeTimeToStr(new Date()),
       util.changeTimeToStr(new Date())
     ]
@@ -96,7 +97,7 @@ const topic = {
 
   //删除话题数据
   async deleteTopic(id){
-    let sql = `UPDATE topic SET name='无话题',status=0 WHERE id=?`
+    let sql = `UPDATE topic SET name='无话题', status=0 WHERE id=?`
     let result = await db.query(sql, [id])
     if(result.affectedRows){
       return true
@@ -106,11 +107,12 @@ const topic = {
 
   //修改话题信息
   async updateTopic(id, data){
-    let sql = 'UPDATE topic SET name=?, intro=?, icon=?, update_time=? WHERE id=?'
+    let sql = 'UPDATE topic SET name=?, intro=?, icon=?, num=?, update_time=? WHERE id=?'
     let values = [
       data.name,
       data.intro,
       data.icon,
+      data.num,
       util.changeTimeToStr(new Date())
     ]
     let result = await db.query(sql, [...values, id])
