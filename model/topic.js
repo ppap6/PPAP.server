@@ -68,7 +68,7 @@ const topic = {
 
   //添加话题
   async addTopic(data){
-    let sql = 'INSERT INTO topic(sid, name, intro, icon, num, create_time, update_time) VALUES(?, ?, ?, ?, ?, ?)'
+    let sql = 'INSERT INTO topic(sid, name, intro, icon, num, create_time, update_time) VALUES(?, ?, ?, ?, ?, ?, ?)'
     let values = [
       data.sid,
       data.name,
