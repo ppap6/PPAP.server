@@ -114,12 +114,12 @@ const notice = {
         let start = (pageNum - 1) * pageSize
         let result = await db_mongo.find('user_log', {
             $or: [
-                {post_owner_id: userId, type: 1},
-                {targetor_id: userId, type: 2},
-                {follow_people_id: userId, type: 3},
-                {post_owner_id: userId, type: 4},
-                {post_owner_id: userId, type: 5},
-                {uid: userId, type: 6},
+                {post_owner_id: userId, type: 1, uid: {$ne: userId}},
+                {targetor_id: userId, type: 2, uid: {$ne: userId}},
+                {follow_people_id: userId, type: 3, uid: {$ne: userId}},
+                {post_owner_id: userId, type: 4, uid: {$ne: userId}},
+                {post_owner_id: userId, type: 5, uid: {$ne: userId}},
+                // {uid: userId, type: 6},
                 // {uid: userId, type: 7}
             ]
         }, start, pageSize, {create_time: -1})
@@ -133,12 +133,12 @@ const notice = {
     async getAllLogCount(userId){
         let count = await db_mongo.count('user_log', {
             $or: [
-                {post_owner_id: userId, type: 1},
-                {targetor_id: userId, type: 2},
-                {follow_people_id: userId, type: 3},
-                {post_owner_id: userId, type: 4},
-                {post_owner_id: userId, type: 5},
-                {uid: userId, type: 6},
+                {post_owner_id: userId, type: 1, uid: {$ne: userId}},
+                {targetor_id: userId, type: 2, uid: {$ne: userId}},
+                {follow_people_id: userId, type: 3, uid: {$ne: userId}},
+                {post_owner_id: userId, type: 4, uid: {$ne: userId}},
+                {post_owner_id: userId, type: 5, uid: {$ne: userId}},
+                // {uid: userId, type: 6},
                 // {uid: userId, type: 7}
             ]
         })
