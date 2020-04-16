@@ -191,9 +191,7 @@ const person = {
     async getLikeList(userId, pageNum, pageSize){
         let count = await personModel.getUserLikeCount(parseInt(userId))
         let pidArr = await personModel.getLikePidArr(parseInt(userId), parseInt(pageNum), parseInt(pageSize))
-        console.log(pidArr)
         if (pidArr) {
-            console.log("wu1")
             let likeList = []
             //遍历
             for (let i = 0; i < pidArr.length; i++) {
