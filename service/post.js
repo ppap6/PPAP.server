@@ -18,6 +18,7 @@ const postModel = require('../model/post')
 const topicModel = require('../model/topic')
 const logModel = require('../model/log')
 const userModel = require('../model/user')
+const personModel = require('../model/person')
 
 const post ={
 
@@ -178,6 +179,29 @@ const post ={
   async getPost(id){
     let post = await postModel.getPost(id)
     if(post){
+      let user = await userModel.getUser(post.uid)
+      let author = {
+        id: user.id,
+        name: user.name,
+        account: user.account,
+        avatar: user.avatar,
+        sex: user.sex,
+        email: user.email,
+        create_time: user.create_time,
+        role_id: user.role_id,
+        role_name: user.role_name,
+        count: {
+          posts: await personModel.getUserPostCount(user.id),
+          comments: await personModel.getUserCommentCount(user.id),
+          answers: await personModel.getUserAnswerCount(user.id),
+          fans: user.fans,
+          follows: user.follows,
+          likes: await personModel.getUserLikeCount(user.id),
+          collects: await personModel.getUserCollectCount(user.id),
+          topics: await personModel.getUserTopicCount(user.id)
+        }
+      }
+      post.author = author
       return {
         status: 200,
         message: post
