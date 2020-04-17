@@ -44,6 +44,7 @@ create_time  - 创建时间(datetime)
 update_time  - 更新时间(datetime)
 fans  - 粉丝数(int)
 follows  - 关注数(int)
+lights  - 被点亮数(int)
 role_id  - 角色ID(int)
 ```
 

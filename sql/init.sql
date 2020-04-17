@@ -19,6 +19,7 @@ CREATE TABLE `user` (
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `fans` INT(10) NOT NULL DEFAULT 0 COMMENT '粉丝数'
     `follows` INT(10) NOT NULL DEFAULT 0 COMMENT '关注数'
+    `lights` INT(10) NOT NULL DEFAULT 0 COMMENT '被点亮数'
     `role_id` INT(10) NOT NULL COMMENT '角色ID',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
