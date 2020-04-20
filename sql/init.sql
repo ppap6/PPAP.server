@@ -86,6 +86,7 @@ CREATE TABLE `post` (
   `comments` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论数',
   `answers` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复数',
   `topic_id` INT(10) UNSIGNED NOT NULL COMMENT '话题ID',
+  `last_answer_time` DATETIME NOT NULL COMMENT '帖子最后回复时间',
   `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '帖子显示状态（0代表隐藏）'
   PRIMARY KEY (`id`)
   FULLTEXT (`title`, `content`) WITH PARSER ngram

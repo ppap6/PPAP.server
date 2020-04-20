@@ -116,6 +116,7 @@ collects  - 收藏数(int)
 comments  - 评论数(int)
 answers  - 回复数(int)
 topic_id  - 话题ID(int)
+last_answer_time - (帖子最后回复时间)(datetime)
 status  - 帖子显示状态(int)
 ```
 
