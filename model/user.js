@@ -490,6 +490,10 @@ const user = {
       sql = 'UPDATE user SET fans=fans+1, update_time=? WHERE id=?'
     }else if(action == 'decreaseFans'){
       sql = 'UPDATE user SET fans=fans-1, update_time=? WHERE id=?'
+    }else if(action == 'increaseLights'){
+      sql = 'UPDATE user SET lights=lights+1, update_time=? WHERE id=?'
+    }else if(action == 'decreaseLights'){
+      sql = 'UPDATE user SET lights=lights-1, update_time=? WHERE id=?'
     }else{
       return false
     }

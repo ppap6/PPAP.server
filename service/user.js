@@ -828,6 +828,8 @@ const user = {
       //修改评论点亮计数
       let comment = await commentModel.getComment(data.comment_id)
       userModel.increaseCommentLightsCount(comment._id, comment.lights)
+      //用户被点亮数加一
+      userModel.updateUserStatistics(comment.uid, 'increaseLights')
       if(result){
         return {
           status: 200,
@@ -866,6 +868,8 @@ const user = {
       //修改评论点亮计数
       let comment = await commentModel.getComment(data.comment_id)
       userModel.decreaseCommentLightsCount(comment._id, comment.lights)
+      //用户被点亮数减一
+      userModel.updateUserStatistics(comment.uid, 'decreaseLights')
       if(result){
         return {
           status: 200,
@@ -904,6 +908,8 @@ const user = {
       //修改回复点亮计数
       let answer = await answerModel.getAnswer(data.answer_id)
       userModel.increaseAnswerLightsCount(answer._id, answer.lights)
+      //用户被点亮数加一
+      userModel.updateUserStatistics(answer.requestor_id, 'increaseLights')
       if(result){
         return {
           status: 200,
@@ -942,6 +948,8 @@ const user = {
       //修改回复点亮计数
       let answer = await answerModel.getAnswer(data.answer_id)
       userModel.decreaseAnswerLightsCount(answer._id, answer.lights)
+      //用户被点亮数减一
+      userModel.updateUserStatistics(answer.requestor_id, 'decreaseLights')
       if(result){
         return {
           status: 200,
