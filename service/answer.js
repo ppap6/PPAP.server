@@ -113,6 +113,8 @@ const answer ={
         postModel.updatePostStatistics(parseInt(data.pid), 'increaseAnswers')
         //添加用户的回复动态
         logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(comment.uid), insertedId)
+        //更新帖子最后回复时间
+        postModel.updatePostLastAnswerTime(parseInt(data.pid))
         return {
           status: 200,
           message: '操作成功'
@@ -132,6 +134,8 @@ const answer ={
         postModel.updatePostStatistics(parseInt(data.pid), 'decreaseAnswers')
         //添加用户的回复动态
         logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
+        //更新帖子最后回复时间
+        postModel.updatePostLastAnswerTime(parseInt(data.pid))
         return {
           status: 200,
           message: '操作成功'

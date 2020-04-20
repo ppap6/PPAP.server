@@ -166,6 +166,8 @@
       postModel.updatePostStatistics(parseInt(data.pid), 'increaseComments')
       //添加用户评论动态
       logModel.addCommentLog(parseInt(global.uid), parseInt(data.pid), post.uid, insertedId)
+      //更新帖子最后回复时间
+      postModel.updatePostLastAnswerTime(parseInt(data.pid))
       return {
         status: 200,
         message: '操作成功'

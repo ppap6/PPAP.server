@@ -302,6 +302,19 @@ const post = {
     return false
   },
 
+  //更新帖子最后回复时间
+  async updatePostLastAnswerTime(id){
+    let sql = 'UPDATE post SET last_answer_time=? WHERE id=?'
+    let values = [
+      util.changeTimeToStr(new Date())
+    ]
+    let result = await db.query(sql, [...values, id])
+    if(result){
+      return true
+    }
+    return false
+  },
+
   //更新帖子统计
   async updatePostStatistics(id, action){
     /**
