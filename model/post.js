@@ -302,46 +302,28 @@ const post = {
     return false
   },
 
-  //修改帖子点赞数（increase为加一，decrease为减一）
-  async updateLikes(id, action){
-    let sql
-    if(action == 'increase'){
-      sql = 'UPDATE post SET likes=likes+1 WHERE id=?'
-    }else{
-      sql = 'UPDATE post SET likes=likes-1 WHERE id=?'
-    }
-    let result = await db.query(sql, [id])
-    if(result){
-      return true
-    }
-    return false
-  },
-
-  //修改帖子收藏数（increase为加一，decrease为减一）
-  async updateCollects(id, action){
-    let sql
-    if(action == 'increase'){
-      sql = 'UPDATE post SET collects=collects+1 WHERE id=?'
-    }else{
-      sql = 'UPDATE post SET collects=collects-1 WHERE id=?'
-    }
-    let result = await db.query(sql, [id])
-    if(result){
-      return true
-    }
-    return false
-  },
-
   //更新帖子统计
   async updatePostStatistics(id, action){
     /**
+     * increaseLikes  增加点赞数
+     * decreaseLikes  减少点赞数
+     * increaseCollects  增加收藏数
+     * decreaseCollects  减少收藏数
      * increaseComments  增加评论数
      * decreaseComments  减少评论数
      * increaseAnswers  增加回复数
      * decreaseAnswers  减少回复数
      */
     let sql = ''
-    if(action == 'increaseComments'){
+    if(action == 'increaseLikes'){
+      sql = 'UPDATE post SET likes=likes+1 WHERE id=?'
+    }else if(action == 'decreaseLikes'){
+      sql = 'UPDATE post SET likes=likes-1 WHERE id=?'
+    }else if(action == 'increaseCollects'){
+      sql = 'UPDATE post SET collects=collects+1 WHERE id=?'
+    }else if(action == 'decreaseCollects'){
+      sql = 'UPDATE post SET collects=collects-1 WHERE id=?'
+    }else if(action == 'increaseComments'){
       sql = 'UPDATE post SET comments=comments+1 WHERE id=?'
     }else if(action == 'decreaseComments'){
       sql = 'UPDATE post SET comments=comments-1 WHERE id=?'

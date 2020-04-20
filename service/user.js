@@ -668,7 +668,7 @@ const user = {
           logModel.addLikePostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
         }
         //增加帖子点赞数
-        postModel.updateLikes(parseInt(data.pid), 'increase')
+        postModel.updatePostStatistics(parseInt(data.pid), 'increaseLikes')
         return {
           status: 200,
           message: '操作成功'
@@ -705,7 +705,7 @@ const user = {
       let result = await userModel.updateLikePosts(parseInt(global.uid), posts)
       if(result){
         //减少帖子点赞数
-        postModel.updateLikes(parseInt(data.pid), 'decrease')
+        postModel.updatePostStatistics(parseInt(data.pid), 'decreaseLikes')
         return {
           status: 200,
           message: '操作成功'
@@ -753,7 +753,7 @@ const user = {
           logModel.addCollectPostLog(parseInt(global.uid), parseInt(data.pid), post.uid)
         }
         //增加帖子收藏数
-        postModel.updateCollects(parseInt(data.pid), 'increase')
+        postModel.updatePostStatistics(parseInt(data.pid), 'increaseCollects')
         return {
           status: 200,
           message: '操作成功'
@@ -790,7 +790,7 @@ const user = {
       let result = await userModel.updateCollectPosts(parseInt(global.uid), posts)
       if(result){
         //减少帖子收藏数
-        postModel.updateCollects(parseInt(data.pid), 'decrease')
+        postModel.updatePostStatistics(parseInt(data.pid), 'decreaseCollects')
         return {
           status: 200,
           message: '操作成功'
