@@ -22,8 +22,14 @@ const personModel = require('../model/person')
 
 const post ={
 
-  //获取帖子列表
-  async getPostList(pageNum, pageSize, topicId){
+    /**
+   * 获取帖子列表
+   * @param {页数} pageNum 
+   * @param {条数} pageSize 
+   * @param {话题ID} topicId 
+   * @param {排序类型，1最新发布，2最新回复，3热度} sort 
+   */
+  async getPostList(pageNum, pageSize, topicId, sort){
     //判断话题是否是父级
     let topic = await topicModel.getTopic(topicId)
     let sid
@@ -32,7 +38,7 @@ const post ={
     }else{
       sid = false
     }
-    let postList = await postModel.getPostList(pageNum, pageSize, topicId, sid)
+    let postList = await postModel.getPostList(pageNum, pageSize, topicId, sort, sid)
     if(postList){
       return {
         status: 200,

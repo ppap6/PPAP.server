@@ -12,8 +12,8 @@ const segmentit = useDefault(new Segment())
 
 const post = {
 
-  //获取帖子数据（页数，数目，话题id）
-  async getPostList(pageNum=1, pageSize=20, topicId=0, sid){
+  //获取帖子数据（页数，数目，话题id，排序）
+  async getPostList(pageNum=1, pageSize=20, topicId=0, sort=1, sid){
     let start = (pageNum-1) * pageSize
     let countSql
     let sql
@@ -21,12 +21,20 @@ const post = {
       countSql = `SELECT COUNT(*)
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1`
-        
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
-        FROM post AS p, user AS u, topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1
-        ORDER BY p.create_time DESC
-        LIMIT ${start},${pageSize}`
+      
+      if(sort == 3){
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1
+          ORDER BY hots DESC
+          LIMIT ${start},${pageSize}`
+      }else{
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1
+          ORDER BY ${sort == 1 ? 'p.create_time' : 'p.last_answer_time'} DESC
+          LIMIT ${start},${pageSize}`
+      }
     }else{
       if(sid){
         //话题id为父级
@@ -34,22 +42,38 @@ const post = {
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1`
 
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
-          FROM post AS p, user AS u, topic AS t, topic AS parent 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
-          ORDER BY p.create_time DESC
-          LIMIT ${start},${pageSize}`
+        if(sort == 3){
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t, topic AS parent 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
+            ORDER BY hots DESC
+            LIMIT ${start},${pageSize}`
+        }else{
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t, topic AS parent 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id AND p.status=1
+            ORDER BY ${sort == 1 ? 'p.create_time' : 'p.last_answer_time'} DESC
+            LIMIT ${start},${pageSize}`
+        }
       }else{
         //话题id为子级
         countSql = `SELECT COUNT(*)
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1`
 
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
-          FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
-          ORDER BY p.create_time DESC
-          LIMIT ${start},${pageSize}`
+        if(sort ==3){
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
+            ORDER BY hots DESC
+            LIMIT ${start},${pageSize}`
+        }else{
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId} AND p.status=1
+            ORDER BY ${sort == 1 ? 'p.create_time' : 'p.last_answer_time'} DESC
+            LIMIT ${start},${pageSize}`
+        }
       }
     }
     let countResult = await db.query(countSql)
@@ -65,8 +89,8 @@ const post = {
     return false
   },
 
-  //管理运营获取帖子数据（页数，数目，话题id）
-  async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sid){
+  //管理运营获取帖子数据（页数，数目，话题id，排序）
+  async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sort=1, sid){
     let start = (pageNum-1) * pageSize
     let countSql
     let sql
@@ -74,12 +98,20 @@ const post = {
       countSql = `SELECT COUNT(*)
         FROM post AS p, user AS u, topic AS t 
         WHERE p.topic_id=t.id AND p.uid=u.id`
-
-      sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
-        FROM post AS p, user AS u, topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id
-        ORDER BY p.create_time DESC
-        LIMIT ${start},${pageSize}`
+      
+      if(sort == 3){
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id
+          ORDER BY hots DESC
+          LIMIT ${start},${pageSize}`
+      }else{
+        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+          FROM post AS p, user AS u, topic AS t 
+          WHERE p.topic_id=t.id AND p.uid=u.id
+          ORDER BY ${sort == 1 ? 'p.create_time' : 'p.last_answer_time'} DESC
+          LIMIT ${start},${pageSize}`
+      }
     }else{
       if(sid){
         //话题id为父级
@@ -87,22 +119,38 @@ const post = {
           FROM post AS p, user AS u, topic AS t, topic AS parent 
           WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id`
 
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
-          FROM post AS p, user AS u, topic AS t, topic AS parent 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id
-          ORDER BY p.create_time DESC
-          LIMIT ${start},${pageSize}`
+        if(sort == 3){
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t, topic AS parent 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id
+            ORDER BY hots DESC
+            LIMIT ${start},${pageSize}`
+        }else{
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t, topic AS parent 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=${topicId} AND t.sid=parent.id
+            ORDER BY ${sort == 1 ? 'p.create_time' : 'p.last_answer_time'} DESC
+            LIMIT ${start},${pageSize}`
+        }
       }else{
         //话题id为子级
         countSql = `SELECT COUNT(*)
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}`
 
-        sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
-          FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
-          ORDER BY p.create_time DESC
-          LIMIT ${start},${pageSize}`
+        if(sort ==3){
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
+            ORDER BY hots DESC
+            LIMIT ${start},${pageSize}`
+        }else{
+          sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
+            FROM post AS p, user AS u, topic AS t 
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=${topicId}
+            ORDER BY ${sort == 1 ? 'p.create_time' : 'p.last_answer_time'} DESC
+            LIMIT ${start},${pageSize}`
+        }
       }
     }
     let countResult = await db.query(countSql)
