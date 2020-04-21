@@ -61,12 +61,11 @@ const user = {
   //新增用户
   async addUser(data){
     //默认新增普通用户
-    let sql = 'INSERT INTO user(name, account, password, email, create_time, update_time, role_id) VALUES(?, ?, ?, ?, ?, ?, ?)'
+    let sql = 'INSERT INTO user(name, password, email, create_time, update_time, role_id) VALUES(?, ?, ?, ?, ?, ?)'
     let sha1Hash = crypto.createHash('sha1').update(data.password).digest('hex')
     let password = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
     let values = [
       data.name,
-      data.account,
       password,
       data.email,
       util.changeTimeToStr(new Date()),
@@ -93,7 +92,7 @@ const user = {
 
   //获取用户信息(根据id)
   async getUser(id){
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.fans, u.follows, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.sex, u.fans, u.follows, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])
@@ -103,12 +102,12 @@ const user = {
     return false
   },
 
-  //获取用户信息(根据account)
-  async getUserByAccount(account){
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+  //获取用户信息(根据email)
+  async getUserByEmail(email){
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
-               WHERE u.role_id=r.id AND u.account=?`
-    let result = await db.query(sql, [account])
+               WHERE u.role_id=r.id AND u.email=?`
+    let result = await db.query(sql, [email])
     if(Array.isArray(result) && result.length > 0){
       return result[0]
     }
@@ -117,7 +116,7 @@ const user = {
 
   //获取用户信息(根据id)
   async getUserById(id){
-    let sql = `SELECT u.id, u.name, u.account, u.password, u.avatar, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.password, u.avatar, u.bg, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])
@@ -146,7 +145,7 @@ const user = {
   },
 
   async updateUserPwd(id, password){
-    let sql = 'UPDATE user SET password=?,update_time=? WHERE id=?'
+    let sql = 'UPDATE user SET password=?, update_time=? WHERE id=?'
     let values = [
       password,
       util.changeTimeToStr(new Date())
@@ -159,9 +158,9 @@ const user = {
   },
 
   //用户登录
-  async login(account, password){
-    let sql = 'SELECT password FROM user WHERE account=?'
-    let result = await db.query(sql, [account])
+  async login(email, password){
+    let sql = 'SELECT password FROM user WHERE email=?'
+    let result = await db.query(sql, [email])
     if(Array.isArray(result) && result.length > 0){
       let sha1Hash = crypto.createHash('sha1').update(password).digest('hex')
       let md5Hash = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
@@ -177,12 +176,12 @@ const user = {
   //用户注册
   async register(data){
     //网站用户注册
-    let sql = 'INSERT INTO user(name, account, password, create_time, update_time, role_id) VALUES(?, ?, ?, ?, ?, ?)'
+    let sql = 'INSERT INTO user(name, emial, password, create_time, update_time, role_id) VALUES(?, ?, ?, ?, ?, ?)'
     let sha1Hash = crypto.createHash('sha1').update(data.password).digest('hex')
     let password = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
     let values = [
       data.name,
-      data.account,
+      data.email,
       password,
       // data.email,
       util.changeTimeToStr(new Date()),

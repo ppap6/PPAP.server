@@ -121,7 +121,7 @@ const user = {
         message: '没有操作权限'
       }
     }
-    let user = await userModel.getUserByAccount(data.account)
+    let user = await userModel.getUserByEmail(data.email)
     if(!user){
       let insertId = await userModel.addUser(data)
       if(insertId){
@@ -139,7 +139,7 @@ const user = {
     }else{
       return {
         status: 10000,
-        message: '用户账号已存在'
+        message: '用户邮箱已存在'
       }
     }
   },
@@ -188,6 +188,7 @@ const user = {
         name: user.name,
         account: user.account,
         avatar: user.avatar,
+        bg: user.bg,
         sex: user.sex,
         email: user.email,
         create_time: user.create_time,
@@ -228,7 +229,7 @@ const user = {
     }
     let user = await userModel.getUser(id)
     if(user){
-      let user = await userModel.getUserByAccount(data.account)
+      let user = await userModel.getUserByEmail(data.email)
       //验证修改的用户账号是否已被使用
       if(!user || (user && user.id == id)){
         let result = await userModel.updateUser(id, data)
@@ -246,7 +247,7 @@ const user = {
       }else{
         return {
           status: 10000,
-          message: '用户账号已存在'
+          message: '用户邮箱已存在'
         }
       }
     }else{
@@ -262,7 +263,7 @@ const user = {
     let uid = global.uid
     let user = await userModel.getUser(uid)
     if(user){
-      let user = await userModel.getUserByAccount(data.account)
+      let user = await userModel.getUserByEmail(data.email)
       //验证修改的用户账号是否已被使用
       if(!user || (user && user.id == uid)){
         let result = await userModel.updateUser(uid, data)
@@ -280,7 +281,7 @@ const user = {
       }else{
         return {
           status: 10000,
-          message: '用户账号已存在'
+          message: '用户邮箱已存在'
         }
       }
     }else{
@@ -330,9 +331,9 @@ const user = {
 
   //用户登录
   async login(data){
-    let user = await userModel.getUserByAccount(data.account)
+    let user = await userModel.getUserByEmail(data.email)
     if(user){
-      let result = await userModel.login(data.account, data.password)
+      let result = await userModel.login(data.email, data.password)
       if(result){
         return {
           status: 200,
@@ -342,6 +343,7 @@ const user = {
             uname: user.name,
             account: data.account,
             avatar: user.avatar,
+            bg: user.bg,
             sex: user.sex,
             email: user.email,
             identity: user.role_id,
@@ -368,7 +370,7 @@ const user = {
       }else{
         return {
           status: 10000,
-          message: '用户账号或密码错误'
+          message: '用户邮箱或密码错误'
         }
       }
     }else{
@@ -381,7 +383,7 @@ const user = {
 
   //用户注册
   async register(data){
-    let user = await userModel.getUserByAccount(data.account)
+    let user = await userModel.getUserByEmail(data.email)
     if(!user){
       let insertId = await userModel.register(data)
       if(insertId){
@@ -399,7 +401,7 @@ const user = {
     }else{
       return {
         status: 10000,
-        message: '用户账号已存在'
+        message: '用户邮箱已存在'
       }
     }
   },

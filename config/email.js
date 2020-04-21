@@ -2,7 +2,7 @@
 const Email = {
   host: 'smtp.qq.com',
   user: 'ppaplive@qq.com',
-  pass: 'xxxx',
+  pass: 'trpaqiggpbfgdjei',
   code(){
     return Math.random().toString(16).slice(2, 6).toUpperCase()
   },

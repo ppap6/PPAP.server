@@ -33,7 +33,7 @@ const user = {
   //添加用户
   async addUser(ctx){
     //验证数据
-    let paramList = ['name', 'account', 'password', 'email', 'role_id']
+    let paramList = ['name', 'password', 'email', 'role_id']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
@@ -75,7 +75,7 @@ const user = {
   //用户修改自己的信息
   async updateSelf(ctx){
     //验证数据
-    let paramList = ['name', 'account', 'sex', 'email', 'role_id']
+    let paramList = ['name', 'sex', 'email', 'role_id']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
@@ -105,7 +105,7 @@ const user = {
   //用户登录
   async login(ctx){
     //验证数据
-    let paramList = ['account', 'password']
+    let paramList = ['email', 'password']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
@@ -120,7 +120,7 @@ const user = {
   //用户注册
   async register(ctx){
     //验证数据
-    let paramList = ['name', 'account', 'password']
+    let paramList = ['name', 'email', 'password']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
