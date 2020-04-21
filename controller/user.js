@@ -132,6 +132,19 @@ const user = {
     ctx.body = result
   },
 
+  //邮箱验证码
+  async verify(ctx){
+    if(ctx.query.email == undefined){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+    }
+    let username = ctx.query.name === undefined ? `P小酱${(new Date()).getTime()}` : ctx.query.name
+    let result = await userService.verify(username, ctx.query.email)
+    ctx.body = result
+  },
+
   //用户关注
   async follow(ctx){
     //验证数据

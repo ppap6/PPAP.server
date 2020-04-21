@@ -25,6 +25,11 @@ const personModel = require('../model/person')
 const tokenUtil = require('../util/token')
 const crypto = require('crypto')
 const salt = require('../config/config').salt
+const Email = require('../config/email')
+
+const nodemailer = require('nodemailer')
+//邮箱验证信息缓存对象
+let verifyObj = {}
 
 const user = {
 
@@ -396,6 +401,73 @@ const user = {
         status: 10000,
         message: '用户账号已存在'
       }
+    }
+  },
+
+  //邮箱验证码
+  async verify(username, email){
+    const saveExpire = verifyObj[`nodemail:${username}`] == undefined ? undefined : verifyObj[`nodemail:${username}`].expire
+    if (saveExpire && new Date().getTime() - saveExpire < 0) {
+      return {
+        status: 10000,
+        message: '验证请求过于频繁，1分钟内1次'
+      }
+    }
+    //发送端信息
+    let transporter = nodemailer.createTransport({
+      host: Email.host,
+      service: Email.smtp_service, 
+      port: Email.smtp_port, // SMTP 端口
+      secureConnection: Email.smtp_secure_connection, // 使用了 SSL
+      auth: {
+        user: Email.user,
+        pass: Email.pass
+      }
+    })
+    //接受端信息
+    let ko = {
+      code: Email.code(),
+      expire: Email.expire(),
+      email,
+      user: username
+    }
+    //邮件信息
+    let mailOptions = {
+      from: Email.user,
+      to: ko.email,
+      subject: 'PPAP.live 社区注册验证码',
+      html:  `<div style="background-color: #ffffff">
+                <div style="margin: auto; width: 500px; height: auto; padding: 20px; position: relative; background-color: #f8f8f8">
+                  <img src="https://files.catbox.moe/3fhyzk.png" style="position: relative; width: 68px; height: 30px;">
+                  <img src="https://files.catbox.moe/s7ansi.png" style="position: absolute; bottom: 0; right: 0; width: 100px; height: 100px;">
+                  <h2>敬爱的 ${ko.email} 用户，您好</h2>
+                  <div style="padding: 5px 20px 20px;">
+                      <p style="font-size: 16px;">感谢您使用 PPAP.live 服务</p>
+                      <p style="font-size: 16px;">您的邮箱注册验证码是： <span style="color: #009688; font-weight: bold;">${ko.code}</span></p>
+                  </div>
+                  <div>此为系统邮件，请勿回复</div>
+                  <div>©2020 <a href="ppap.live" style="cursor: pointer; color: #409eff;">PPAP</a></div>
+                </div> 
+              </div>`
+    };
+    //发送邮件
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error)
+      } else {
+        // console.log(info)
+        verifyObj[`nodemail:${ko.user}`] = {
+          code: ko.code,
+          expire: ko.expire,
+          email: ko.email
+        }
+        // console.log(verifyObj)  
+      }
+    })
+    //ctx返回值
+    return {
+      status: 200,
+      message: '验证码发送成功'
     }
   },
 

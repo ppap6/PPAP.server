@@ -9,6 +9,7 @@ const router = require('koa-router')()
 const user = require('../controller/user')
 
 router
+  .get('/verify', user.verify)   //邮箱验证码 
   .get('/', user.getUserList)    //获取用户列表
   .get('/login/status', user.getUserLoginStatus)    //获取用户登录状态
   .get('/auth', user.getUserAuthList)   //获取用户权限列表

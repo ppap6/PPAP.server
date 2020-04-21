@@ -5,6 +5,8 @@
 //定义不需要jwt验证的接口数组(get方法)
 const nonTokenApiArr = [
   '/',
+  //user模块
+  '/user/verify',
   //topic模块
   '/topic',
   //post模块
