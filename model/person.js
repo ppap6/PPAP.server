@@ -179,7 +179,7 @@ const person = {
         let likePosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
         if (Array.isArray(likePosts) && likePosts.length > 0) {
             let pidArr = likePosts[0].like_posts
-            if(pidArr.length < start){
+            if(pidArr.length == 0 || pidArr.length < start){
                 return 0
             }
             if(pidArr.length - start > pageSize){
@@ -196,7 +196,7 @@ const person = {
         let collectPosts = await db_mongo.find('user_likes_collects_lights_relation', {uid: userId})
         if (Array.isArray(collectPosts) && collectPosts.length > 0) {
             let pidArr = collectPosts[0].collect_posts
-            if(pidArr.length < start){
+            if(pidArr.length == 0 || pidArr.length < start){
                 return 0
             }
             if(pidArr.length - start > pageSize){
