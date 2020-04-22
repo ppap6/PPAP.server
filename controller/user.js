@@ -120,7 +120,7 @@ const user = {
   //用户注册
   async register(ctx){
     //验证数据
-    let paramList = ['name', 'email', 'password']
+    let paramList = ['code', 'email', 'password']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
@@ -134,14 +134,13 @@ const user = {
 
   //邮箱验证码
   async verify(ctx){
-    if(ctx.query.email == undefined){
+    if(ctx.query.email == undefined || ctx.query.email == ''){
       ctx.body = {
         status: 10002,
         message: '非法参数'
       }
     }
-    let username = ctx.query.name === undefined ? `P小酱${(new Date()).getTime()}` : ctx.query.name
-    let result = await userService.verify(username, ctx.query.email)
+    let result = await userService.verify(ctx.query.email)
     ctx.body = result
   },
 

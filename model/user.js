@@ -176,7 +176,7 @@ const user = {
   //用户注册
   async register(data){
     //网站用户注册
-    let sql = 'INSERT INTO user(name, emial, password, create_time, update_time, role_id) VALUES(?, ?, ?, ?, ?, ?)'
+    let sql = 'INSERT INTO user(name, email, password, create_time, update_time, role_id) VALUES(?, ?, ?, ?, ?, ?)'
     let sha1Hash = crypto.createHash('sha1').update(data.password).digest('hex')
     let password = crypto.createHash('md5').update(salt + sha1Hash).digest('hex')
     let values = [

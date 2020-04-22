@@ -385,6 +385,30 @@ const user = {
   async register(data){
     let user = await userModel.getUserByEmail(data.email)
     if(!user){
+      //校验code
+      if(data.code){
+        const saveCode = verifyObj[`nodemail:${data.email}`] == undefined ? undefined : verifyObj[`nodemail:${data.email}`].code
+        const saveExpire = verifyObj[`nodemail:${data.email}`] == undefined ? undefined : verifyObj[`nodemail:${data.email}`].expire
+        if (data.code === saveCode) {
+          if (new Date().getTime() - saveExpire > 0) {
+            return {
+              status: 10000,
+              message: '验证码已过期，请重新尝试'
+            }
+          }
+        } else {
+          return {
+            status: 10000,
+            message: '请填写正确的验证码'
+          }
+        }
+      } else {
+        return {
+          status: 10000,
+          message: '请填写验证码'
+        }
+      }
+      data.name = `P小酱${(new Date()).getTime()}`
       let insertId = await userModel.register(data)
       if(insertId){
         //新增用户点赞收藏点亮模型
@@ -407,8 +431,8 @@ const user = {
   },
 
   //邮箱验证码
-  async verify(username, email){
-    const saveExpire = verifyObj[`nodemail:${username}`] == undefined ? undefined : verifyObj[`nodemail:${username}`].expire
+  async verify(email){
+    const saveExpire = verifyObj[`nodemail:${email}`] == undefined ? undefined : verifyObj[`nodemail:${email}`].expire
     if (saveExpire && new Date().getTime() - saveExpire < 0) {
       return {
         status: 10000,
@@ -430,8 +454,7 @@ const user = {
     let ko = {
       code: Email.code(),
       expire: Email.expire(),
-      email,
-      user: username
+      email
     }
     //邮件信息
     let mailOptions = {
@@ -458,7 +481,7 @@ const user = {
         return console.log(error)
       } else {
         // console.log(info)
-        verifyObj[`nodemail:${ko.user}`] = {
+        verifyObj[`nodemail:${ko.email}`] = {
           code: ko.code,
           expire: ko.expire,
           email: ko.email

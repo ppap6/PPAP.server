@@ -7,7 +7,7 @@ const Email = {
     return Math.random().toString(16).slice(2, 6).toUpperCase()
   },
   expire() {
-    return new Date().getTime() + 60 * 1000
+    return new Date().getTime() + 300 * 1000
   },
   // smtp_service: '163',
   stmp_service: 'qq',
