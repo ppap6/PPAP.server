@@ -70,10 +70,10 @@ app.use(jwtKoa({ secret: tokenUtil.secret }).unless({
   //自定义过滤函数，详细参考koa-unless
   custom: ctx => {
     if(jwtUnless.checkIsNonTokenApi(ctx)){
-      // console.log('是不需要验证token的接口')
+      //是不需要验证token的接口
       return true
     }else{
-      // console.log('是需要验证token的接口')
+      //是需要验证token的接口
       return false
     }
   }

@@ -9,8 +9,8 @@
 ### 工程结构
 ```bash
 └── PPAP.server
-    ├── code # 返回提示码
-    │   └── index.js  # 常量文件
+    ├── config # 配置文件
+    │   └── index.js  
     ├── controller # 操作层 验证视图层用户输入，调用业务层方法，json接口返回数据
     │   └── index.js
     ├── model # 数据模型层 执行数据操作
