@@ -12,6 +12,9 @@ const getTokenRenewStatus = () => {
 
   //检测当前token是否到达续期时间段
   let obj = parseToken()
+  if(!obj.email){
+    return false
+  }
   //更新时间段在过期前3天
   if(obj.exp - new Date().getTime()/1000 > 60*60*24*3){
     return false
@@ -23,7 +26,7 @@ const getTokenRenewStatus = () => {
 
 //获取一个期限为7天的token
 const getToken = (payload = {}) => {
-  return jwt.sign(payload, secret, { expiresIn: 60*60*24*7 });
+  return jwt.sign(payload, secret, { expiresIn: 60*60*24*7 })
 }
 
 //重新生成一个期限为7天的token
@@ -32,7 +35,11 @@ const createNewToken = () => {
   let token = global.token
   let obj = jwt.verify(token, secret)
   let payload = {
+    uid: obj.uid,
+    name: obj.name,
     account: obj.account,
+    roleId: obj.roleId,
+    email: obj.email,
     password: obj.password
   }
   return getToken(payload)

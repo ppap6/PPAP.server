@@ -352,6 +352,7 @@ const user = {
               uid: user.id,
               name: user.name,
               account: data.account, 
+              email: data.email,
               password: data.password,
               roleId: user.role_id
             }),
