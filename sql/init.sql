@@ -18,9 +18,9 @@ CREATE TABLE `user` (
     `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '手机号',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
-    `fans` INT(10) NOT NULL DEFAULT 0 COMMENT '粉丝数'
-    `follows` INT(10) NOT NULL DEFAULT 0 COMMENT '关注数'
-    `lights` INT(10) NOT NULL DEFAULT 0 COMMENT '被点亮数'
+    `fans` INT(10) NOT NULL DEFAULT 0 COMMENT '粉丝数',
+    `follows` INT(10) NOT NULL DEFAULT 0 COMMENT '关注数',
+    `lights` INT(10) NOT NULL DEFAULT 0 COMMENT '被点亮数',
     `role_id` INT(10) NOT NULL COMMENT '角色ID',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
@@ -77,8 +77,8 @@ CREATE TABLE `post` (
   `id` INT(10) UNSIGNED NOT NULL COMMENT '帖子ID',
   `uid` INT(10) UNSIGNED NOT NULL COMMENT '用户ID',
   `title` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '贴子标题',
-  `content` MEDLUMTEXT NOT NULL COMMENT '帖子内容',
-  `md` MEDLUMTEXT NOT NULL DEFAULT '' COMMENT '帖子内容markdown',
+  `content` MEDIUMTEXT NOT NULL COMMENT '帖子内容',
+  `md` MEDIUMTEXT NOT NULL COMMENT '帖子内容markdown',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
   `pv` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读数',
@@ -88,8 +88,8 @@ CREATE TABLE `post` (
   `answers` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复数',
   `topic_id` INT(10) UNSIGNED NOT NULL COMMENT '话题ID',
   `last_answer_time` DATETIME NULL COMMENT '帖子最后回复时间',
-  `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '帖子显示状态（0代表隐藏）'
-  PRIMARY KEY (`id`)
+  `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '帖子显示状态（0代表隐藏）',
+  PRIMARY KEY (`id`),
   FULLTEXT (`title`, `content`) WITH PARSER ngram
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='帖子表';
 
@@ -100,7 +100,7 @@ CREATE TABLE `topic` (
     `sid` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级话题ID',
     `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '话题名称',
     `intro` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '话题简介',
-    `icon` MEDLUMTEXT NOT NULL COMMENT '话题图标',
+    `icon` MEDIUMTEXT NOT NULL COMMENT '话题图标',
     `num` INT(10) NOT NULL COMMENT '序号',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
