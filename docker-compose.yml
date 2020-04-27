@@ -9,4 +9,4 @@ services:
       - "2333:2333"
     privileged: true
     volumes:
-      - /home/volume/PPAP.server/config:/home/docker/PPAP.server/config
+      - /home/volume/PPAP_server/config:/home/docker/PPAP_server/config
