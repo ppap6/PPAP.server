@@ -1,0 +1,24 @@
+name: preview
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish: 
+    runs-on: ubuntu-lastest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      
+      - name: Build Image
+        env: 
+          DockerUsername: ${{ secrets.DockerUsername }}
+          DockerPassword: ${{ secrets.DockerPassword }}
+        run: |
+          docker login -u $DockerUsername -p $DockerPassword
+          docker build -t jwchan1996/ppap_server:preview .
+          docker push jwchan1996/ppap_server:preview
