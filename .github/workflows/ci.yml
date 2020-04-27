@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - uses: borales/actions-yarn@v2.0.0
       
       - name: Build Image
         env: 
