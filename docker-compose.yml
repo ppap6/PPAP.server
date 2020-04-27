@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ppap_server:
-    imgae: jwchan1996/ppap_server:preview
+    image: jwchan1996/ppap_server:preview
     container_name: ppap_server
     restart: always
     ports:
