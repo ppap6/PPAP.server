@@ -5,5 +5,5 @@ WORKDIR /home/docker/PPAP_server/
 
 EXPOSE 2333
 
-RUN yarn 
+CMD ["yarn"]
 CMD ["yarn", "start"]
