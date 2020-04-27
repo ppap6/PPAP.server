@@ -22,3 +22,14 @@ jobs:
           docker login -u $DockerUsername -p $DockerPassword
           docker build -t jwchan1996/ppap_server:preview .
           docker push jwchan1996/ppap_server:preview
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [publish]
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: 22
+          script: cd /home/docker/PPAP_server && docker-compose up -d
