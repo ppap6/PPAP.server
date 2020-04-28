@@ -12,7 +12,7 @@ CREATE TABLE `user` (
     `account` VARCHAR(20) NOT NULL COMMENT '账号',
     `password` VARCHAR(100) NOT NULL COMMENT '密码',
     `avatar` MEDIUMTEXT NULL COMMENT '头像',
-    `bg` MEDIUMTEXT NULL COMMENT '头像',
+    `bg` MEDIUMTEXT NULL COMMENT '背景',
     `sex` INT(10) NOT NULL DEFAULT 0 COMMENT '性别',
     `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '邮箱',
     `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '手机号',
@@ -23,7 +23,7 @@ CREATE TABLE `user` (
     `lights` INT(10) NOT NULL DEFAULT 0 COMMENT '被点亮数',
     `role_id` INT(10) NOT NULL COMMENT '角色ID',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 
 DROP TABLE IF EXISTS `role`;
@@ -34,7 +34,7 @@ CREATE TABLE `role` (
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '角色描述',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
 
 DROP TABLE IF EXISTS `access`;
@@ -47,7 +47,7 @@ CREATE TABLE `access` (
     `update_time` DATETIME NOT NULL COMMENT '更新时间',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '权限描述',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
 
 DROP TABLE IF EXISTS `role_access_relation`;
@@ -56,7 +56,7 @@ CREATE TABLE `role_access_relation` (
     `role_id` INT(10) UNSIGNED NOT NULL COMMENT '角色ID',
     `access_id` INT(10) UNSIGNED NOT NULL COMMENT '权限ID',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 
 
 DROP TABLE IF EXISTS `admin_log`;
@@ -69,7 +69,7 @@ CREATE TABLE `admin_log` (
     `content` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '操作内容',
     `create_time` DATETIME NOT NULL COMMENT '操作时间',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='操作日志表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='操作日志表';
 
 
 DROP TABLE IF EXISTS `post`;
@@ -91,7 +91,7 @@ CREATE TABLE `post` (
   `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '帖子显示状态（0代表隐藏）',
   PRIMARY KEY (`id`),
   FULLTEXT (`title`, `content`) WITH PARSER ngram
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='帖子表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4mb4 COMMENT='帖子表';
 
 
 DROP TABLE IF EXISTS `topic`;
@@ -108,7 +108,7 @@ CREATE TABLE `topic` (
     `followers` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注总数',
     `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '话题显示状态',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='话题表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='话题表';
 
 
 DROP TABLE IF EXISTS `chat`;
@@ -117,4 +117,4 @@ CREATE TABLE `chat` (
     `uid_str` VARCHAR(100) NOT NULL COMMENT '用户ID字符串',
     `create_time` DATETIME NOT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='私信表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='私信表';
