@@ -9,7 +9,6 @@ const Email = {
   expire() {
     return new Date().getTime() + 300 * 1000
   },
-  // smtp_service: '163',
   stmp_service: 'qq',
   smtp_port: 465,
   smtp_secure_connection: true
