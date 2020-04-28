@@ -2,7 +2,8 @@
 const secret = 'secret'
 //密码加密盐
 const salt = 'ppap'
-//程序运行端口
+//程序运行主机与端口
+const host = 'localhost'
 const port = 2333
 //mysql数据库相关
 const sql_host = 'localhost'
@@ -20,6 +21,7 @@ const mongo_password = 'ppap'
 module.exports = {
   secret,
   salt,
+  host,
   port,
   sql_host,
   sql_port,

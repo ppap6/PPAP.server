@@ -83,4 +83,4 @@ app.use(jwtKoa({ secret: tokenUtil.secret }).unless({
 app.use(router.routes()).use(router.allowedMethods())
 
 //监听启动窗口
-app.listen(config.port, () => console.log(`PPAP.server is run on localhost:${config.port}`))
+app.listen(config.port, () => console.log(`PPAP.server is run on ${config.host}:${config.port}`))
