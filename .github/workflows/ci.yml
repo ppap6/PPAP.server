@@ -32,4 +32,4 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           password: ${{ secrets.DEPLOY_PASSWORD }}
           port: 22
-          script: cd /home/docker/PPAP_server && docker-compose up -d
+          script: cd /home/docker/PPAP_server && docker-compose pull jwchan1996/ppap_server:preview && docker-compose up -d
