@@ -26,9 +26,9 @@ const person = {
             FROM post AS p, user AS u, topic AS t 
             WHERE p.topic_id=t.id AND p.uid=u.id AND p.uid=? AND p.status=1
             ORDER BY p.create_time DESC
-            LIMIT ${start},${pageSize}`
+            LIMIT ?,?`
         let countResult = await db.query(countSql, [userId])
-        let result = await db.query(sql, [userId])
+        let result = await db.query(sql, [userId, start, pageSize])
         if (Array.isArray(result) && result.length > 0) {
             return {
                 page_num: pageNum,

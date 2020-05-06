@@ -17,7 +17,7 @@ const mongo_port = 27017
 const mongo_database = 'ppap'
 const mongo_user = 'root'
 const mongo_password = 'ppap'
-const mongo_auth_source = 'ppap'
+const mongo_auth_source = 'admin'
 
 module.exports = {
   secret,

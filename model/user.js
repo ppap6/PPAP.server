@@ -37,16 +37,16 @@ const user = {
     let start = (pageNum-1) * pageSize
     let countSql = `SELECT COUNT(*) 
                     FROM user AS u, role AS r 
-                    WHERE u.role_id=r.id AND u.role_id>${roleId}`
+                    WHERE u.role_id=r.id AND u.role_id>?`
 
     let sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
-               WHERE u.role_id=r.id AND u.role_id>${roleId}
+               WHERE u.role_id=r.id AND u.role_id>?
                ORDER BY u.id
-               LIMIT ${start},${pageSize}`
+               LIMIT ?,?`
 
-    let countResult = await db.query(countSql)
-    let result = await db.query(sql)
+    let countResult = await db.query(countSql, [roleId])
+    let result = await db.query(sql, [roleId, start, pageSize])
     if(Array.isArray(result) && result.length > 0){
       return {
         page_num: pageNum,

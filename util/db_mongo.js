@@ -8,7 +8,9 @@
 const MongoClient = require('mongodb').MongoClient
 const config = require('../config/config')
 
-const url = `mongodb://${config.mongo_user}:${config.mongo_password}@${config.mongo_host}:${config.mongo_port}/?authSource=${config.mongo_auth_source}`
+// 连接用户认证生产环境不明原因失败，暂时关闭
+// const url = `mongodb://${config.mongo_user}:${config.mongo_password}@${config.mongo_host}:${config.mongo_port}/?authSource=${config.mongo_auth_source}`
+const url = `mongodb://${config.mongo_user}:${config.mongo_password}@${config.mongo_host}:${config.mongo_port}/`
 console.log(url)
 
 /**
