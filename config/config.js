@@ -17,6 +17,7 @@ const mongo_port = 27017
 const mongo_database = 'ppap'
 const mongo_user = 'root'
 const mongo_password = 'ppap'
+const mongo_auth_source = 'ppap'
 
 module.exports = {
   secret,
@@ -32,5 +33,6 @@ module.exports = {
   mongo_port,
   mongo_database,
   mongo_user,
-  mongo_password
+  mongo_password,
+  mongo_auth_source
 }
