@@ -8,7 +8,7 @@
 const MongoClient = require('mongodb').MongoClient
 const config = require('../config/config')
 
-const url = `mongodb://${config.mongo_user}:${config.mongo_password}@${config.mongo_host}:${config.mongo_port}/`
+const url = `mongodb://${config.mongo_user}:${config.mongo_password}@${config.mongo_host}:${config.mongo_port}/?authSource=${config.mongo_auth_source}`
 console.log(url)
 
 /**
