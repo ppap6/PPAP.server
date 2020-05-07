@@ -1,11 +1,12 @@
 # Mysql
 ## 安装
-版本 5.7.6 以上
+版本 5.7.6 及以上
 ## 配置
 ### 创建用户账户密码
 略
 ### 开启 utf8mb4 支持
-找到配置文件，将下面配置放到配置文件对应位置
+如果 ppap.sql 数据表已经设置了 CHARSET=utf8mb4，则不需要修改配置文件  
+否则，找到配置文件，将下面配置放到配置文件对应位置
 ```bash
 [client]
 default-character-set = utf8mb4
@@ -58,7 +59,7 @@ ngram_token_size = 2
 
 # Mongodb
 ## 安装
-略
+版本 4.0 及以上
 ## 配置
 ### 创建用户账户密码
 #### 连接 Mongodb

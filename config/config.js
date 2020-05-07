@@ -19,6 +19,8 @@ const mongo_user = 'root'
 const mongo_password = 'ppap'
 const mongo_auth_source = 'admin'
 
+// docker 容器模式下访问宿主机切记将配置文件改成宿主机内网ip
+
 module.exports = {
   secret,
   salt,
