@@ -6,6 +6,6 @@ services:
     container_name: ppap_server
     restart: always
     ports:
-      - "2333:2333"
+      - "0.0.0.0:2333:2333"
     volumes:
       - /home/volume/PPAP_server/config/:/home/docker/PPAP_server/config/
