@@ -32,4 +32,4 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           password: ${{ secrets.DEPLOY_PASSWORD }}
           port: 22
-          script: cd /home/docker/PPAP_server && docker-compose pull && docker-compose up -d && docker rmi $(docker images -f "dangling=true" -q)
+          script: cd /home/docker/PPAP_server && docker-compose pull && docker-compose up -d
