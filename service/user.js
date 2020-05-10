@@ -257,6 +257,40 @@ const user = {
       }
     }
   },
+  
+  //用户上传头像背景
+  async upload(data){
+    //base64图片格式限制大小
+    let urlLen = data.url.length
+    let fileSize = urlLen - (urlLen/8) * 2
+    if(fileSize > 500000){
+      return {
+        status: 10000,
+        message: '图片大小超标了'
+      }
+    }
+    let uid = global.uid
+    let user = await userModel.getUser(uid)
+    if(user){
+      let result = await userModel.upload(uid, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
+        }
+      }else{
+        return {
+          status: 10000,
+          message: '操作失败'
+        }
+      }
+    }else{
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+  },
 
   //用户修改自己的信息
   async updateSelf(data){

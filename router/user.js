@@ -40,4 +40,6 @@ router
   .post('/light/answer', user.lightAnswer)    //用户点亮回复
   .post('/cancel/light/answer', user.cancelLightAnswer)    //用户取消点亮回复
 
+  .post('/upload', user.upload)   //用户上传头像背景
+
 module.exports = router

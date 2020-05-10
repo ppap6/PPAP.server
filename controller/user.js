@@ -341,6 +341,28 @@ const user = {
     let result = await userService.cancelLightAnswer(ctx.request.body)
     ctx.body = result
   },
+
+  //用户上传头像背景
+  async upload(ctx){
+    //验证数据
+    let paramList = ['type', 'url']
+    if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    if(ctx.request.body.type != 1 && ctx.request.body.type != 2){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    let result = await userService.upload(ctx.request.body)
+    ctx.body = result
+  },
 }
 
 module.exports = user

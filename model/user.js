@@ -126,6 +126,16 @@ const user = {
     return false
   },
 
+  //用户上传头像背景
+  async upload(id, data){
+    let sql = data.type == 1 ? 'UPDATE user SET avatar=? WHERE id=?' : 'UPDATE user SET bg=? WHERE id=?'
+    let result = await db.query(sql, [data.url ,id])
+    if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
   //修改用户信息
   async updateUser(id, data){
     let sql = 'UPDATE user SET name=?, account=?, sex=?, email=?, update_time=?, role_id=? WHERE id=?'
