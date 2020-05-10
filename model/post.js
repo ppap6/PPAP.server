@@ -396,8 +396,6 @@ const post = {
         WHERE p.topic_id=t.id AND p.uid=u.id AND (?) AND p.id!=?
         ORDER BY similarity DESC
         LIMIT ?,?`
-      console.log(likeStr)
-      console.log(sql)
       
       result = await db.query(sql, [likeStr, postId, start, pageSize])
 
