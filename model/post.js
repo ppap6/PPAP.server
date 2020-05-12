@@ -41,18 +41,18 @@ const post = {
 
         let sortType
         if(sort == 2){
-          sortType = 'p.create_time'
-        }else{
           sortType = 'p.last_answer_time'
+        }else{
+          sortType = 'p.create_time'
         }
 
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
           FROM post AS p, user AS u, topic AS t 
           WHERE p.topic_id=t.id AND p.uid=u.id AND p.status=1
-          ORDER BY ? DESC
+          ORDER BY ${sortType} DESC
           LIMIT ?,?`
 
-        result = await db.query(sql, [sortType, start, pageSize])
+        result = await db.query(sql, [start, pageSize])
 
       }
     }else{
@@ -77,18 +77,18 @@ const post = {
 
           let sortType
           if(sort == 2){
-            sortType = 'p.create_time'
-          }else{
             sortType = 'p.last_answer_time'
+          }else{
+            sortType = 'p.create_time'
           }
 
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
             FROM post AS p, user AS u, topic AS t, topic AS parent 
             WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.status=1
-            ORDER BY ? DESC
+            ORDER BY ${sortType} DESC
             LIMIT ?,?`
 
-          result = await db.query(sql, [topicId, sortType, start, pageSize])
+          result = await db.query(sql, [topicId, start, pageSize])
 
         }
       }else{
@@ -112,18 +112,18 @@ const post = {
 
           let sortType
           if(sort == 2){
-            sortType = 'p.create_time'
-          }else{
             sortType = 'p.last_answer_time'
+          }else{
+            sortType = 'p.create_time'
           }
 
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name 
             FROM post AS p, user AS u, topic AS t 
             WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.status=1
-            ORDER BY ? DESC
+            ORDER BY ${sortType} DESC
             LIMIT ?,?`
 
-          result = await db.query(sql, [topicId, sortType, start, pageSize])
+          result = await db.query(sql, [topicId, start, pageSize])
 
         }
       }
