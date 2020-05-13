@@ -132,7 +132,7 @@ const answer ={
         //获取准备回复的这条回复的目标人uid
         let answer = await answerModel.getAnswer(data.target_answer_id)
         //帖子回复数加一
-        postModel.updatePostStatistics(parseInt(data.pid), 'decreaseAnswers')
+        postModel.updatePostStatistics(parseInt(data.pid), 'increaseAnswers')
         //添加用户的回复动态
         logModel.addAnswerLog(parseInt(global.uid), parseInt(data.pid), parseInt(answer.requestor_id), insertedId)
         //更新帖子最后回复时间
