@@ -31,7 +31,15 @@ const answer = {
   //添加评论回复
   async addAnswer(ctx){
     //验证数据
-    let paramList = ['type', 'pid', 'comment_id', 'targetor_id', 'content']
+    let type = ctx.request.body.type
+    if(type === undefined){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    let paramList = type == 1 ? ['type', 'pid', 'comment_id', 'targetor_id', 'content'] : ['type', 'pid', 'comment_id', 'target_answer_id', 'targetor_id', 'content']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,

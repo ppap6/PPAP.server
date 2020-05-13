@@ -17,6 +17,7 @@
 
 const answerModel = require('../model/answer')
 const commentModel = require('../model/comment')
+const postModel = require('../model/post')
 const logModel = require('../model/log')
 const userModel = require('../model/user')
 
@@ -129,7 +130,7 @@ const answer ={
       let insertedId = await answerModel.addAnswerForAnswer(data)
       if(insertedId){
         //获取准备回复的这条回复的目标人uid
-        let answer = await answerModel.getAnswer(data.answer_id)
+        let answer = await answerModel.getAnswer(data.target_answer_id)
         //帖子回复数加一
         postModel.updatePostStatistics(parseInt(data.pid), 'decreaseAnswers')
         //添加用户的回复动态

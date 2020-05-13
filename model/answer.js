@@ -82,7 +82,8 @@ const answer = {
       content: data.content,
       create_time: util.changeTimeToStr(new Date()),
       update_time: util.changeTimeToStr(new Date()),
-      lights: 0
+      lights: 0,
+      status: 1
     }
     let result = await db_mongo.insertOne('answer', dataObj)
     if(result.insertedCount){
