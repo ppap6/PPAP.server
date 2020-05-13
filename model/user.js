@@ -138,16 +138,22 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
-    let sql = 'UPDATE user SET name=?, account=?, sex=?, email=?, update_time=?, role_id=? WHERE id=?'
-    let values = [
-      data.name,
-      data.account,
-      data.sex,
-      data.email,
-      util.changeTimeToStr(new Date()),
-      data.role_id
-    ]
-    let result = await db.query(sql, [...values,id])
+    let sql
+    let values
+    if(data.type == 'name'){
+      sql = 'UPDATE user SET name=?, update_time=? WHERE id=?'
+      values = [
+        data.name,
+        util.changeTimeToStr(new Date())
+      ]
+    }else{
+      sql = 'UPDATE user SET signature=?, update_time=? WHERE id=?'
+      values = [
+        data.signature,
+        util.changeTimeToStr(new Date())
+      ]
+    }
+    let result = await db.query(sql, [...values, id])
     if(result.affectedRows){
       return true
     }

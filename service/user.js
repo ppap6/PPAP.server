@@ -297,25 +297,16 @@ const user = {
     let uid = global.uid
     let user = await userModel.getUser(uid)
     if(user){
-      let user = await userModel.getUserByEmail(data.email)
-      //验证修改的用户账号是否已被使用
-      if(!user || (user && user.id == uid)){
-        let result = await userModel.updateUser(uid, data)
-        if(result){
-          return {
-            status: 200,
-            message: '操作成功'
-          }
-        }else{
-          return {
-            status: 10000,
-            message: '操作失败'
-          }
+      let result = await userModel.updateUser(uid, data)
+      if(result){
+        return {
+          status: 200,
+          message: '操作成功'
         }
       }else{
         return {
           status: 10000,
-          message: '用户邮箱已存在'
+          message: '操作失败'
         }
       }
     }else{

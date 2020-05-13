@@ -75,7 +75,16 @@ const user = {
   //用户修改自己的信息
   async updateSelf(ctx){
     //验证数据
-    let paramList = ['name', 'sex', 'email', 'role_id']
+    let type = ctx.request.body.type
+    if(type === undefined){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    // name => 昵称 / signature => 签名
+    let paramList = type == 'name' ? ['type', 'name'] : ['type', 'signature']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,
