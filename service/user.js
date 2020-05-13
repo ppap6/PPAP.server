@@ -59,6 +59,8 @@ const user = {
         name: user.name,
         account: user.account,
         avatar: user.avatar,
+        bg: user.bg,
+        signature: user.signature,
         sex: user.sex,
         email: user.email,
         create_time: user.create_time,
@@ -189,6 +191,7 @@ const user = {
         account: user.account,
         avatar: user.avatar,
         bg: user.bg,
+        signature: user.signature,
         sex: user.sex,
         email: user.email,
         create_time: user.create_time,
@@ -297,7 +300,7 @@ const user = {
     let uid = global.uid
     let user = await userModel.getUser(uid)
     if(user){
-      let result = await userModel.updateUser(uid, data)
+      let result = await userModel.updateSelf(uid, data)
       if(result){
         return {
           status: 200,
@@ -369,6 +372,7 @@ const user = {
             account: data.account,
             avatar: user.avatar,
             bg: user.bg,
+            signature: user.signature,
             sex: user.sex,
             email: user.email,
             identity: user.role_id,

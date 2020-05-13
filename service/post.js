@@ -192,6 +192,7 @@ const post ={
         account: user.account,
         avatar: user.avatar,
         bg: user.bg,
+        signature: user.signature,
         sex: user.sex,
         email: user.email,
         create_time: user.create_time,

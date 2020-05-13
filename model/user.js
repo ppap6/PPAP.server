@@ -39,7 +39,7 @@ const user = {
                     FROM user AS u, role AS r 
                     WHERE u.role_id=r.id AND u.role_id>?`
 
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.role_id>?
                ORDER BY u.id
@@ -92,7 +92,7 @@ const user = {
 
   //获取用户信息(根据id)
   async getUser(id){
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.sex, u.fans, u.follows, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.signature, u.sex, u.fans, u.follows, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])
@@ -104,7 +104,7 @@ const user = {
 
   //获取用户信息(根据email)
   async getUserByEmail(email){
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.email=?`
     let result = await db.query(sql, [email])
@@ -116,7 +116,7 @@ const user = {
 
   //获取用户信息(根据id)
   async getUserById(id){
-    let sql = `SELECT u.id, u.name, u.account, u.password, u.avatar, u.bg, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.password, u.avatar, u.bg, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])
@@ -138,6 +138,24 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
+    let sql = 'UPDATE user SET name=?, account=?, sex=?, email=?, update_time=?, role_id=? WHERE id=?'
+    let values = [
+      data.name,
+      data.account,
+      data.sex,
+      data.email,
+      util.changeTimeToStr(new Date()),
+      data.role_id
+    ]
+    let result = await db.query(sql, [...values,id])
+    if(result.affectedRows){
+      return true
+    }
+    return false
+  },
+
+  //修改用户自己的信息
+  async updateSelf(id, data){
     let sql
     let values
     if(data.type == 'name'){
