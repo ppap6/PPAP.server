@@ -387,17 +387,17 @@ const post = {
       }
       countSql = `SELECT COUNT(*)
         FROM post AS p, user AS u, topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND (?) AND p.id!=?`
+        WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr}) AND p.id!=?`
 
       countResult = await db.query(countSql, [likeStr, postId])      
 
       sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (CASE ${cond} END)+(p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS similarity, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name 
         FROM post AS p, user AS u, topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND (?) AND p.id!=?
+        WHERE p.topic_id=t.id AND p.uid=u.id AND (${likeStr}) AND p.id!=?
         ORDER BY similarity DESC
         LIMIT ?,?`
       
-      result = await db.query(sql, [likeStr, postId, start, pageSize])
+      result = await db.query(sql, [postId, start, pageSize])
 
     }
     if(Array.isArray(result) && result.length > 0){
