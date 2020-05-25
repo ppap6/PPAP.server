@@ -37,8 +37,10 @@ const nonTokenApiRegArr = [
   /^\/post\/\d/, 
   /^\/comment\/post\/\d/, 
   /^\/comment\/\d/, 
+  /^\/comment\/detail\/\d/, 
   /^\/answer\/comment\/\d/, 
-  /^\/answer\/\d/
+  /^\/answer\/\d/,
+  /^\/answer\/detail\/\d/
 ]
 
 //判断请求api是否在数组里

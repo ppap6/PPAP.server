@@ -14,6 +14,7 @@ router
   .post('/', comment.addComment)     //添加帖子评论
   .del('/:id', comment.deleteComment)   //删除帖子评论
   .get('/:id', comment.getComment)    //获取帖子评论信息
+  .get('/detail/:id', comment.getCommentDetail)    //查看评论详情相关信息
   .put('/:id', comment.updateComment)     //修改帖子评论信息
 
 module.exports = router

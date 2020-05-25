@@ -56,6 +56,14 @@ const comment = {
     ctx.body = result
   },
 
+  //查看评论详情相关信息
+  async getCommentDetail(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let result = await commentService.getCommentDetail(ctx.params.id, pageNum, pageSize)
+    ctx.body = result
+  },
+
   //修改帖子评论信息
   async updateComment(ctx){
     //验证数据
