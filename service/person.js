@@ -82,7 +82,8 @@ const person = {
             let newList = []
             for(let i=0; i<answerList.length; i++){
                 let post = await postModel.getPost(answerList[i].pid)
-                let user = await userModel.getUser(answerList[i].targetor_id)
+                let requestor = await userModel.getUser(answerList[i].requestor_id)
+                let targetor = await userModel.getUser(answerList[i].targetor_id)
                 let comment = await commentModel.getComment(answerList[i].comment_id)
                 let answer = await answerModel.getAnswer(answerList[i].target_answer_id)
                 let item = {
@@ -93,9 +94,11 @@ const person = {
                     target_answer_id: answerList[i].target_answer_id,
                     target_answer_content: answer.content,
                     requestor_id: answerList[i].requestor_id,
+                    requestor_name: requestor.name,
+                    requestor_avatar: requestor.avatar,
                     targetor_id: answerList[i].targetor_id,
-                    targetor_name: user.name,
-                    targetor_avatar: user.avatar,
+                    targetor_name: targetor.name,
+                    targetor_avatar: targetor.avatar,
                     pid: answerList[i].pid,
                     ptitle: post.title,
                     content: answerList[i].content,

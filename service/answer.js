@@ -188,12 +188,20 @@ const answer ={
   async getAnswer(id){
     let answer = await answerModel.getAnswer(id)
     if(answer){
+      let post = await postModel.getPost(answer.pid)
+      answer.ptitle = post.title
       let requestor = await userModel.getUser(answer.requestor_id)
       answer.requestor_name = requestor.name
       answer.requestor_avatar = requestor.avatar
       let targetor = await userModel.getUser(answer.targetor_id)
       answer.targetor_name = targetor.name
       answer.targetor_avatar = targetor.avatar
+      let comment = await commentModel.getComment(answer.comment_id)
+      answer.comment_content = comment.content
+      if(answer.type == 2){
+        let targetAnswer = await answerModel.getAnswer(answer.target_answer_id)
+        answer.target_answer_content = targetAnswer.content
+      }
       return {
         status: 200,
         message: answer
