@@ -213,6 +213,114 @@ const answer ={
     }
   },
 
+  //查看评论详情相关信息
+  async getAnswerDetail(id, pageNum, pageSize){
+    let answer = await answerModel.getAnswer(id)
+    if(!answer){
+      return {
+        status: 10003,
+        message: '未找到操作对象'
+      }
+    }
+    //comment
+    let comment = await commentModel.getComment(answer.comment_id)
+    if(comment){
+      let user = await userModel.getUser(comment.uid)
+      comment.uname = user.name
+      comment.avatar = user.avatar
+      if(parseInt(global.uid)){
+        //获取用户点亮评论数组
+        let comments = await userModel.getLightComment(parseInt(global.uid))
+        if(comments.includes(comment._id.toString())){
+          comment.is_light = true
+        }else{
+          comment.is_light = false
+        }
+      }else{
+        comment.is_light = false
+      }
+      //post
+      let post = await postModel.getPost(comment.pid)
+      //answer_list
+      let answerCount = await answerModel.getAnswerCount(comment._id.toString())
+      let answerList = await answerModel.getAnswerList(pageNum, pageSize, comment._id.toString())
+      let answer_list
+      if(answerList){
+        for(let i=0; i<answerList.length; i++){
+          let requestor = await userModel.getUser(answerList[i].requestor_id)
+          answerList[i].requestor_name = requestor.name
+          answerList[i].requestor_avatar = requestor.avatar
+          let targetor = await userModel.getUser(answerList[i].targetor_id)
+          answerList[i].targetor_name = targetor.name
+          answerList[i].targetor_avatar = targetor.avatar
+          if(parseInt(global.uid)){
+            //获取用户点亮回复数组
+            let answers = await userModel.getLightAnswer(parseInt(global.uid))
+            if(answers.includes(answerList[i]._id.toString())){
+              answerList[i].is_light = true
+            }else{
+              answerList[i].is_light = false
+            }
+          }else{
+            answerList[i].is_light = false
+          }
+        }
+        answer_list = {
+          page_num: pageNum,
+          page_size: pageSize,
+          total: answerCount,
+          list: answerList
+        }
+      }else{
+        answer_list = {
+          page_num: pageNum,
+          pageSize: pageSize,
+          total: answerCount,
+          list: []
+        }
+      }
+      //answer_detail
+      let post_last = await postModel.getPost(answer.pid)
+      let requestor_last = await userModel.getUser(answer.requestor_id)
+      let targetor_last = await userModel.getUser(answer.targetor_id)
+      let comment_last = await commentModel.getComment(answer.comment_id)
+      let answer_last = await answerModel.getAnswer(answer.target_answer_id)
+      let answer_detail = {
+        _id: answer._id,
+        type: answer.type,
+        comment_id: answer.comment_id,
+        comment_content: comment_last.content,
+        target_answer_id: answer.target_answer_id,
+        target_answer_content: answer_last.content,
+        requestor_id: answer.requestor_id,
+        requestor_name: requestor_last.name,
+        requestor_avatar: requestor_last.avatar,
+        targetor_id: answer.targetor_id,
+        targetor_name: targetor_last.name,
+        targetor_avatar: targetor_last.avatar,
+        pid: answer.pid,
+        ptitle: post_last.title,
+        content: answer.content,
+        create_time: answer.create_time,
+        update_time: answer.update_time,
+        lights: answer.lights
+      }
+      return {
+        status: 200,
+        message: {
+          comment,
+          post,
+          answer_list,
+          answer_detail
+        }
+      }
+    }
+    return {
+      status: 10003,
+      message: '未找到操作对象'
+    }
+  },
+
   //修改评论回复信息
   async updateAnswer(id, data){
     let answer = await answerModel.getAnswer(id)

@@ -64,6 +64,14 @@ const answer = {
     ctx.body = result
   },
 
+  //查看回复详情相关信息
+  async getAnswerDetail(ctx){
+    let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
+    let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
+    let result = await answerService.getAnswerDetail(ctx.params.id, pageNum, pageSize)
+    ctx.body = result
+  },
+
   //修改评论回复信息
   async updateAnswer(ctx){
     //验证数据

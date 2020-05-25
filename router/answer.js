@@ -14,6 +14,7 @@ router
   .post('/', answer.addAnswer)     //添加评论回复
   .del('/:id', answer.deleteAnswer)   //删除评论单条回复
   .get('/:id', answer.getAnswer)    //获取评论单条回复信息
+  .get('/detail/:id', answer.getAnswerDetail)    //查看回复详情相关信息
   .put('/:id', answer.updateAnswer)     //修改评论回复信息
 
 module.exports = router
