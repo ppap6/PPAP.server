@@ -124,6 +124,17 @@
             let targetor = await userModel.getUser(answerList[i].targetor_id)
             answerList[i].targetor_name = targetor.name
             answerList[i].targetor_avatar = targetor.avatar
+            if(parseInt(global.uid)){
+              //获取用户点亮回复数组
+              let answers = await userModel.getLightAnswer(parseInt(global.uid))
+              if(answers.includes(answerList[i]._id.toString())){
+                answerList[i].is_light = true
+              }else{
+                answerList[i].is_light = false
+              }
+            }else{
+              answerList[i].is_light = false
+            }
           }
           commentList[i].answer = {
             page_num: pageNum,
