@@ -39,7 +39,7 @@ const user = {
                     FROM user AS u, role AS r 
                     WHERE u.role_id=r.id AND u.role_id>?`
 
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.role_id>?
                ORDER BY u.id
@@ -92,7 +92,7 @@ const user = {
 
   //获取用户信息(根据id)
   async getUser(id){
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.signature, u.sex, u.fans, u.follows, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.fans, u.follows, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])
@@ -104,7 +104,7 @@ const user = {
 
   //获取用户信息(根据email)
   async getUserByEmail(email){
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.email=?`
     let result = await db.query(sql, [email])
@@ -116,7 +116,7 @@ const user = {
 
   //获取用户信息(根据id)
   async getUserById(id){
-    let sql = `SELECT u.id, u.name, u.account, u.password, u.avatar, u.bg, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+    let sql = `SELECT u.id, u.name, u.account, u.password, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
                FROM user AS u, role AS r 
                WHERE u.role_id=r.id AND u.id=?`
     let result = await db.query(sql, [id])

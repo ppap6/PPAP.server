@@ -32,6 +32,9 @@
         let user = await userModel.getUser(commentList[i].uid)
         commentList[i].uname = user.name
         commentList[i].avatar = user.avatar
+        commentList[i].title = user.title
+        commentList[i].role_id = user.role_id
+        commentList[i].role_name = user.role_name
         if(parseInt(global.uid)){
           //获取用户点亮评论数组
           let comments = await userModel.getLightComment(parseInt(global.uid))
@@ -50,6 +53,9 @@
             let requestor = await userModel.getUser(answerList[i].requestor_id)
             answerList[i].requestor_name = requestor.name
             answerList[i].requestor_avatar = requestor.avatar
+            answerList[i].requestor_title = requestor.title
+            answerList[i].requestor_role_id = requestor.role_id
+            answerList[i].requestor_role_name = requestor.role_name
             let targetor = await userModel.getUser(answerList[i].targetor_id)
             answerList[i].targetor_name = targetor.name
             answerList[i].targetor_avatar = targetor.avatar
