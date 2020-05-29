@@ -13,6 +13,7 @@ CREATE TABLE `user` (
     `password` VARCHAR(100) NOT NULL COMMENT '密码',
     `avatar` MEDIUMTEXT NULL COMMENT '头像',
     `bg` MEDIUMTEXT NULL COMMENT '背景',
+    `title` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '个人头衔',
     `signature` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '个人签名',
     `sex` INT(10) NOT NULL DEFAULT 0 COMMENT '性别',
     `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '邮箱',
