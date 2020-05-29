@@ -196,6 +196,7 @@ const post ={
         sex: user.sex,
         email: user.email,
         create_time: user.create_time,
+        utitle: user.title,
         role_id: user.role_id,
         role_name: user.role_name,
         count: {
