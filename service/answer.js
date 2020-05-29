@@ -38,6 +38,9 @@ const answer ={
         let requestor = await userModel.getUser(answerList[i].requestor_id)
         answerList[i].requestor_name = requestor.name
         answerList[i].requestor_avatar = requestor.avatar
+        answerList[i].requestor_title = requestor.title
+        answerList[i].requestor_role_id = requestor.role_id
+        answerList[i].requestor_role_name = requestor.role_name
         let targetor = await userModel.getUser(answerList[i].targetor_id)
         answerList[i].targetor_name = targetor.name
         answerList[i].targetor_avatar = targetor.avatar
@@ -93,6 +96,9 @@ const answer ={
         let requestor = await userModel.getUser(answerList[i].requestor_id)
         answerList[i].requestor_name = requestor.name
         answerList[i].requestor_avatar = requestor.avatar
+        answerList[i].requestor_title = requestor.title
+        answerList[i].requestor_role_id = requestor.role_id
+        answerList[i].requestor_role_name = requestor.role_name
         let targetor = await userModel.getUser(answerList[i].targetor_id)
         answerList[i].targetor_name = targetor.name
         answerList[i].targetor_avatar = targetor.avatar
@@ -215,6 +221,9 @@ const answer ={
       let requestor = await userModel.getUser(answer.requestor_id)
       answer.requestor_name = requestor.name
       answer.requestor_avatar = requestor.avatar
+      answer.requestor_title = requestor.title
+      answer.requestor_role_id = requestor.role_id
+      answer.requestor_role_name = requestor.role_name
       let targetor = await userModel.getUser(answer.targetor_id)
       answer.targetor_name = targetor.name
       answer.targetor_avatar = targetor.avatar
@@ -250,6 +259,9 @@ const answer ={
       let user = await userModel.getUser(comment.uid)
       comment.uname = user.name
       comment.avatar = user.avatar
+      comment.utitle = user.title
+      comment.role_id = user.role_id
+      comment.role_name = user.role_name
       if(parseInt(global.uid)){
         //获取用户点亮评论数组
         let comments = await userModel.getLightComment(parseInt(global.uid))
@@ -272,6 +284,9 @@ const answer ={
           let requestor = await userModel.getUser(answerList[i].requestor_id)
           answerList[i].requestor_name = requestor.name
           answerList[i].requestor_avatar = requestor.avatar
+          answerList[i].requestor_title = requestor.title
+          answerList[i].requestor_role_id = requestor.role_id
+          answerList[i].requestor_role_name = requestor.role_name
           let targetor = await userModel.getUser(answerList[i].targetor_id)
           answerList[i].targetor_name = targetor.name
           answerList[i].targetor_avatar = targetor.avatar
@@ -317,6 +332,9 @@ const answer ={
         requestor_id: answer.requestor_id,
         requestor_name: requestor_last.name,
         requestor_avatar: requestor_last.avatar,
+        requestor_title: requestor_last.title,
+        requestor_role_id: requestor_last.role_id,
+        requestor_role_name: requestor_last.role_name,
         targetor_id: answer.targetor_id,
         targetor_name: targetor_last.name,
         targetor_avatar: targetor_last.avatar,
