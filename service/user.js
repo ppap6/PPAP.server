@@ -124,8 +124,15 @@ const user = {
         message: '没有操作权限'
       }
     }
-    let user = await userModel.getUserByEmail(data.email)
-    if(!user){
+    let userByName = await userModel.getUserByName(data.name)
+    if(userByName){
+      return {
+        status: 10000,
+        message: '用户昵称已存在'
+      }
+    }
+    let userByEmail = await userModel.getUserByEmail(data.email)
+    if(!userByEmail){
       let insertId = await userModel.addUser(data)
       if(insertId){
         //新增用户点赞收藏点亮模型
@@ -234,25 +241,34 @@ const user = {
     }
     let user = await userModel.getUser(id)
     if(user){
-      let user = await userModel.getUserByEmail(data.email)
-      //验证修改的用户账号是否已被使用
-      if(!user || (user && user.id == id)){
-        let result = await userModel.updateUser(id, data)
-        if(result){
-          return {
-            status: 200,
-            message: '操作成功'
+      let userByName = await userModel.getUserByName(data.name)
+      //验证修改的用户昵称是否已被使用
+      if(!userByName || (userByName && userByName.id == id)){
+        let userByEmail = await userModel.getUserByEmail(data.email)
+        //验证修改的用户邮箱是否已被使用
+        if(!userByEmail || (userByEmail && userByEmail.id == id)){
+          let result = await userModel.updateUser(id, data)
+          if(result){
+            return {
+              status: 200,
+              message: '操作成功'
+            }
+          }else{
+            return {
+              status: 10000,
+              message: '操作失败'
+            }
           }
         }else{
           return {
             status: 10000,
-            message: '操作失败'
+            message: '用户邮箱已存在'
           }
         }
       }else{
         return {
           status: 10000,
-          message: '用户邮箱已存在'
+          message: '用户昵称已存在'
         }
       }
     }else{

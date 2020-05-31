@@ -102,6 +102,18 @@ const user = {
     return false
   },
 
+  //获取用户信息(根据name)
+  async getUserByName(name){
+    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
+               FROM user AS u, role AS r 
+               WHERE u.role_id=r.id AND u.name=?`
+    let result = await db.query(sql, [name])
+    if(Array.isArray(result) && result.length > 0){
+      return result[0]
+    }
+    return false
+  },
+
   //获取用户信息(根据email)
   async getUserByEmail(email){
     let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
