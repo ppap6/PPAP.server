@@ -294,7 +294,7 @@ const person = {
     //获取关注用户的动态列表
     async getFollowUserDynamicList(pageNum, pageSize){
         let uid = global.uid
-        let followList = await personModel.getFollowList(parseInt(uid), 1, 1000)
+        let followList = await personModel.getFollowList(parseInt(uid), 1, 5000)
         if(followList){
             let queryArr = []
             for(let i=0; i<followList.length; i++){
