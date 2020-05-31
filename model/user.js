@@ -23,9 +23,9 @@ const user = {
   //根据token获取用户角色id
   async getRoleId(){
     let obj = tokenUtil.parseToken()
-    let account = obj.account
-    let sql = 'SELECT * FROM user WHERE account=?'
-    let result = await db.query(sql, [account])
+    let id = obj.uid
+    let sql = 'SELECT * FROM user WHERE id=?'
+    let result = await db.query(sql, [id])
     if(Array.isArray(result) && result.length > 0){
       return result[0].role_id
     }
@@ -138,16 +138,17 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
-    let sql = 'UPDATE user SET name=?, account=?, sex=?, email=?, update_time=?, role_id=? WHERE id=?'
+    let sql = 'UPDATE user SET name=?, account=?, title=?, sex=?, email=?, update_time=?, role_id=? WHERE id=?'
     let values = [
       data.name,
       data.account,
+      data.title,
       data.sex,
       data.email,
       util.changeTimeToStr(new Date()),
       data.role_id
     ]
-    let result = await db.query(sql, [...values,id])
+    let result = await db.query(sql, [...values, id])
     if(result.affectedRows){
       return true
     }
@@ -178,6 +179,7 @@ const user = {
     return false
   },
 
+  //修改用户密码
   async updateUserPwd(id, password){
     let sql = 'UPDATE user SET password=?, update_time=? WHERE id=?'
     let values = [
