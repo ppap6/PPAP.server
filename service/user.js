@@ -318,6 +318,15 @@ const user = {
     let uid = global.uid
     let user = await userModel.getUser(uid)
     if(user){
+      if(data.type == 'name'){
+        let userHasName = await userModel.getUserByName(data.name)
+        if(userHasName){
+          return {
+            status: 10000,
+            message: '该昵称已被使用'
+          }
+        }
+      }
       let result = await userModel.updateSelf(uid, data)
       if(result){
         return {
