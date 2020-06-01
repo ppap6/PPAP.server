@@ -7,7 +7,7 @@ WORKDIR /home/docker/PPAP_server/
 
 RUN yarn global add nodemon --registry=https://registry.npm.taobao.org \
     && yarn --registry=https://registry.npm.taobao.org \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone
 
 EXPOSE 2333
