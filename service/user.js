@@ -537,13 +537,11 @@ const user = {
       if (error) {
         return console.log(error)
       } else {
-        // console.log(info)
         verifyObj[`nodemail:${ko.email}`] = {
           code: ko.code,
           expire: ko.expire,
           email: ko.email
         }
-        // console.log(verifyObj)  
       }
     })
     //ctx返回值
