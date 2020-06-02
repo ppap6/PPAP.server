@@ -14,7 +14,7 @@ const topic = {
   async getTopicList(pageNum=1, pageSize=20){
     let start = (pageNum-1) * pageSize
     let countSql = `SELECT COUNT(*) FROM topic WHERE sid=0 AND status=1`
-    let sql = 'SELECT * FROM topic WHERE sid=0 AND status=1 ORDER BY num ASC LIMIT ?,?'
+    let sql = 'SELECT id, sid, name, intro, num, create_time, update_time, posts, followers FROM topic WHERE sid=0 AND status=1 ORDER BY num ASC LIMIT ?,?'
     let countResult = await db.query(countSql)
     let result = await db.query(sql, [start, pageSize])
     if(Array.isArray(result) && result.length > 0){
@@ -30,7 +30,7 @@ const topic = {
 
   //获取子级话题数据
   async getChildTopicList(sid){
-    let sql = 'SELECT * FROM topic WHERE sid=? AND status=1 ORDER BY num ASC' 
+    let sql = 'SELECT id, sid, name, intro, num, create_time, update_time, posts, followers FROM topic WHERE sid=? AND status=1 ORDER BY num ASC' 
     let result = await db.query(sql, [sid])
     if(Array.isArray(result) && result.length > 0){
       return result
