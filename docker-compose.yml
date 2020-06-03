@@ -2,7 +2,7 @@ version: '2'
 
 services:
   ppap_server:
-    image: jwchan1996/ppap_server:preview
+    image: registry.cn-shenzhen.aliyuncs.com/ppap6pro/ppap_server:preview
     container_name: ppap_server
     restart: always
     ports:
