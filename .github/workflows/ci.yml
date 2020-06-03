@@ -15,27 +15,25 @@ jobs:
           node-version: '12.x'
       
       - name: Build Image
+        # env: 
+        #   DockerUsername: ${{ secrets.DOCKER_USERNAME }}
+        #   DockerPassword: ${{ secrets.DOCKER_PASSWORD }}
         env: 
-          # docker hub 
-          # DockerUsername: ${{ secrets.DOCKER_USERNAME  }}
-          # DockerPassword: ${{ secrets.DOCKER_PASSWORD }}
-          # aliyun docker 
           AliyunDockerUsername: ${{ secrets.ALIYUN_DOCKER_USERNAME }}
           AliyunDockerPassword: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
+        # run: |
+        #   docker login -u $DockerUsername -p $DockerPassword
+        #   docker build -t jwchan1996/ppap_server:preview .
+        #   docker push jwchan1996/ppap_server:preview
         run: |
-          # docker hub
-          # docker login -u $DockerUsername -p $DockerPassword
-          # docker build -t jwchan1996/ppap_server:preview .
-          # docker push jwchan1996/ppap_server:preview
-          # aliyun docker
           docker login -u $AliyunDockerUsername -p $AliyunDockerPassword registry.cn-shenzhen.aliyuncs.com
           docker build -t registry.cn-shenzhen.aliyuncs.com/ppap6pro/ppap_server:preview .
           docker push registry.cn-shenzhen.aliyuncs.com/ppap6pro/ppap_server:preview
       
-      - name: Sleep for 10 seconds
+      - name: Sleep for 5 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: 10s
+          time: '5s'
 
   deploy:
     runs-on: ubuntu-latest
