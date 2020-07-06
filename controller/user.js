@@ -26,7 +26,8 @@ const user = {
   async getUserList(ctx){
     let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
-    let users = await userService.getUserList(pageNum, pageSize)
+    let keyword = ctx.query.keyword === undefined ? '' : ctx.query.keyword
+    let users = await userService.getUserList(pageNum, pageSize, keyword)
     ctx.body = users
   },
 
