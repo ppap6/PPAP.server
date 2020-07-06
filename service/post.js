@@ -52,7 +52,7 @@ const post ={
   },
 
   //管理运营获取帖子列表
-  async getPostListForAdmin(pageNum, pageSize, topicId, sort){
+  async getPostListForAdmin(pageNum, pageSize, topicId, sort, keyword){
     //判断话题是否是父级
     let topic = await topicModel.getTopic(topicId)
     let sid
@@ -61,7 +61,7 @@ const post ={
     }else{
       sid = false
     }
-    let postList = await postModel.getPostListForAdmin(pageNum, pageSize, topicId, sort, sid)
+    let postList = await postModel.getPostListForAdmin(pageNum, pageSize, topicId, sort, sid, keyword)
     if(postList){
       return {
         status: 200,

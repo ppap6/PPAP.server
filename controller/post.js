@@ -33,6 +33,7 @@ const post = {
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
     let topicId = ctx.query.topic_id === undefined ? 0 : parseInt(ctx.query.topic_id)
     let sort = ctx.query.sort === undefined ? 1 : parseInt(ctx.query.sort)
+    let keyword = ctx.query.keyword === undefined ? '' : ctx.query.keyword
     if(sort != 1 && sort != 2 && sort != 3){
       ctx.body = {
         status: 10002,
@@ -40,7 +41,7 @@ const post = {
       }
       return
     }
-    let posts = await postService.getPostListForAdmin(pageNum, pageSize, topicId, sort)
+    let posts = await postService.getPostListForAdmin(pageNum, pageSize, topicId, sort, keyword)
     ctx.body = posts
   },
 

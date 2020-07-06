@@ -140,7 +140,7 @@ const post = {
   },
 
   //管理运营获取帖子数据（页数，数目，话题id，排序）
-  async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sort=1, sid){
+  async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sort=1, sid, keyword){
     let start = (pageNum-1) * pageSize
     let countSql
     let sql
@@ -151,18 +151,18 @@ const post = {
     if(topicId === 0){
       countSql = `SELECT COUNT(*)
         FROM post AS p, user AS u, topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id`
+        WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ?`
 
-      countResult = await db.query(countSql)
+      countResult = await db.query(countSql, [`%${keyword}%`])
       
       if(sort == 3){
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name, p.status 
           FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id
+          WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ?
           ORDER BY hots DESC
           LIMIT ?,?`
 
-        result = await db.query(sql, [start, pageSize])
+        result = await db.query(sql, [`%${keyword}%`, start, pageSize])
 
       }else{
 
@@ -175,11 +175,11 @@ const post = {
 
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
           FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id
+          WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ?
           ORDER BY ?? DESC
           LIMIT ?,?`
 
-        result = await db.query(sql, [sortType, start, pageSize])
+        result = await db.query(sql, [`%${keyword}%`, sortType, start, pageSize])
 
       }
     }else{
@@ -187,18 +187,18 @@ const post = {
         //话题id为父级
         countSql = `SELECT COUNT(*)
           FROM post AS p, user AS u, topic AS t, topic AS parent 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id`
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ?`
 
-        countResult = await db.query(countSql, [topicId])
+        countResult = await db.query(countSql, [topicId, `%${keyword}%`])
 
         if(sort == 3){
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name, p.status 
             FROM post AS p, user AS u, topic AS t, topic AS parent 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ?
             ORDER BY hots DESC
             LIMIT ?,?`
 
-          result = await db.query(sql, [topicId, start, pageSize])
+          result = await db.query(sql, [topicId, `%${keyword}%`, start, pageSize])
 
         }else{
 
@@ -211,29 +211,29 @@ const post = {
 
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
             FROM post AS p, user AS u, topic AS t, topic AS parent 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ?
             ORDER BY ?? DESC
             LIMIT ?,?`
 
-          result = await db.query(sql, [topicId, sortType, start, pageSize])
+          result = await db.query(sql, [topicId, `%${keyword}%`, sortType, start, pageSize])
 
         }
       }else{
         //话题id为子级
         countSql = `SELECT COUNT(*)
           FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=?`
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ?`
 
-        countResult = await db.query(countSql, [topicId])
+        countResult = await db.query(countSql, [topicId, `%${keyword}%`])
 
         if(sort ==3){
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name, p.status 
             FROM post AS p, user AS u, topic AS t 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ?
             ORDER BY hots DESC
             LIMIT ?,?`
 
-          result = await db.query(sql, [topicId, start, pageSize])
+          result = await db.query(sql, [topicId, `%${keyword}%`, start, pageSize])
           
         }else{
 
@@ -246,11 +246,11 @@ const post = {
 
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status
             FROM post AS p, user AS u, topic AS t 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ?
             ORDER BY ?? DESC
             LIMIT ?,?`
 
-          result = await db.query(sql, [topicId, sortType, start, pageSize])
+          result = await db.query(sql, [topicId, `%${keyword}%`, sortType, start, pageSize])
           
         }
       }
