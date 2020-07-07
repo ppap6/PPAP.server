@@ -33,20 +33,44 @@ const user = {
   },
 
   //查看用户列表
-  async getUserList(roleId, pageNum, pageSize, keyword){
+  async getUserList(roleId, pageNum, pageSize, keyword, status){
     let start = (pageNum-1) * pageSize
-    let countSql = `SELECT COUNT(*) 
-                    FROM user AS u, role AS r 
-                    WHERE u.role_id=r.id AND u.role_id>? AND u.name LIKE ?`
+    let countSql
+    let sql
+    let countResult
+    let result
 
-    let sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name 
-               FROM user AS u, role AS r 
-               WHERE u.role_id=r.id AND u.role_id>? AND u.name LIKE ?
-               ORDER BY u.id
-               LIMIT ?,?`
+    if(status == 2){
 
-    let countResult = await db.query(countSql, [roleId, `%${keyword}%`])
-    let result = await db.query(sql, [roleId, `%${keyword}%`, start, pageSize])
+      countSql = `SELECT COUNT(*) 
+                 FROM user AS u, role AS r 
+                 WHERE u.role_id=r.id AND u.role_id>? AND u.name LIKE ?`
+
+      sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name, u.status 
+             FROM user AS u, role AS r 
+             WHERE u.role_id=r.id AND u.role_id>? AND u.name LIKE ?
+             ORDER BY u.id
+             LIMIT ?,?`
+
+      countResult = await db.query(countSql, [roleId, `%${keyword}%`])
+      result = await db.query(sql, [roleId, `%${keyword}%`, start, pageSize])
+
+    }else{
+
+      countSql = `SELECT COUNT(*) 
+                 FROM user AS u, role AS r 
+                 WHERE u.role_id=r.id AND u.role_id>? AND u.name LIKE ? AND u.status=?`
+
+      sql = `SELECT u.id, u.name, u.account, u.avatar, u.bg, u.title, u.signature, u.sex, u.email, u.mobile, u.create_time, u.update_time, u.role_id, r.name AS role_name, u.status 
+             FROM user AS u, role AS r 
+             WHERE u.role_id=r.id AND u.role_id>? AND u.name LIKE ? AND u.status=?
+             ORDER BY u.id
+             LIMIT ?,?`
+
+      countResult = await db.query(countSql, [roleId, `%${keyword}%`, status])
+      result = await db.query(sql, [roleId, `%${keyword}%`, status, start, pageSize])
+
+    }
     if(Array.isArray(result) && result.length > 0){
       return {
         page_num: pageNum,

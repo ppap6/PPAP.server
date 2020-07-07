@@ -27,7 +27,15 @@ const user = {
     let pageNum = ctx.query.page_num === undefined ? 1 : parseInt(ctx.query.page_num)
     let pageSize = ctx.query.page_size === undefined ? 20 : parseInt(ctx.query.page_size)
     let keyword = ctx.query.keyword === undefined ? '' : ctx.query.keyword
-    let users = await userService.getUserList(pageNum, pageSize, keyword)
+    let status = ctx.query.status === undefined ? 2 : parseInt(ctx.query.status)
+    if(![0,1,2].includes(status)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    let users = await userService.getUserList(pageNum, pageSize, keyword, status)
     ctx.body = users
   },
 

@@ -90,7 +90,7 @@ const user = {
   },
 
   //获取所有用户
-  async getUserList(pageNum, pageSize, keyword){
+  async getUserList(pageNum, pageSize, keyword, status){
     //获取角色权限
     let roleId = await userModel.getRoleId()
     //验证身份权限
@@ -100,7 +100,7 @@ const user = {
         message: '没有操作权限'
       }
     }
-    let userList = await userModel.getUserList(roleId, pageNum, pageSize, keyword)
+    let userList = await userModel.getUserList(roleId, pageNum, pageSize, keyword, status)
     if(userList){
       return {
         status: 200,
