@@ -49,6 +49,7 @@ fans  - 粉丝数(int)
 follows  - 关注数(int)
 lights  - 被点亮数(int)
 role_id  - 角色ID(int)
+status  - 用户显示状态(int)
 ```
 
 #### <span style="color:#009688"># </span>角色表 role

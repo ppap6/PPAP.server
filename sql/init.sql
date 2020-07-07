@@ -24,6 +24,7 @@ CREATE TABLE `user` (
     `follows` INT(10) NOT NULL DEFAULT 0 COMMENT '关注数',
     `lights` INT(10) NOT NULL DEFAULT 0 COMMENT '被点亮数',
     `role_id` INT(10) NOT NULL COMMENT '角色ID',
+    `status` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '用户显示状态（0代表隐藏）',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
