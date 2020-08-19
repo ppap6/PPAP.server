@@ -57,8 +57,15 @@ const topic = {
   //修改话题信息
   async updateTopic(ctx){
     //验证数据
-    let paramList = ['name', 'intro', 'icon', 'num']
+    let paramList = ['name', 'intro', 'icon', 'num', 'status']
     if(!util.checkParamExist(paramList, ctx.request.body)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    if(ctx.request.body.status != 0 && ctx.request.body.status != 1){
       ctx.body = {
         status: 10002,
         message: '非法参数'

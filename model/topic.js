@@ -107,13 +107,14 @@ const topic = {
 
   //修改话题信息
   async updateTopic(id, data){
-    let sql = 'UPDATE topic SET name=?, intro=?, icon=?, num=?, update_time=? WHERE id=?'
+    let sql = 'UPDATE topic SET name=?, intro=?, icon=?, num=?, update_time=?, status=? WHERE id=?'
     let values = [
       data.name,
       data.intro,
       data.icon,
       data.num,
-      util.changeTimeToStr(new Date())
+      util.changeTimeToStr(new Date()),
+      data.status
     ]
     let result = await db.query(sql, [...values, id])
     if(result.affectedRows){
