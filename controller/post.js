@@ -34,6 +34,7 @@ const post = {
     let topicId = ctx.query.topic_id === undefined ? 0 : parseInt(ctx.query.topic_id)
     let sort = ctx.query.sort === undefined ? 1 : parseInt(ctx.query.sort)
     let keyword = ctx.query.keyword === undefined ? '' : ctx.query.keyword
+    let status = ctx.query.status === undefined ? 2 : parseInt(ctx.query.status)
     if(sort != 1 && sort != 2 && sort != 3){
       ctx.body = {
         status: 10002,
@@ -41,7 +42,14 @@ const post = {
       }
       return
     }
-    let posts = await postService.getPostListForAdmin(pageNum, pageSize, topicId, sort, keyword)
+    if(![0,1,2].includes(status)){
+      ctx.body = {
+        status: 10002,
+        message: '非法参数'
+      }
+      return
+    }
+    let posts = await postService.getPostListForAdmin(pageNum, pageSize, topicId, sort, keyword, status)
     ctx.body = posts
   },
 

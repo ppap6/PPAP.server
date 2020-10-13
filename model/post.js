@@ -139,8 +139,8 @@ const post = {
     return false
   },
 
-  //管理运营获取帖子数据（页数，数目，话题id，排序）
-  async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sort=1, sid, keyword){
+  //管理运营获取帖子数据（页数，数目，话题id，排序，显示状态）
+  async getPostListForAdmin(pageNum=1, pageSize=20, topicId=0, sort=1, sid, keyword, status=2){
     let start = (pageNum-1) * pageSize
     let countSql
     let sql
@@ -148,17 +148,24 @@ const post = {
     let countResult
     let result
 
+    let statusCondition
+    if(status == 2){
+      statusCondition = ''
+    }else{
+      statusCondition = `AND p.status=${status}`
+    }
+
     if(topicId === 0){
       countSql = `SELECT COUNT(*)
         FROM post AS p, user AS u, topic AS t 
-        WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ?`
+        WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ? ${statusCondition}`
 
       countResult = await db.query(countSql, [`%${keyword}%`])
       
       if(sort == 3){
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name, p.status 
           FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ?
+          WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ? ${statusCondition}
           ORDER BY hots DESC
           LIMIT ?,?`
 
@@ -175,7 +182,7 @@ const post = {
 
         sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
           FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ?
+          WHERE p.topic_id=t.id AND p.uid=u.id AND p.title LIKE ? ${statusCondition}
           ORDER BY ?? DESC
           LIMIT ?,?`
 
@@ -187,14 +194,14 @@ const post = {
         //话题id为父级
         countSql = `SELECT COUNT(*)
           FROM post AS p, user AS u, topic AS t, topic AS parent 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ?`
+          WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ? ${statusCondition}`
 
         countResult = await db.query(countSql, [topicId, `%${keyword}%`])
 
         if(sort == 3){
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name, p.status 
             FROM post AS p, user AS u, topic AS t, topic AS parent 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ? ${statusCondition}
             ORDER BY hots DESC
             LIMIT ?,?`
 
@@ -211,7 +218,7 @@ const post = {
 
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status 
             FROM post AS p, user AS u, topic AS t, topic AS parent 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND parent.id=? AND t.sid=parent.id AND p.title LIKE ? ${statusCondition}
             ORDER BY ?? DESC
             LIMIT ?,?`
 
@@ -222,14 +229,14 @@ const post = {
         //话题id为子级
         countSql = `SELECT COUNT(*)
           FROM post AS p, user AS u, topic AS t 
-          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ?`
+          WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ? ${statusCondition}`
 
         countResult = await db.query(countSql, [topicId, `%${keyword}%`])
 
-        if(sort ==3){
+        if(sort == 3){
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, (p.pv/100 + p.likes + p.collects*2 + p.comments + p.answers) AS hots, p.topic_id, t.name AS topic_name, p.status 
             FROM post AS p, user AS u, topic AS t 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ? ${statusCondition}
             ORDER BY hots DESC
             LIMIT ?,?`
 
@@ -246,7 +253,7 @@ const post = {
 
           sql = `SELECT p.id, p.uid, u.name AS uname, u.avatar, p.title, LEFT(p.content, 50) AS content, LEFT(p.md, 50) AS md, p.create_time, p.update_time, p.pv, p.likes, p.collects, p.comments, p.answers, p.topic_id, t.name AS topic_name, p.status
             FROM post AS p, user AS u, topic AS t 
-            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ?
+            WHERE p.topic_id=t.id AND p.uid=u.id AND t.id=? AND p.title LIKE ? ${statusCondition}
             ORDER BY ?? DESC
             LIMIT ?,?`
 
