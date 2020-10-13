@@ -69,7 +69,7 @@ const user = {
   //修改用户信息
   async updateUser(ctx){
     //验证数据
-    let paramList = ['name', 'account', 'title', 'sex', 'email', 'role_id', 'status']
+    let paramList = ['name', 'email', 'account', 'sex', 'avatar', 'bg', 'title', 'signature', 'mobile', 'role_id', 'status']
     if(!util.checkParamExist(paramList, ctx.request.body)){
       ctx.body = {
         status: 10002,

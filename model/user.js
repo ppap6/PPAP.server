@@ -174,13 +174,17 @@ const user = {
 
   //修改用户信息
   async updateUser(id, data){
-    let sql = 'UPDATE user SET name=?, account=?, title=?, sex=?, email=?, update_time=?, role_id=?, status=? WHERE id=?'
+    let sql = 'UPDATE user SET name=?, account=?, title=?, signature=?, avatar=?, bg=?, sex=?, email=?, mobile=?, update_time=?, role_id=?, status=? WHERE id=?'
     let values = [
       data.name,
       data.account,
       data.title,
+      data.signature,
+      data.avatar,
+      data.bg,
       data.sex,
       data.email,
+      data.mobile,
       util.changeTimeToStr(new Date()),
       data.role_id,
       data.status
