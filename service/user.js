@@ -18,6 +18,7 @@ const userModel = require('../model/user')
 const topicModel = require('../model/topic')
 const postModel = require('../model/post')
 const roleModel = require('../model/role')
+const accessModel = require('../model/access')
 const logModel = require('../model/log')
 const commentModel = require('../model/comment')
 const answerModel = require('../model/answer')
@@ -37,11 +38,31 @@ const user = {
   async getUserAuthList(){
     //获取用户角色ID
     let roleId = await userModel.getRoleId()
-    let roleAccess = await roleModel.getRoleAccess(roleId)
-    if(roleAccess){
-      return {
-        status: 200,
-        message: roleAccess
+    //判断是超级管理员，则返回所有菜单权限
+    if(roleId === 1){
+      let accessList = await accessModel.getAccessList(1, 30)
+      if(accessList){
+        //获取子级权限
+        for(let i=0; i<accessList.list.length; i++){
+          let childAccessList = await accessModel.getChildAccessList(accessList.list[i].id)
+          if(childAccessList){
+            accessList.list[i].child = childAccessList
+          }else{
+            accessList.list[i].child = []
+          }
+        }
+        return {
+          status: 200,
+          message: accessList
+        }
+      }
+    }else{
+      let roleAccess = await roleModel.getRoleAccess(roleId)
+      if(roleAccess){
+        return {
+          status: 200,
+          message: roleAccess
+        }
       }
     }
     return {
