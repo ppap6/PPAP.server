@@ -39,6 +39,13 @@ CREATE TABLE `role` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
+INSERT INTO `role` (`id`, `name`, `create_time`, `update_time`, `description`) VALUES
+(1, '超级管理员', '2019-06-06 10:31:00', '2019-06-06 10:34:00', ''),
+(2, '管理员', '2019-06-06 10:32:00', '2019-06-06 10:34:00', '全站管理、权限：用户、帖子、话题全权限'),
+(3, '运营', '2019-06-06 10:33:00', '2019-06-06 10:34:00', '管理版主与普通用户、权限：话题创建、用户标签认证、删除修改用户帖子、重置用户密码'),
+(4, '版主', '2019-06-06 10:34:00', '2019-06-06 10:34:00', '负责管理话题板块、权限：删除用户帖子、修改用户帖子、合并帖子、更改帖子话题分区'),
+(5, '普通用户', '2019-07-02 00:06:26', '2019-07-02 23:35:24', '不能删除帖子，只能编辑');
+
 
 DROP TABLE IF EXISTS `access`;
 CREATE TABLE `access` (
@@ -52,6 +59,19 @@ CREATE TABLE `access` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
+INSERT INTO `access` (`id`, `sid`, `name`, `code`, `create_time`, `update_time`, `description`) VALUES
+(1, 0, '用户管理', '/user', '2019-07-03 00:11:59', '2019-07-03 00:11:59', ''),
+(2, 1, '所有用户', '/user/list', '2019-07-03 00:15:24', '2019-07-03 00:15:24', ''),
+(3, 1, '用户小黑屋', '/user/blacklist', '2019-07-04 23:10:13', '2019-07-04 23:12:16', '233'),
+(4, 0, '话题管理', '/topic', '2019-07-03 00:11:59', '2019-07-03 00:11:59', ''),
+(5, 4, '所有话题', '/topic/list', '2019-07-03 00:15:24', '2019-07-03 00:15:24', ''),
+(6, 0, '帖子管理', '/post', '2019-07-03 00:11:59', '2019-07-03 00:11:59', ''),
+(7, 6, '所有帖子', '/post/list', '2019-07-03 00:15:24', '2019-07-03 00:15:24', ''),
+(8, 6, '帖子小黑屋', '/post/blacklist', '2019-07-04 23:10:13', '2019-07-04 23:12:16', ''),
+(17, 0, '角色权限', '/role_access', '2019-07-03 00:11:59', '2019-07-03 00:11:59', ''),
+(18, 17, '角色管理', '/role_access/role', '2019-07-03 00:11:59', '2019-07-03 00:11:59', ''),
+(19, 17, '权限管理', '/role_access/access', '2019-07-03 00:11:59', '2019-07-03 00:11:59', '');
+
 
 DROP TABLE IF EXISTS `role_access_relation`;
 CREATE TABLE `role_access_relation` (
@@ -60,6 +80,22 @@ CREATE TABLE `role_access_relation` (
     `access_id` INT(10) UNSIGNED NOT NULL COMMENT '权限ID',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
+
+INSERT INTO `role_access_relation` (`id`, `role_id`, `access_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(13, 2, 5),
+(12, 2, 4),
+(11, 2, 7),
+(10, 2, 2),
+(14, 2, 8),
+(15, 2, 6),
+(16, 2, 3),
+(17, 2, 1),
+(18, 4, 6),
+(19, 4, 7),
+(20, 4, 8);
 
 
 DROP TABLE IF EXISTS `admin_log`;
@@ -77,7 +113,7 @@ CREATE TABLE `admin_log` (
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
-  `id` INT(10) UNSIGNED NOT NULL COMMENT '帖子ID',
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
   `uid` INT(10) UNSIGNED NOT NULL COMMENT '用户ID',
   `title` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '贴子标题',
   `content` MEDIUMTEXT NOT NULL COMMENT '帖子内容',
